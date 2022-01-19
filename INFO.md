@@ -26,9 +26,9 @@ d2lbook build html
 
 生成的html会在`_build/html`。
 
-此时我们将编译好的html整个文件夹下的内容拷贝至openmlsys.github.io的website发布。
+此时我们将编译好的html整个文件夹下的内容拷贝至openmlsys.github.io的docs发布。
 
-需要注意的是website目录下的.nojekyll不要删除了，不然网页会没有渲染。
+需要注意的是docs目录下的.nojekyll不要删除了，不然网页会没有渲染。
 
 ## 编译PDF版本
 
