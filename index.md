@@ -5,5 +5,5 @@
 :numbered:
 
 chapter_introduction/index
-chapter_programming_model/index
+chapter_programming_interface/index
 chapter_computational_graph/index
