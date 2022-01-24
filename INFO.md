@@ -14,7 +14,7 @@ python setyp.py install
 当然构建PDF必须要有LaTeX，如安装[Tex Live](https://www.tug.org/texlive/).
 
 ## 编译HTML版本
-在编译前先下载[openmlsys-zh]()，所有的编译命令都在改文件目录内执行。
+在编译前先下载[openmlsys-zh](https://github.com/openmlsys/openmlsys-zh) 所有的编译命令都在改文件目录内执行。
 ```
  git clone git@github.com:openmlsys/openmlsys-zh.git
  cd openmlsys-zh

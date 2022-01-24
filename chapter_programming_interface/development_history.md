@@ -1,6 +1,6 @@
 ## 机器学习系统编程模型的演进
 
-![机器学习编程库发展历程](../img/ch02/framework_development_history.png)
+![机器学习编程库发展历程](../img/ch02/framework_development_history.svg)
 :width:`800px`
 :label:`img_framedh`
 
