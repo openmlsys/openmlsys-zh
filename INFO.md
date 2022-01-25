@@ -3,11 +3,11 @@
 ```
 pip install git+https://github.com/d2l-ai/d2l-book
 ```
-使用pip如果不能安装成功，可以通过git clon下载代码安装
+使用pip如果不能安装成功，可以通过git clone下载代码安装
 ```
 git clone git@github.com:d2l-ai/d2l-book.git
 cd d2l-book
-python setyp.py install
+python setup.py install
 ```
 使用d2lbook构建HTML需要安装pandoc,可以使用pip install pandoc。
 构建PDF时如果有SVG图片需要安装LibRsvg来转换SVG图片，安装librsvg可以通过pip install librsvg。
