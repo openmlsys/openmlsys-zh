@@ -1,6 +1,6 @@
 ## 机器学习系统基本组成
 
-为了达到上述设计目标，一个现代的机器学习框架往往具有如图1.3.1所示的基本架构。
+为了达到上述设计目标，一个现代的机器学习框架往往具有如 :numref:`framework_architecture`所示的基本架构。
 
 ![机器学习框架基本构成](../img/ch01/framework_architecture.svg)
 :width:`600px`

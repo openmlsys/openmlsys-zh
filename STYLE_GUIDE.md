@@ -13,6 +13,7 @@
     * Linux下安装Pandoc命令：agt-get install pandoc
     * 使用Pandoc命令：pandoc -s example.tex -o example.md
 * 使用Pandoc转换后需要注意修改的地方
+    * 表格需要手动改
     * 图片需要手动改
     * 公式部分可能会有不正确，需要注意
     * 代码部分需要手动改，样式如下：
@@ -45,7 +46,7 @@
     * 格式：
         * svg：自己绘制的图片需要用svg，注意去掉白底
         * png：一些常规举例图片不需去除白底的可以使用png
-    * md里插入图片，大小选择800个像素，label自动生成，例如：
+    * md里插入图片，大小选择宽度800个像素(可以依据自己生成的网页效果调整大小)，label自动生成，例如：
     ```python
         ![机器学习系统工作流](../img/ch02/workflow.svg)
         :width:`800px`
@@ -58,5 +59,15 @@
     * 两张图不可以较邻近
         * 两张图拼一下
 * 引用
-    * 生成html后可以看到自动label的引用，手动引用（例如，图7.1）
+    * 图片引用如下
+     ```python
+        ![机器学习系统工作流](../img/ch02/workflow.svg)
+        :width:`800px`
+        :label:`img_workflow`
+        我们给这个图片打了标签img_workflow,此时对其进行引用如下
+        机器学习系统工作流如 :numref:`img_workflow` 。必须注意的是在引用时冒号前要空有一个字符距离。
+    ```
+   * 表格或者章节引用和图片引用类似，流程依旧是打上标签，然后用 :numref:‘引用的标签’
+    
+    
 
