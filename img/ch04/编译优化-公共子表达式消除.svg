@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   id="svg512"
+   xml:space="preserve"
+   width="641.59998"
+   height="356.26666"
+   viewBox="0 0 641.59998 356.26666"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+     id="defs516"><clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath526"><path
+         d="M 0,1.2207e-4 H 960 V 540.00012 H 0 Z"
+         clip-rule="evenodd"
+         id="path524" /></clipPath><clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath540"><path
+         d="M 1.4305e-5,0 H 960.00001 V 540 H 1.4305e-5 Z"
+         clip-rule="evenodd"
+         id="path538" /></clipPath><clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath560"><path
+         d="M 1.4305e-5,0 H 960.00001 V 540 H 1.4305e-5 Z"
+         clip-rule="evenodd"
+         id="path558" /></clipPath></defs><g
+     id="g518"
+     transform="matrix(1.3333333,0,0,-1.3333333,-25.066666,641.06665)"><path
+       d="m 19.4,466.6 c 0,7.51 6.089,13.6 13.601,13.6 H 485.8 c 7.51,0 13.6,-6.09 13.6,-13.6 v -54.4 c 0,-7.51 -6.09,-13.6 -13.6,-13.6 H 33.001 c -7.512,0 -13.601,6.09 -13.601,13.6 z"
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+       id="path530" /><path
+       d="m 19.4,466.6 c 0,7.51 6.089,13.6 13.601,13.6 H 485.8 c 7.51,0 13.6,-6.09 13.6,-13.6 v -54.4 c 0,-7.51 -6.09,-13.6 -13.6,-13.6 H 33.001 c -7.512,0 -13.601,6.09 -13.601,13.6 z"
+       style="fill:none;stroke:#000000;stroke-width:1.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+       id="path532" /><g
+       id="g534"><g
+         id="g536"
+         clip-path="url(#clipPath540)"><text
+           transform="matrix(1,0,0,-1,30.4,431.05)"
+           style="font-variant:normal;font-weight:normal;font-size:24px;font-family:Consolas;-inkscape-font-specification:Consolas;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           id="text544"><tspan
+             x="0 13.200001 26.400002 39.600002 52.800003 66.000008 79.200005 92.400009 105.60001 118.80001 132.00002 145.20001 158.78401 171.98401 185.18401 198.38402 211.58401 224.78401 237.98402 251.18402 264.76801 277.96802 291.16803 304.36801 317.56802 330.76804 343.96802 357.16803 370.75201 383.95203 397.53604 410.73602 423.93604 437.13602 450.33603"
+             y="0"
+             id="tspan542">d = (a + b*c)*2 + (b*c)/5 + (c*c*b)</tspan></text></g></g><path
+       d="m 240.2,339 h 9.6 v 35.6 H 269 V 339 h 9.6 l -19.2,-19.2 z"
+       style="fill:#5b9bd5;fill-opacity:1;fill-rule:evenodd;stroke:none"
+       id="path546" /><path
+       d="m 240.2,339 h 9.6 v 35.6 H 269 V 339 h 9.6 l -19.2,-19.2 z"
+       style="fill:none;stroke:#41719c;stroke-width:1.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+       id="path548" /><path
+       d="m 19.4,282.2 c 0,7.51 6.089,13.6 13.601,13.6 H 485.8 c 7.51,0 13.6,-6.09 13.6,-13.6 v -54.4 c 0,-7.51 -6.09,-13.6 -13.6,-13.6 H 33.001 c -7.512,0 -13.601,6.09 -13.601,13.6 z"
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+       id="path550" /><path
+       d="m 19.4,282.2 c 0,7.51 6.089,13.6 13.601,13.6 H 485.8 c 7.51,0 13.6,-6.09 13.6,-13.6 v -54.4 c 0,-7.51 -6.09,-13.6 -13.6,-13.6 H 33.001 c -7.512,0 -13.601,6.09 -13.601,13.6 z"
+       style="fill:none;stroke:#000000;stroke-width:1.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+       id="path552" /><g
+       id="g554"><g
+         id="g556"
+         clip-path="url(#clipPath560)"><text
+           transform="matrix(1,0,0,-1,30.4,246.48)"
+           style="font-variant:normal;font-weight:normal;font-size:24.025px;font-family:Consolas;-inkscape-font-specification:Consolas;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           id="text564"><tspan
+             x="0 13.19995 26.3999 39.59985 52.799801 65.999748 79.199699 92.399651 105.5996 118.79955 131.9995 145.19945 158.7838 171.98375 185.1837 198.38365 211.5836 224.78355 237.98351 251.18346 264.76779 277.96774 291.16769 304.36765 317.5676"
+             y="0"
+             id="tspan562">d = (a + E)*2 + E/5 + c*E</tspan></text></g></g></g></svg>
