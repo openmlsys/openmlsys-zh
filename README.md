@@ -28,7 +28,7 @@
 
 一个现代的机器学习框架往往具有如下图所示的基本架构。
 
-![机器学习框架基本构成](img/ch01/framework_architecture.svg)
+<!-- ![机器学习框架基本构成](img/ch01/framework_architecture.svg) -->
 
 
 -   **编程接口:** 一个机器学习框架面向用户的编程接口（Programming
