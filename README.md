@@ -3,11 +3,10 @@
 
 ## 本书内容介绍
 
-本书由浅入深地讨论了机器学习系统的设计原理和实现，一个现代的机器学习框架往往具有如 :numref:`framework_architecture`所示的基本架构。
+本书由浅入深地讨论了机器学习系统的设计原理和实现，一个现代的机器学习框架往往具有如下图所示的基本架构。
 
-![机器学习框架基本构成](../img/ch01/framework_architecture.svg)
-:width:`600px`
-:label:`framework_architecture`
+![机器学习框架基本构成](img/ch01/framework_architecture.svg)
+
 
 -   **编程接口:** 一个机器学习框架面向用户的编程接口（Programming
     interface）需要特殊设计。编程接口提供简单易用的编程函数（往往是PyThon）从而让用户定义出各式各样的神经网络和相关的训练过程。同时，编程接口要兼顾性能：神经网络的执行可以调用硬件相关C和C++函数（许多加速器和操作系统的编程接口）。该部分的内容将在第2章展开。
