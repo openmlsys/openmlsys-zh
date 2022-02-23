@@ -10,7 +10,7 @@
 
 ![影响机器学习系统架构的因素](../img/ch01/framework_architecture.svg）
 
-![机器学习框架基本构成](../img/ch01/framework_architecture.svg)
+![机器学习框架基本构成](../img/Advanced/preface3_1.png)
 
 ​      上述四个方面的不同需求，在设计AI框架系统的时候，需要基于场景充分的予以考虑，另外还需要考虑：
 
