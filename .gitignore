@@ -11,3 +11,4 @@ _build/
 test*.md
 run.sh
 .idea
+env
