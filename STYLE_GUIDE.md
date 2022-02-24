@@ -17,12 +17,19 @@
     * 图片需要手动改
     * 公式部分可能会有不正确，需要注意
     * 代码部分需要手动改，样式如下：
- ```python
-    ```python
-    import os
-    import argparse
+    ```markdown
+      ``` python
+      import os
+      import argparse
+      ```
     ```
-```
+    * 转换得到的md中，如果使用了"-"语法，则不能出现以下形式的内容:
+    ```markdown
+      - title
+  
+          content content content content content con...
+    ```
+    即"-"之后空了一行，且内容行首空了4格，否则d2lbook会编译失败:
   
 ## 图片
 
