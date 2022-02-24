@@ -24,6 +24,5 @@ model_converter_and_optimizer
 model_compression
 model_inference
 model_security
-model_deployment_practice
 summary
 ```
