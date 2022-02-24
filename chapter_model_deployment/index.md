@@ -17,7 +17,6 @@
 
 ```toc
 :maxdepth: 2
-:numbered:
 
 model_deployment_introduction
 model_converter_and_optimizer
