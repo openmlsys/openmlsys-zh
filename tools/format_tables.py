@@ -19,7 +19,7 @@ def format_table():
         soup = BeautifulSoup(open(html_file))
         all_tables = soup.find_all(name="table", attrs={"class":"docutils align-default"})
         for table in all_tables:
-            table["style"] = "margin-left:auto;margin-right:auto;"
+            table["style"] = "margin:auto"
         if len(all_tables):
             write_out_file = open(html_file, mode="w")
             write_out_file.write(soup.prettify())
