@@ -13,6 +13,7 @@ chapter_hardware_accelerator/index
 chapter_data_processing_framework/index
 chapter_model_deployment/index
 chapter_distributed_training_system/index
+chapter_transition_advanced/index
 chapter_framework_expansion/index
 appendix_Introduction_machine_learning/index
 
