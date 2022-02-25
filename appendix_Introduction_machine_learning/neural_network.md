@@ -10,8 +10,7 @@
 
 当输入数据用列向量$\bm{x}=[x_1,x_2,x_3]^T$表示，模型权重用行向量$\bm{w}=[w_1,w_2,w_3]$表示，那么输出的标量$z$可以写为：
 
-$$\begin{aligned}
-z = 
+$$z = 
 \begin{bmatrix}
 w_1,w_2,w_3\\
 \end{bmatrix}
@@ -20,19 +19,19 @@ x_1\\
 x_2\\
 x_3
 \end{bmatrix}
-=\bm{w}\bm{x}\end{aligned}$$
+=\bm{w}\bm{x}$$
 
 我们可以利用输出标量$z$为输入的加权组合来实现特定任务。
 比如，可以对"好苹果"和"坏苹果"进行分类，输入的$x_1,x_2,x_3$分别代表三种不同的特征：1）红色的程度，2）有没有洞，3）大小。如果苹果的大小对这个判断没有影响，那么对应的权重就为零。
 这个神经网络的训练，其实就是选择合适的权重，来实现我们的任务。比如我们可以选择合适的权重，使得当$z$小于等于$0$时代表"坏苹果"，而当$z$大于$0$时则是"好苹果"。
 则最终的分类输出标签$y$如下，为$1$时代表好，$0$代表坏。这个神经元的输入和输出之间只有一层，所以可以成为单层神经网络。
 
-$$\begin{aligned}
+$$
 y =
 \begin{cases}
 1 &  z>0 \\
 0 & z \leq 0 \\
-\end{cases}\end{aligned}$$
+\end{cases}$$
 
 ### 决策边界vs.偏置
 
@@ -40,11 +39,9 @@ y =
 （Decision
 Boundary）。如 :numref:`single_neuron_decision_boundary2`所示，以神经元输出$z=0$作为输出标签$y$的决策边界，没有偏置时决策边界必然经过坐标原点，如果数据样本点不以原点来分开，会导致分类错误。
 为了解决这个问题，可以在神经元上加入一个**偏置**（Bias）。 :numref:`single_neuron_bias2`
-是一个有偏置$b$的神经元模型，可以用公式 [\[equ:singleneuron_bias\]](#equ:singleneuron_bias){reference-type="eqref"
-reference="equ:singleneuron_bias"} 表达： 
-$$\begin{aligned}
-\label{equ:singleneuron_bias}
-z = w_{1}x_{1}+ w_{2}x_{2}+ w_{3}x_{3} + b\end{aligned}$$
+是一个有偏置$b$的神经元模型，可以用 :numref:`singleneuron_bias`表达： 
+$$z = w_{1}x_{1}+ w_{2}x_{2}+ w_{3}x_{3} + b$$
+:label:`singleneuron_bias`
 
 ![两个输入（左）和三个输入（右）时的决策边界。不同形状的点代表不同类别的数据，需要找到$z=0$作为决策边界来把不同数据点分开。两个输入时决策边界是一直线，三个输入时决策边界是一个平面，高维度输入时决策边界称为**超平面**（Hyperplane）。
 左： $z=w_{1}x_{1}+w_{2}x_{2}+b$。右：$z=w_{1}x_{1}+w_{2}x_{2}+w_{3}x_{3}+b$。没有偏置时，决策边界必然经过原点，所以不能分开不同类别的数据样本。](../img/ch_basic/single_neuron_decision_boundary2.png)
@@ -65,14 +62,11 @@ $\{x_1, x_2, x_3 | w_{1}x_{1}+ w_{2}x_{2}+ w_{3}x_{3} + b = 0\}$。
 Function），最常见的激活函数有Sigmoid、Tanh、ReLU和Softmax等。
 比如，上述神经元以$z=0$为分界来做分类任务，那么我们可不可以让神经元输出一个概率呢？比如输出$0~1$，$1$代表输入数据$100\%$为某一类。
 为了让神经元输出$0~1$，可以在$z$上加一个逻辑函数**Sigmoid**，
-如公式 [\[equ:sigmoid\]](#equ:sigmoid){reference-type="eqref"
-reference="equ:sigmoid"}
-所示，Sigmoid把数值限制在0和1之中，通过一个简单的临界值（如：0.5）来决定最终输出的标签是否属于某个类别。这个方法叫做**逻辑回归**（Logistic
+如 :numref:`sigmoid`所示，Sigmoid把数值限制在0和1之中，通过一个简单的临界值（如：0.5）来决定最终输出的标签是否属于某个类别。这个方法叫做**逻辑回归**（Logistic
 Regression）。
 
-$$\begin{aligned}
-\label{equ:sigmoid}
-a = f(\bm{z}) = \frac{1}{1+{\rm e}^{-\bm{z}}}\end{aligned}$$
+$$a = f(\bm{z}) = \frac{1}{1+{\rm e}^{-\bm{z}}}$$
+:label:`sigmoid`
 
 ### 多个神经元
 
@@ -80,18 +74,17 @@ a = f(\bm{z}) = \frac{1}{1+{\rm e}^{-\bm{z}}}\end{aligned}$$
 :width:`600px`
 :label:`two_neurons2`
 
-上述网络只有一个输出，若多个神经元在一起就可以有多个输出。 :numref:`two_neurons2`是有两个输出的网络，每个输出都和所有输入相连，所以也被称**全连接层**（Fully-Connected(FC) Layer），可由下述式子 [\[equ:foundation_DL/fullyconnected\]](#equ:foundation_DL/fullyconnected){reference-type="eqref"
-reference="equ:foundation_DL/fullyconnected"} 表示X。
+上述网络只有一个输出，若多个神经元在一起就可以有多个输出。 :numref:`two_neurons2`是有两个输出的网络，每个输出都和所有输入相连，所以也被称**全连接层**（Fully-Connected(FC) Layer），
+可由下述式子 :numref:`fullyconnected`表示X。
 
-$$\begin{aligned}
-\label{equ:foundation_DL/fullyconnected}
+$$
 z_{1} &= w_{11}x_{1} + w_{12}x_{2} + w_{13}x_{3} + b_1 \notag \\
-z_{2} &= w_{21}x_{1} + w_{22}x_{2} + w_{23}x_{3} + b_2\end{aligned}$$
+z_{2} &= w_{21}x_{1} + w_{22}x_{2} + w_{23}x_{3} + b_2$$
+:label:`fullyconnected`
 
 如下式子表示了矩阵方法的实现：
 
-$$\begin{aligned}
-\label{equ:foundation_DL/fullyconnect/colvector/all}
+$$
 \bm{z} =
 \begin{bmatrix}
 z_1 \\
@@ -111,14 +104,14 @@ x_3
 \begin{bmatrix}
 b_1 \\ b_2
 \end{bmatrix}
-= \bm{W}\bm{x} + \bm{b}\end{aligned}$$
+= \bm{W}\bm{x} + \bm{b}$$
 
-多输出的网络可以实现多分类问题，比如有10个数值输出，每个数值分别代表一类物品的概率，每个输出在$0$到$1$之间，10个输出之和为$1$。可用公式 [\[equ:softmax\]](#equ:softmax){reference-type="eqref"
-reference="equ:softmax"}的**Softmax** 函数来实现，$K$为输出的个数：
 
-$$\begin{aligned}
-\label{equ:softmax}
-f(\bm{z})_{i} = \frac{{\rm e}^{z_{i}}}{\sum_{k=1}^{K}{\rm e}^{z_{k}}}\end{aligned}$$
+多输出的网络可以实现多分类问题，比如有10个数值输出，每个数值分别代表一类物品的概率，每个输出在$0$到$1$之间，10个输出之和为$1$。
+可用 :numref:`e_softmax`的**Softmax** 函数来实现，$K$为输出的个数：
+
+$$f(\bm{z})_{i} = \frac{{\rm e}^{z_{i}}}{\sum_{k=1}^{K}{\rm e}^{z_{k}}}$$
+:label:`e_softmax`
 
 ### 多层感知器
 
@@ -128,9 +121,7 @@ f(\bm{z})_{i} = \frac{{\rm e}^{z_{i}}}{\sum_{k=1}^{K}{\rm e}^{z_{k}}}\end{aligne
 Perceptron，MLP）[@rosenblatt1958perceptron]通过叠加多层全连接层来提升网络的表达能力。相比单层网络，多层感知器有很多中间层的输出并不暴露给最终输出，这些层被称为**隐含层**（Hidden
 Layers）。这个例子中的网络可以通过下方的串联式矩阵运算实现，其中$W^l$和$b^l$代表不同层的权重矩阵和偏置，$l$代表层号，$L$代表输出层。
 
-$$\begin{aligned}
-\label{equ:foundation_DL/xxxxx}
-\bm{z} = f(\bm{W^L}f(\bm{W^3}f(\bm{W^2}f(\bm{W^1}\bm{x} + \bm{b^1}) + \bm{b^2}) + \bm{b^3}) + \bm{b^L})\end{aligned}$$
+$$\bm{z} = f(\bm{W^L}f(\bm{W^3}f(\bm{W^2}f(\bm{W^1}\bm{x} + \bm{b^1}) + \bm{b^2}) + \bm{b^3}) + \bm{b^L})$$
 
 在深度学习时代，网络模型基本都是多层的神经网络层连接起来的，输入数据经过多层的特征提取，可以学到不同抽象层级的**特征向量**（Feature
 Vector）。下面我们介绍一下其他常用的神经网络层。
@@ -173,12 +164,10 @@ Neural Networks，RNN）[@rumelhart1986learning]
 是一种处理序列数据的深度学习模型结构。序列数据是一串连续的数据$\{x_1, x_2, \dots, x_n\}$，比如每个$x$代表一个句子中的单词。
 
 为了可以接收一连串的输入序列，如 :numref:`rnn_simple_cell2`所示，朴素循环神经网络使用了循环单元（Cell）作为计算单元，用隐状态（Hidden
-State）来存储过去输入的信息。具体来说，对输入模型的每个数据$x$，根据公式 [\[eq1-25\]](#eq1-25){reference-type="eqref"
-reference="eq1-25"}，循环单元会反复计算新的隐状态，用于记录当前和过去输入的信息。而新的隐状态会被用到下一单元的计算中。
+State）来存储过去输入的信息。具体来说，对输入模型的每个数据$x$，根据公式 :numref:`aligned`，循环单元会反复计算新的隐状态，用于记录当前和过去输入的信息。而新的隐状态会被用到下一单元的计算中。
 
-$$\begin{aligned}
-\label{eq1-25}
-\bm{h}_t = \bm{W}[\bm{x}_t; \bm{h}_{t-1}] + \bm{b}\end{aligned}$$
+$$\bm{h}_t = \bm{W}[\bm{x}_t; \bm{h}_{t-1}] + \bm{b}$$
+:label:`aligned`
 
 ![朴素循环神经网络。 在每一步的计算中，循环单元通过过去时刻的隐状态$\bm{h}_{t-1}$和当前的输入$\bm{x}_t$，求得当前的隐状态$\bm{h}_t$。](../img/ch_basic/rnn_simple_cell2.png)
 :width:`600px`
