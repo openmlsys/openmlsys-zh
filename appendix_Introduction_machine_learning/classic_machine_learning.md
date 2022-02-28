@@ -13,26 +13,26 @@ Machine，SVM)，是一种经典的机器学习分类算法，其核心思想在
 Method)即可类似处理。
 
 如果训练数据是线性可分的，SVM的目标则是最大化**间隔**(Margin)。首先，我们先来定义最大化间隔的分类器，如下：
-$$\min_{\bm{w},b} ~~~\frac{1}{2} ||\bm{w}||^2$$
-$$s.t. ~~~y_i (\bm{w}^T \bm{x_i} + b) \geq 1, ~~~\forall 1 \leq i \leq n$$
+$$\min_{{w},b} ~~~\frac{1}{2} ||{w}||^2$$
+$$s.t. ~~~y_i ({w}^T {x_i} + b) \geq 1, ~~~\forall 1 \leq i \leq n$$
 其拉格朗日乘子为
-$$L(\bm{w},b,\bm{\lambda}) = \frac{1}{2} ||\bm{w}||^2 + \sum_{i=1}^n \lambda_i (1-y_i(\bm{w}^T \bm{x_i} + b))$$
-由于$\frac{1}{2} ||\bm{w}||^2$是凸的，并且$\lambda_i (1-y_i(\bm{w}^T \bm{x_i} + b))$是线性的（也是凸的），所以优化问题的解为
-$$\max_{\lambda>0} \min_{\bm{w},b} L(\bm{w},b, \bm{\lambda})$$
-求$L$关于$\bm{w},b$的导数有
-$$\nabla_{\bm{w}} L= \bm{w} - \sum_{i=1}^n \lambda_i y_i \bm{x_i}$$
+$$L({w},b,{\lambda}) = \frac{1}{2} ||{w}||^2 + \sum_{i=1}^n \lambda_i (1-y_i({w}^T {x_i} + b))$$
+由于$\frac{1}{2} ||{w}||^2$是凸的，并且$\lambda_i (1-y_i({w}^T {x_i} + b))$是线性的（也是凸的），所以优化问题的解为
+$$\max_{\lambda>0} \min_{{w},b} L({w},b, {\lambda})$$
+求$L$关于${w},b$的导数有
+$$\nabla_{{w}} L= {w} - \sum_{i=1}^n \lambda_i y_i {x_i}$$
 $$\nabla_b L = - \sum_{i=1}^n \lambda_i y_i$$
-令$L$关于$\bm{w},b$的导数均为0得到，$\bm{w}^* = \sum_{i=1}^n \lambda_i y_i \bm{x_i}$以及$\sum_{i=1}^n \lambda_i y_i = 0$。
+令$L$关于${w},b$的导数均为0得到，${w}^* = \sum_{i=1}^n \lambda_i y_i {x_i}$以及$\sum_{i=1}^n \lambda_i y_i = 0$。
 由于当$\lambda$固定的时候，$b$的值对目标函数无贡献，所以可以令$b^* = 0$。
 这时，由对偶性理论和KTT条件，我们得到：
-$$y_i (\bm{w}^{*T} \bm{x_i} + b^*) > 1 \Rightarrow \lambda_i^* = 0$$
-$$\lambda_i^* > 0  \Rightarrow y_i (\bm{w}^{*T} \bm{x_i} + b^*) = 1$$
-$$\bm{w}^* = \sum_{i=1}^n \lambda_i^* y_i \bm{x_i}$$
-如果$y_i (\bm{w}^{*T} \bm{x_i} + b^*) = 1$，那么$\bm{x_i}$就是离超平面$(\bm{w}^*,b^*)$最近的点之一，否则就不是。因此，$\bm{w}^*$就是离超平面$(\bm{w}^*,b^*)$最近的点$\bm{x_i}$的线性组合。
+$$y_i ({w}^{*T} {x_i} + b^*) > 1 \Rightarrow \lambda_i^* = 0$$
+$$\lambda_i^* > 0  \Rightarrow y_i ({w}^{*T} {x_i} + b^*) = 1$$
+$${w}^* = \sum_{i=1}^n \lambda_i^* y_i {x_i}$$
+如果$y_i ({w}^{*T} {x_i} + b^*) = 1$，那么${x_i}$就是离超平面$({w}^*,b^*)$最近的点之一，否则就不是。因此，${w}^*$就是离超平面$({w}^*,b^*)$最近的点${x_i}$的线性组合。
 
 如此，通过SVM算法，我们实现了数据的分类，并且能够最大化了决策边界到最近点的距离。
-我们定义满足$y_i (\bm{w}^{*T} \bm{x_i} + b^*) = 1$的$\bm{x_i}$为**支持向量**(Support
-Vectors)，同时把分类器$\hat{y}=sgn(\bm{w}^{*T} \bm{x_i} + b^*)$称为支持向量机。
+我们定义满足$y_i ({w}^{*T} {x_i} + b^*) = 1$的${x_i}$为**支持向量**(Support
+Vectors)，同时把分类器$\hat{y}=sgn({w}^{*T} {x_i} + b^*)$称为支持向量机。
 
 ### K最近邻算法
 
@@ -49,19 +49,19 @@ KNN算法有几个需要注意的关键问题，包括超参数K的选择，距�
 ### K均值聚类算法
 
 **K均值聚类算法**(K-Means Clustering
-Algorithm)是机器学习中一种常见的无监督聚类算法。在这里，我们首先定义聚类问题：给定数据点$\bm{x_1},\cdots, \bm{x_n} \in \mathbb{R}^d$和$K\in \mathbb{N}$，需要划分为$K$个簇$\bm{C_1}, \cdots, \bm{C_K} \in \mathbb{R}^d$以及每个数据点所对应的分类中心点$\bm{ C_{(1)}}, \cdots, \bm{C_{(n)}}$，以最小化距离和$\sum_i ||\bm{x_i} - \bm{C_{(i)}}||^2$。
+Algorithm)是机器学习中一种常见的无监督聚类算法。在这里，我们首先定义聚类问题：给定数据点${x_1},\cdots, {x_n} \in \mathbb{R}^d$和$K\in \mathbb{N}$，需要划分为$K$个簇${C_1}, \cdots, {C_K} \in \mathbb{R}^d$以及每个数据点所对应的分类中心点${ C_{(1)}}, \cdots, {C_{(n)}}$，以最小化距离和$\sum_i ||{x_i} - {C_{(i)}}||^2$。
 
 K均值聚类算法是一种解决聚类问题的算法，算法过程如下：
 
--   随机选择$\bm{C_1}, \cdots, \bm{C_K}$
+-   随机选择${C_1}, \cdots, {C_K}$
 
--   把$\bm{x_i}$所对应的分类置为距离其最近的聚类中心点的分类
+-   把${x_i}$所对应的分类置为距离其最近的聚类中心点的分类
 
--   计算并赋值$\bm{C_K} = \frac{\sum_{\bm{C_{(i)}}=\bm{C_K}} \bm{x_i}}{\sum_{\bm{C_{(i)}}=\bm{C_K}} 1}$
+-   计算并赋值${C_K} = \frac{\sum_{{C_{(i)}}={C_K}} {x_i}}{\sum_{{C_{(i)}}={C_K}} 1}$
 
 -   重复以上步骤直到算法收敛
 
-可以证明，K均值聚类算法会使得距离和$\sum_i ||\bm{x_i} - \bm{C_{(i)}}||^2$不断地单调减小，并且最终能够收敛。不过，算法可能收敛到局部最小值。
+可以证明，K均值聚类算法会使得距离和$\sum_i ||{x_i} - {C_{(i)}}||^2$不断地单调减小，并且最终能够收敛。不过，算法可能收敛到局部最小值。
 
 本章结束语：
 
