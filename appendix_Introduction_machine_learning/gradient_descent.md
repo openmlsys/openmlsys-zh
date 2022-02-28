@@ -4,7 +4,7 @@
 Function）来作为训练优化的一个方向。
 常见的损失函数有：1）用来衡量向量之间距离的均方误差(Mean Squared
 Error，MSE)
-$\mathcal{L} = \frac{1}{N}\|\bm{y}-\hat{\bm{y}}\|^{2}_{2} = \frac{1}{N}\sum_{i=1}^N(y_{i}-\hat{y}_{i})^{2}$
+$\mathcal{L} = \frac{1}{N}\|{y}-\hat{{y}}\|^{2}_{2} = \frac{1}{N}\sum_{i=1}^N(y_{i}-\hat{y}_{i})^{2}$
 和 平均绝对误差(Mean Absolute Error，MAE)
 $\mathcal{L} = \frac{1}{N}\sum_{i=1}^{N}|y_{i}-\hat{y}_{i}|$
 ，其中$N$代表数据样本的数量，用以求平均用，而$y$代表真实标签（Ground
@@ -14,75 +14,75 @@ $\mathcal{L} = - \frac{1}{N} \sum_{i=1}^N \bigg(y_{i}\log\hat{y}_{i} + (1 - y_{i
 
 有了损失值之后，我们就可以利用大量真实标签的数据和优化方法来更新模型参数了，其中最常用的方法是**梯度下降**（Gradient
 Descent）。如 :numref:`gradient_descent2`所示，
-开始的时候，模型的参数$\bm{w}$是随机选取的，然后求出损失值对参数的偏导数$\frac{\partial \mathcal{L}}{\partial \bm{w}}$，通过反复迭代
-$\bm{w}:=\bm{w}-\alpha\frac{\partial \mathcal{L}}{\partial \bm{w}}$完成优化。这个优化的过程其实就可以降低损失值以达到任务目标，其中$\alpha$是控制优化幅度的**学习率**（Learning
+开始的时候，模型的参数${w}$是随机选取的，然后求出损失值对参数的偏导数$\frac{\partial \mathcal{L}}{\partial {w}}$，通过反复迭代
+${w}:={w}-\alpha\frac{\partial \mathcal{L}}{\partial {w}}$完成优化。这个优化的过程其实就可以降低损失值以达到任务目标，其中$\alpha$是控制优化幅度的**学习率**（Learning
 Rate）。
 在实践中，梯度下降最终得到的最小值很大可能是一个局部最小值，而不是全局最小值。不过由于深度神经网络能提供一个很强的数据表达能力，所以局部最小值可以很接近全局最小值，损失值可以足够小。
 
-![梯度下降介绍。（左图）只有一个可以训练的参数$w$；（右图）有两个可以训练的参数$\bm{w}=[w_1,w_2]$。在不断更新迭代参数后，损失值$\mathcal{L}$会逐渐地减小。但是由于存在很多局部最优解，我们往往不能更新到全局最优解。](../img/ch_basic/gradient_descent2.png)
+![梯度下降介绍。（左图）只有一个可以训练的参数$w$；（右图）有两个可以训练的参数${w}=[w_1,w_2]$。在不断更新迭代参数后，损失值$\mathcal{L}$会逐渐地减小。但是由于存在很多局部最优解，我们往往不能更新到全局最优解。](../img/ch_basic/gradient_descent2.png)
 :width:`600px`
 :label:`gradient_descent2`
 
-那么接下来，在深度神经网络中如何实现梯度下降呢，这需要计算出网络中每层参数的偏导数$\frac{\partial \mathcal{L}}{\partial \bm{w}}$，我们可以用**反向传播**（Back-Propagation）[@rumelhart1986learning; @lecun2015deep]来实现。
+那么接下来，在深度神经网络中如何实现梯度下降呢，这需要计算出网络中每层参数的偏导数$\frac{\partial \mathcal{L}}{\partial {w}}$，我们可以用**反向传播**（Back-Propagation）[@rumelhart1986learning; @lecun2015deep]来实现。
 接下来，
-我们引入一个中间量$\bm{\delta}=\frac{\partial \mathcal{L}}{\partial \bm{z}}$来表示损失函数$\mathcal{L}$
-对于神经网络输出$\bm{z}$（未经过激活函数，不是$a$）的偏导数，
-并最终得到$\frac{\partial \mathcal{L}}{\partial \bm{w}}$。
+我们引入一个中间量${\delta}=\frac{\partial \mathcal{L}}{\partial {z}}$来表示损失函数$\mathcal{L}$
+对于神经网络输出${z}$（未经过激活函数，不是$a$）的偏导数，
+并最终得到$\frac{\partial \mathcal{L}}{\partial {w}}$。
 
 我们下面用一个例子来介绍反向传播算法，
 我们设层序号为$l=1, 2, \ldots  L$（输出层（最后一层）序号为$L$）。
-对于每个网络层，我们有输出$\bm{z}^l$，中间值$\bm{\delta}^l=\frac{\partial \mathcal{L}}{\partial \bm{z}^l}$和一个激活值输出$\bm{a}^l=f(\bm{z}^l)$
+对于每个网络层，我们有输出${z}^l$，中间值${\delta}^l=\frac{\partial \mathcal{L}}{\partial {z}^l}$和一个激活值输出${a}^l=f({z}^l)$
 （其中$f$为激活函数）。
 我们假设模型是使用Sigmoid激活函数的多层感知器，损失函数是均方误差（MSE）。也就是说，我们设定：
 
--   网络结构$\bm{z}^{l}=\bm{W}^{l}\bm{a}^{l-1}+\bm{b}^{l}$
+-   网络结构${z}^{l}={W}^{l}{a}^{l-1}+{b}^{l}$
 
--   激活函数$\bm{a}^l=f(\bm{z}^l)=\frac{1}{1+{\rm e}^{-\bm{z}^l}}$
+-   激活函数${a}^l=f({z}^l)=\frac{1}{1+{\rm e}^{-{z}^l}}$
 
--   损失函数$\mathcal{L}=\frac{1}{2}\|\bm{y}-\bm{a}^{L}\|^2_2$
+-   损失函数$\mathcal{L}=\frac{1}{2}\|{y}-{a}^{L}\|^2_2$
 
 我们可以直接算出激活输出对于原输出的偏导数：
 
--   $\frac{\partial \bm{a}^l}{\partial \bm{z}^l}=f'(\bm{z}^l)=f(\bm{z}^l)(1-f(\bm{z}^l))=\bm{a}^l(1-\bm{a}^l)$
+-   $\frac{\partial {a}^l}{\partial {z}^l}=f'({z}^l)=f({z}^l)(1-f({z}^l))={a}^l(1-{a}^l)$
 
 和损失函数对于激活输出的偏导数：
 
--   $\frac{\partial \mathcal{L}}{\partial \bm{a}^{L}}=(\bm{a}^{L}-\bm{y})$
+-   $\frac{\partial \mathcal{L}}{\partial {a}^{L}}=({a}^{L}-{y})$
 
 有了这些后，为了进一步得到损失函数对于每一个参数的偏导数，可以使用**链式法则**（Chain
 Rule），细节如下：
 
 首先，从输出层（$l=L$，最后一层）开始向后方传播误差，根据链式法则，我们先计算输出层的中间量：
 
--   $\bm{\delta}^{L}
-    =\frac{\partial \mathcal{L}}{\partial \bm{z}^{L}}
-    =\frac{\partial \mathcal{L}}{\partial \bm{a}^{L}}\frac{\partial \bm{a}^L}{\partial \bm{z}^{L}}=(\bm{a}^L-\bm{y})\odot(\bm{a}^L(1-\bm{a}^L))$
+-   ${\delta}^{L}
+    =\frac{\partial \mathcal{L}}{\partial {z}^{L}}
+    =\frac{\partial \mathcal{L}}{\partial {a}^{L}}\frac{\partial {a}^L}{\partial {z}^{L}}=({a}^L-{y})\odot({a}^L(1-{a}^L))$
 
-除了输出层（$l=L$）的中间值$\bm{\delta}^{L}$，其他层（$l=1, 2, \ldots , L-1$）的中间值$\bm{\delta}^{l}$如何计算呢？
+除了输出层（$l=L$）的中间值${\delta}^{L}$，其他层（$l=1, 2, \ldots , L-1$）的中间值${\delta}^{l}$如何计算呢？
 
--   已知模型结构$\bm{z}^{l+1}=\bm{W}^{l+1}\bm{a}^{l}+\bm{b}^{l+1}$，我们可以直接得到$\frac{\partial \bm{z}^{l+1}}{\partial \bm{a}^{l}}=\bm{W}^{l+1}$；而且我们已知$\frac{\partial \bm{a}^l}{\partial \bm{z}^l}=\bm{a}^l(1-\bm{a}^l)$
+-   已知模型结构${z}^{l+1}={W}^{l+1}{a}^{l}+{b}^{l+1}$，我们可以直接得到$\frac{\partial {z}^{l+1}}{\partial {a}^{l}}={W}^{l+1}$；而且我们已知$\frac{\partial {a}^l}{\partial {z}^l}={a}^l(1-{a}^l)$
 
--   那么根据链式法则，我们可以得到 $\bm{\delta}^{l}
-    =\frac{\partial \mathcal{L}}{\partial \bm{z}^{l}}
-    =\frac{\partial \mathcal{L}}{\partial \bm{z}^{l+1}}\frac{\partial \bm{z}^{l+1}}{\partial \bm{a}^{l}}\frac{\partial \bm{a}^{l}}{\partial \bm{z}^{l}}
-    =(\bm{W}^{l+1})^\top\bm{\delta}^{l+1}\odot(\bm{a}^l(1-\bm{a}^l))$
+-   那么根据链式法则，我们可以得到 ${\delta}^{l}
+    =\frac{\partial \mathcal{L}}{\partial {z}^{l}}
+    =\frac{\partial \mathcal{L}}{\partial {z}^{l+1}}\frac{\partial {z}^{l+1}}{\partial {a}^{l}}\frac{\partial {a}^{l}}{\partial {z}^{l}}
+    =({W}^{l+1})^\top{\delta}^{l+1}\odot({a}^l(1-{a}^l))$
 
-根据上面的计算有所有层的中间值$\bm{\delta}^l, l=1, 2, \ldots , L$后，我们就可以在此基础上求出损失函数对于每层参数的偏导数：$\frac{\partial \mathcal{L}}{\partial \bm{W}^l}$和$\frac{\partial \mathcal{L}}{\partial \bm{b}^l}$，以此来根据梯度下降的方法来更新每一层的参数。
+根据上面的计算有所有层的中间值${\delta}^l, l=1, 2, \ldots , L$后，我们就可以在此基础上求出损失函数对于每层参数的偏导数：$\frac{\partial \mathcal{L}}{\partial {W}^l}$和$\frac{\partial \mathcal{L}}{\partial {b}^l}$，以此来根据梯度下降的方法来更新每一层的参数。
 
--   已知模型结构$\bm{z}^l=\bm{W}^l\bm{a}^{l-1}+\bm{b}^l$，我们可以求出
-    $\frac{\partial \bm{z}^{l}}{\partial \bm{W}^l}=\bm{a}^{l-1}$ 和
-    $\frac{\partial \bm{z}^{l}}{\partial \bm{b}^l}=1$
+-   已知模型结构${z}^l={W}^l{a}^{l-1}+{b}^l$，我们可以求出
+    $\frac{\partial {z}^{l}}{\partial {W}^l}={a}^{l-1}$ 和
+    $\frac{\partial {z}^{l}}{\partial {b}^l}=1$
 
--   那么根据链式法则，我们可以得到$\frac{\partial \mathcal{L}}{\partial \bm{W}^l}=\frac{\partial \mathcal{L}}{\partial \bm{z}^l}\frac{\partial \bm{z}^l}{\partial \bm{W}^l}=\bm{\delta}^l(\bm{a}^{l-1})^\top$
+-   那么根据链式法则，我们可以得到$\frac{\partial \mathcal{L}}{\partial {W}^l}=\frac{\partial \mathcal{L}}{\partial {z}^l}\frac{\partial {z}^l}{\partial {W}^l}={\delta}^l({a}^{l-1})^\top$
     ,
-    $\frac{\partial \mathcal{L}}{\partial \bm{b}^l}=\frac{\partial \mathcal{L}}{\partial \bm{z}^l}\frac{\partial \bm{z}^l}{\partial \bm{b}^l}=\bm{\delta}^l$
+    $\frac{\partial \mathcal{L}}{\partial {b}^l}=\frac{\partial \mathcal{L}}{\partial {z}^l}\frac{\partial {z}^l}{\partial {b}^l}={\delta}^l$
 
-求得所有偏导数$\frac{\partial \mathcal{L}}{\partial \bm{W}^l}$ 和
-$\frac{\partial \mathcal{L}}{\partial \bm{b}^l}$后，我们就可以用梯度下降更新所有参数$\bm{W}^l$
-和 $\bm{b}^l$：
+求得所有偏导数$\frac{\partial \mathcal{L}}{\partial {W}^l}$ 和
+$\frac{\partial \mathcal{L}}{\partial {b}^l}$后，我们就可以用梯度下降更新所有参数${W}^l$
+和 ${b}^l$：
 
--   $\bm{W}^l:=\bm{W}^l-\alpha\frac{\partial \mathcal{L}}{\partial \bm{W}^l}$,
-    $\bm{b}^l:=\bm{b}^l-\alpha\frac{\partial \mathcal{L}}{\partial \bm{b}^l}$
+-   ${W}^l:={W}^l-\alpha\frac{\partial \mathcal{L}}{\partial {W}^l}$,
+    ${b}^l:={b}^l-\alpha\frac{\partial \mathcal{L}}{\partial {b}^l}$
 
 但是还有一个问题需要解决，那就是梯度下降的时候每更新一次参数，都需要计算一次当前参数下的损失值。然而，当训练数据集很大时（$N$很大），若每次更新都用整个训练集来计算损失值的话，计算量会非常巨大。
 为了减少计算量，我们使用**随机梯度下降**（Stochastic Gradient
