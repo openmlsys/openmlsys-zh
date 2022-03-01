@@ -17,12 +17,19 @@
     * 图片需要手动改
     * 公式部分可能会有不正确，需要注意
     * 代码部分需要手动改，样式如下：
- ```python
-    ```python
-    import os
-    import argparse
+    ```markdown
+      ``` python
+      import os
+      import argparse
+      ```
     ```
-```
+    * 转换得到的md中，如果使用了"-"语法，则不能出现以下形式的内容:
+    ```markdown
+      - title
+  
+          content content content content content con...
+    ```
+    即"-"之后空了一行，且内容行首空了4格，否则d2lbook会编译失败:
   
 ## 图片
 
@@ -68,6 +75,10 @@
         机器学习系统工作流如 :numref:`img_workflow` 。必须注意的是在引用时冒号前要空有一个字符距离。
     ```
    * 表格或者章节引用和图片引用类似，流程依旧是打上标签，然后用 :numref:‘引用的标签’
+* 其他转换方式
+    * 如果图中有很多公式，使用工具导入可能会有大量公式乱码，此时可以将图保存为.png格式。
+    * 使用[在线图片去底工具](https://www.aigei.com/bgremover/) 将图片中的白底去除。
+ 
     
     
 
