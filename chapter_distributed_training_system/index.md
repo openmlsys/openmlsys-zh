@@ -20,6 +20,10 @@ Libraries）实现。不同的系统实现具有各自的优势和劣势。我�
 ```toc
 :maxdepth: 2
 
-system_overview
-distributed_methods
+overview
+methods
+pipeline
+collective
+parameter_servers
+summary
 ```
