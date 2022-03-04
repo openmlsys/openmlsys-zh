@@ -36,8 +36,8 @@ y =
 ### 决策边界vs.偏置
 
 通过选择合适的权重以$z$大于或小于$0$来对输入数据做分类的话，可以在数据空间上获得一个**决策边界**
-（Decision
-Boundary）。如 :numref:`single_neuron_decision_boundary2`所示，以神经元输出$z=0$作为输出标签$y$的决策边界，没有偏置时决策边界必然经过坐标原点，如果数据样本点不以原点来分开，会导致分类错误。
+（Decision Boundary）。如 :numref:`single_neuron_decision_boundary2`所示，以神经元输出$z=0$作为输出标签$y$的决策边界，
+没有偏置时决策边界必然经过坐标原点，如果数据样本点不以原点来分开，会导致分类错误。
 为了解决这个问题，可以在神经元上加入一个**偏置**（Bias）。 :numref:`single_neuron_bias2`
 是一个有偏置$b$的神经元模型，可以用 :eqref:`singleneuron_bias`表达： 
 $$z = w_{1}x_{1}+ w_{2}x_{2}+ w_{3}x_{3} + b$$
@@ -75,12 +75,10 @@ $$a = f({z}) = \frac{1}{1+{\rm e}^{-{z}}}$$
 :label:`two_neurons2`
 
 上述网络只有一个输出，若多个神经元在一起就可以有多个输出。 :numref:`two_neurons2`是有两个输出的网络，每个输出都和所有输入相连，所以也被称**全连接层**（Fully-Connected(FC) Layer），
-可由下述式子 :eqref:`fullyconnected`表示X。
+可由下述式子 :eqref:`fc_cal`表示X。
 
-$$
-z_{1} &= w_{11}x_{1} + w_{12}x_{2} + w_{13}x_{3} + b_1 \notag \\
-z_{2} &= w_{21}x_{1} + w_{22}x_{2} + w_{23}x_{3} + b_2$$
-:eqlabel:`fullyconnected`
+$$z_{1} &= w_{11}x_{1} + w_{12}x_{2} + w_{13}x_{3} + b_1 \notag \\ z_{2} &= w_{21}x_{1} + w_{22}x_{2} + w_{23}x_{3} + b_2$$
+:eqlabel:`fc_cal`
 
 如下式子表示了矩阵方法的实现：
 
@@ -118,7 +116,7 @@ $$f({z})_{i} = \frac{{\rm e}^{z_{i}}}{\sum_{k=1}^{K}{\rm e}^{z_{k}}}$$
 ![多层感知器例子。$a^l_i$表示神经元输出$z$经过激活函数后的值，其中$l$代表层的序号（$L$代表输出层），$i$代表输出的序号](../img/ch_basic/mlp2.png)
 
 **多层感知器**（Multi-Layer
-Perceptron，MLP）[@rosenblatt1958perceptron]通过叠加多层全连接层来提升网络的表达能力。相比单层网络，多层感知器有很多中间层的输出并不暴露给最终输出，这些层被称为**隐含层**（Hidden
+Perceptron，MLP）通过叠加多层全连接层来提升网络的表达能力。相比单层网络，多层感知器有很多中间层的输出并不暴露给最终输出，这些层被称为**隐含层**（Hidden
 Layers）。这个例子中的网络可以通过下方的串联式矩阵运算实现，其中$W^l$和$b^l$代表不同层的权重矩阵和偏置，$l$代表层号，$L$代表输出层。
 
 $${z} = f({W^L}f({W^3}f({W^2}f({W^1}{x} + {b^1}) + {b^2}) + {b^3}) + {b^L})$$
@@ -138,8 +136,8 @@ Map），在这个例子中因为只有一个卷积核，所以输出的通道�
 :label:`conv_computation_v4`
 
 **卷积神经网络** （Convolutional Neural
-Network，CNN）[@lecun1989backpropagation]由多层**卷积层**（Convolutional
-Layer）组成，常用于计算机视觉任务 [@krizhevsky2012imagenet; @he2016deep]。
+Network，CNN）由多层**卷积层**（Convolutional
+Layer）组成，常用于计算机视觉任务。
  :numref:`conv_computation_v4`描述了一个卷积运算的例子。
 根据卷积的特点，我们可以知道两个事实：1）一个卷积核的通道数，等于输入的通道数；2）输出的通道数，等于卷积核的数量。
 
@@ -160,8 +158,7 @@ Pooling）。如 :numref:`pooling_v3`所示，假设池化的卷积核高宽为$
 ### 时序模型
 
 现实生活中除了图像还有大量时间序列数据，例如视频、股票价格等等。**循环神经网络**（Recurrent
-Neural Networks，RNN）[@rumelhart1986learning]
-是一种处理序列数据的深度学习模型结构。序列数据是一串连续的数据$\{x_1, x_2, \dots, x_n\}$，比如每个$x$代表一个句子中的单词。
+Neural Networks，RNN）是一种处理序列数据的深度学习模型结构。序列数据是一串连续的数据$\{x_1, x_2, \dots, x_n\}$，比如每个$x$代表一个句子中的单词。
 
 为了可以接收一连串的输入序列，如 :numref:`rnn_simple_cell2`所示，朴素循环神经网络使用了循环单元（Cell）作为计算单元，用隐状态（Hidden
 State）来存储过去输入的信息。具体来说，对输入模型的每个数据$x$，根据公式 :eqref:`aligned`，循环单元会反复计算新的隐状态，用于记录当前和过去输入的信息。而新的隐状态会被用到下一单元的计算中。
@@ -176,4 +173,4 @@ $${h}_t = {W}[{x}_t; {h}_{t-1}] + {b}$$
 然而这种简单的朴素循环神经网络有严重的信息遗忘问题。比如说我们的输入是"我是中国人，我的母语是\_\_\_"，隐状态记住了"中国人"的信息，使得网络最后可以预测出"中文"一词；但是如果句子很长的时候，隐状态可能记不住太久之前的信息了，比如说"我是中国人，我去英国读书，后来在法国工作，我的母语是\_\_\_"，这时候在最后的隐状态中关于"中国人"的信息可能会被因为多次的更新而遗忘了。
 为了解决这个问题，后面有人提出了各种各样的改进方法，其中最有名的是长短期记忆（Long
 Short-Term
-Memory，LSTM）[@Hochreiter1997lstm]。关于时序的模型还有很多很多，比如近年来出现的Transformer [@vaswani2017attention]等等。
+Memory，LSTM）。关于时序的模型还有很多很多，比如近年来出现的Transformer等等。
