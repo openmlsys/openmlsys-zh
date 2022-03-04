@@ -16,7 +16,7 @@ jobs:
       - run: sudo apt install -y pandoc
 
       - run: |
-          git clone https://github.com/d2l-ai/d2l-book.git
+          git clone https://github.com/openmlsys/d2l-book.git
           cd d2l-book
           python3 -m pip install .
       - run: d2lbook build html
