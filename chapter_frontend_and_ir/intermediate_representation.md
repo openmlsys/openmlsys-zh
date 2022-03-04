@@ -172,7 +172,7 @@ typed）。每个节点需要有一个具体的类型，这个对于性能最大
 
 接下来我们通过图 :numref:`MindIR_example`中的一段程序作为示例，来进一步分析MindIR。
 
-![MindIR的ANF表达](../img/ch04/中间表示-MindIR示例.PNG)
+![MindIR的ANF表达](../img/ch04/中间表示-MindIR示例.png)
 :width:`600px`
 :label:`MindIR_example`
 
