@@ -10,7 +10,7 @@
 ## 文本
 
 * LaTeX文件转换Markdown文件
-    * Linux下安装Pandoc命令：agt-get install pandoc
+    * Linux下安装Pandoc命令：apt-get install pandoc
     * 使用Pandoc命令：pandoc -s example.tex -o example.md
 * 使用Pandoc转换后需要注意修改的地方
     * 表格需要手动改
