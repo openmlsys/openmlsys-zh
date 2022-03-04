@@ -1,0 +1,22 @@
+name: CI
+
+on:
+- push
+- pull_request
+- workflow_dispatch  # Allows you to run this workflow manually from the Actions tab
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - run: python3 -m pip install -r requirements.txt
+      - run: sudo apt install -y pandoc
+
+      - run: |
+          git clone https://github.com/d2l-ai/d2l-book.git
+          cd d2l-book
+          python3 -m pip install .
+      - run: d2lbook build html
