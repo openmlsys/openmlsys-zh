@@ -1,11 +1,13 @@
 加速器基本编程原理
 ------------------
+:label:`accelerator-program`
 
-本章前两节主要介绍了这些硬件加速器设计的意义、思路以及基本组成原理。软硬件协同优化作为构建高效AI系统的一个重要指导思想，需要软件算法/软件栈和硬件架构在神经网络应用中互相影响、紧密耦合。为了最大限度地发挥加速器的优势，要求能够基于硬件系统架构设计出一套较为匹配的指令或编程（操纵）方法。因此，本节将以[1.2.3](#硬件加速器的计算单元){reference-type="ref" reference="硬件加速器的计算单元"}中介绍的Tensor Core为例，着重介绍加速器的可编程性，以及如何通过编程使能加速器，提升神经网络算子的计算效率。
+本章前两节主要介绍了这些硬件加速器设计的意义、思路以及基本组成原理。软硬件协同优化作为构建高效AI系统的一个重要指导思想，需要软件算法/软件栈和硬件架构在神经网络应用中互相影响、紧密耦合。为了最大限度地发挥加速器的优势，要求能够基于硬件系统架构设计出一套较为匹配的指令或编程（操纵）方法。因此，本节将以 :ref:`compute-unit-title`中介绍的Tensor Core为例，着重介绍加速器的可编程性，以及如何通过编程使能加速器，提升神经网络算子的计算效率。
 
 ### 硬件加速器的可编程性
+:label:`accelerator-programable`
 
-[1.1.2](#硬件加速器设计的思路){reference-type="ref" reference="硬件加速器设计的思路"}节中列出的硬件加速器均具有一定的可编程性，程序员可以通过软件编程，有效的使能上述加速器进行计算加速。但出于计算效率和易用性等方面考虑，将编程使能方式分为不同等级，一般包括：算子库层级，编程原语层级，以及指令层级。为了更具象的解释上述层级的区别，仍以Volta架构的Tensor Core加速器为例，由高层至底层对比介绍这三种不同编程方式：
+ :ref:`accelerator-design`节中列出的硬件加速器均具有一定的可编程性，程序员可以通过软件编程，有效的使能上述加速器进行计算加速。但出于计算效率和易用性等方面考虑，将编程使能方式分为不同等级，一般包括：算子库层级，编程原语层级，以及指令层级。为了更具象的解释上述层级的区别，仍以Volta架构的Tensor Core加速器为例，由高层至底层对比介绍这三种不同编程方式：
 
 -   **算子库层级**：如cuBLAS基本矩阵与向量运算库，cuDNN深度学习加速库，均通过Host端调用算子库提供的核函数使能TensorCore；
 
@@ -22,16 +24,17 @@ $D[i][j] \gets C[i][j]$ 
 ```
 
 ### 硬件加速器的多样化编程方法
+:label:`diversified-programming`
 
 #### 算子库使能加速器
 
 在上述三种层级的编程方式中，直接调用算子加速库使能加速器无疑是最快捷高效的方式。NVIDIA提供了cuBLAS/cuDNN两类算子计算库，cuBLAS提供了使能Tensor Core单元的接口，用以加速矩阵乘法(GEMM)运算，cuDNN提供了对应接口加速卷积(CONV)运算等。
 
-以[1.3.1](#硬件加速器的可编程性){reference-type="ref" reference="硬件加速器的可编程性"}小节的GEMM运算为例，与常规CUDA调用cuBLAS算子库相似，通过cuBLAS加速库使能Tensor Core步骤包括：
+以 :ref:`accelerator-programable`小节的GEMM运算为例，与常规CUDA调用cuBLAS算子库相似，通过cuBLAS加速库使能Tensor Core步骤包括：
 
 1.  创建cuBLAS对象句柄且设置对应数学计算模式
 
-```
+```cpp
 cublasHandle_t handle;
 cublasStatus_t cublasStat = cublasCreate(&handle);
 cublasStat = cublasSetMathMode(handle, CUBLAS_TENSOR_OP_MATH);
@@ -39,7 +42,7 @@ cublasStat = cublasSetMathMode(handle, CUBLAS_TENSOR_OP_MATH);
 
 2.  分配和初始化矩阵内存空间及内容元素
 
-```
+```cpp
 size_t matrixSizeA = (size_t)M * K;
 cublasStat = cudaMalloc(&devPtrA[0], matrixSizeA * sizeof(devPtrA[0][0]));
 cublasStat = cublasSetMatrix(M, K, sizeof(A[0]), A, M, devPtrA[i], M);
@@ -47,7 +50,7 @@ cublasStat = cublasSetMatrix(M, K, sizeof(A[0]), A, M, devPtrA[i], M);
 
 3.  调用对应计算函数接口
 
-```
+```cpp
 cublasStat = cublasGemmEx(handle, transa, transb, m, n, k, alpha,
                           A, CUDA_R_16F, lda,
                           B, CUDA_R_16F, ldb,
@@ -56,28 +59,28 @@ cublasStat = cublasGemmEx(handle, transa, transb, m, n, k, alpha,
 
 4.  传回结果数据
 
-```
+```cpp
 cublasStat = cublasGetMatrix(M, N, sizeof(D[0]), devPtrD[i], M, D, M);
 ```
 
 5.  释放内存和对象句柄
 
-```
+```cpp
 cudaFree(devPtrA);
 cudaDestroy(handle);
 ```
 
-当然，由于加速器一般会有矩阵形状、数据类型、排布方式等限制，因此在调用句柄和函数接口时要多加注意。如本例中，cuBLAS计算模式必须设置为$CUBLAS\_TENSOR\_OP\_MATH$，步长必须设置为8的倍数，输入数据类型必须为$CUDA\_R\_16F$等。按照如上方式即可通过cuBLAS算子库对[1.3.1](#硬件加速器的可编程性){reference-type="ref" reference="硬件加速器的可编程性"}实例使能Tensor Core加速器，通过NVIDIA官方数据可知，该方式对于不同矩阵乘法计算规模，平均有4～10倍的提升，且矩阵规模越大，加速器提升效果越明显。
+当然，由于加速器一般会有矩阵形状、数据类型、排布方式等限制，因此在调用句柄和函数接口时要多加注意。如本例中，cuBLAS计算模式必须设置为$CUBLAS\_TENSOR\_OP\_MATH$，步长必须设置为8的倍数，输入数据类型必须为$CUDA\_R\_16F$等。按照如上方式即可通过cuBLAS算子库对 :ref:`accelerator-programable`实例使能Tensor Core加速器，通过NVIDIA官方数据可知，该方式对于不同矩阵乘法计算规模，平均有4～10倍的提升，且矩阵规模越大，加速器提升效果越明显。
 
 该方式由于能够隐藏体系结构细节，易用性较好，且一般官方提供的算子库吞吐量较高。但与此同时，这种算子颗粒度的库也存在一些问题，如不足以应对复杂多变的网络模型导致的算子长尾问题（虽然常规形式算子占据绝大多数样本，但仍有源源不断的新增算子，因其出现机会较少，算子库未对其进行有效优化。），以及错失了较多神经网络框架优化（如算子融合）的机会。
 
 #### 编程原语使能加速器
 
-第二种加速器编程方式为编程原语使能加速器，如通过在Device端调用CUDA WMMA (Warp Matrix Multiply Accumulate) API接口。以线程束（即Warp，是调度的基本单位）为操纵对象，使能多个Tensor Core单元。该方式在CUDA 9.0中被公开，程序员可通过添加API头文件的引用和命名空间定义来使用上述API接口。基于软硬件协同设计的基本思想，该层级编程API的设计多与架构绑定，如WMMA操纵的总是$16x16$大小的矩阵块，并且操作一次跨两个TensorCore进行处理，本质是与TensorCore如何集成进SM中强相关的。针对Float16输入数据类型，NVIDIA官方提供了三种不同矩阵规模的WMMA乘累加计算接口，分别为$16x16x16$，$32x8x16$，$8x32x16$。
+第二种加速器编程方式为编程原语使能加速器，如通过在Device端调用CUDA WMMA (Warp Matrix Multiply Accumulate) API接口。以线程束（即Warp，是调度的基本单位）为操纵对象，使能多个Tensor Core单元。该方式在CUDA 9.0中被公开，程序员可通过添加API头文件的引用和命名空间定义来使用上述API接口。基于软硬件协同设计的基本思想，该层级编程API的设计多与架构绑定，如WMMA操纵的总是$16\times16$大小的矩阵块，并且操作一次跨两个TensorCore进行处理，本质是与TensorCore如何集成进SM中强相关的。针对Float16输入数据类型，NVIDIA官方提供了三种不同矩阵规模的WMMA乘累加计算接口，分别为$16\times16\times16$，$32\times8\times16$，$8\times32\times16$。
 
 该API接口操纵的基本单位为Fragment，是一种指明了矩阵含义（乘法器/累加器）、矩阵形状（$WMMA\_M, WMMA\_N, WMMA\_K$）、数据类型（Half/ Float）、排布方式（$row\_major/ col\_major$）等信息的模板类型，包括如下：
 
-```
+```cpp
 wmma::fragment<wmma::matrix_a, WMMA_M, WMMA_N, WMMA_K, half, wmma::row_major> a_frag;
 wmma::fragment<wmma::matrix_b, WMMA_M, WMMA_N, WMMA_K, half, wmma::col_major> b_frag;
 wmma::fragment<wmma::accumulator, WMMA_M, WMMA_N, WMMA_K, float> acc_frag;
@@ -88,7 +91,7 @@ wmma::fragment<wmma::accumulator, WMMA_M, WMMA_N, WMMA_K, float> c_frag;
 
 #### 指令集编程使能加速器
 
-在NVIDIA PTX ISA (Instruction Set Architecture)中提供了另一个编程接口，如Volta架构中的$mma.sync.m8n8k4$指令，它使用$M=8, N=8, K=4$的形状配置执行乘累加操作。具体地，它由线程组（黑色椭圆表示）或octet执行[@2018Modeling]，如图 :numref:`PTX`显示了线程和数据的映射关系。每个线程组由四个连续的线程组成，使用不同颜色的圆圈表示。图中还指出了一个octet里面的线程在线程束内的分布，Float16乘法器A或B的四个连续元素（使用具有相同颜色的块表示），以及Float32累加器C或D的八个分散元素（同样使用相同颜色的块表示）。彩色块上的数字代表对应的线程ID。
+在NVIDIA PTX ISA (Instruction Set Architecture)中提供了另一个编程接口，如Volta架构中的$mma.sync.m8n8k4$指令，它使用$M=8, N=8, K=4$的形状配置执行乘累加操作。具体地，它由线程组（黑色椭圆表示）或octet执行，如图 :numref:`PTX`显示了线程和数据的映射关系。每个线程组由四个连续的线程组成，使用不同颜色的圆圈表示。图中还指出了一个octet里面的线程在线程束内的分布，Float16乘法器A或B的四个连续元素（使用具有相同颜色的块表示），以及Float32累加器C或D的八个分散元素（同样使用相同颜色的块表示）。彩色块上的数字代表对应的线程ID。
 
 ![mma指令之线程与矩阵元素映射关系](../img/ch06/ptx.svg)
 :width:`800px`
@@ -118,7 +121,7 @@ res = te.lang.cce.matmul(tensor_a, tensor_b, False, False, False, dst_dtype=dst_
 
 ### 硬件加速器高性能编程实例
 
-本节[1.3](#加速器基本编程原理){reference-type="ref" reference="加速器基本编程原理"}前几个小节主要介绍了硬件加速器的不同层级的多样化编程方法。调用计算库的方式留给程序员的优化空间较少，合理利用硬件加速器不同层级的编程，可以实现更好的性能优化。 为了更好的让读者理解硬件加速器的使用，本节会继续[1.3.1](#硬件加速器的可编程性){reference-type="ref" reference="硬件加速器的可编程性"}节中的GEMM运算，仍以WMMA API使能Tensor Core加速单元为例，介绍如何通过矩阵分块、资源映射等方式更高效的利用硬件加速器。
+本节 :ref:`accelerator-program`前几个小节主要介绍了硬件加速器的不同层级的多样化编程方法。调用计算库的方式留给程序员的优化空间较少，合理利用硬件加速器不同层级的编程，可以实现更好的性能优化。 为了更好的让读者理解硬件加速器的使用，本节会继续 :ref:`accelerator-programable`节中的GEMM运算，仍以WMMA API使能Tensor Core加速单元为例，介绍如何通过矩阵分块、资源映射等方式更高效的利用硬件加速器。
 
 [\[alg:TensorCore\]]{#alg:TensorCore label="alg:TensorCore"}
 
@@ -148,7 +151,7 @@ $Syncthreads()$  $wmma.store\_matrix\_sync(D, D_{Fragment})$ 
 
 2.  **并行资源映射------提高并行性**：将多层级的并行资源（Block、Warp、Thread）与对应需要计算/搬移的数据建立映射关系，提高程序并行性。将可并行的计算/数据搬移操作映射到并行资源上，对于GEMM实例，M/N轴即为可并行轴，将数据搬移操作中的循环指令映射分配到Block层级（即算法3中的2-4行$For$循环），将内层循环指令映射分配到Warp层级（即算法3中的8-10行$For$循环）。（前文介绍，线程束Warp作为调度的基本单位，且是WMMA API操纵的基本层级，因此对Warp层级进行数据映射比Thread层级映射更为合适）
 
-3.  **Warp统一的Tensor Core数据交互------增大吞吐量**：根据[1.3.2](#硬件加速器的多样化编程方法){reference-type="ref" reference="硬件加速器的多样化编程方法"}节中介绍的编程方法，除调用算子库外，均需要使用或将指令封装成WMMA接口形式统一进行Warp层级的数据存取和计算。如图 :numref:`GEMM-TensorCore`所示，Tensor Core加速器需要从局部内存/寄存器中读取数据，存于虚拟Fragment数据结构中，对应使用$wmma.load\_matrix\_sync()$接口，将累加Fragment $C$ 通过$wmma.fill\_fragment()$接口进行初始化后，使用$wmma.mma\_sync()$使能加速器进行乘累加运算，后将结果Fragment $D$通过调用$wmma.store\_matrix\_sync()$接口拷贝至目标内存地址。
+3.  **Warp统一的Tensor Core数据交互------增大吞吐量**：根据 :ref:`diversified-programming`节中介绍的编程方法，除调用算子库外，均需要使用或将指令封装成WMMA接口形式统一进行Warp层级的数据存取和计算。如图 :numref:`GEMM-TensorCore`所示，Tensor Core加速器需要从局部内存/寄存器中读取数据，存于虚拟Fragment数据结构中，对应使用$wmma.load\_matrix\_sync()$接口，将累加Fragment $C$ 通过$wmma.fill\_fragment()$接口进行初始化后，使用$wmma.mma\_sync()$使能加速器进行乘累加运算，后将结果Fragment $D$通过调用$wmma.store\_matrix\_sync()$接口拷贝至目标内存地址。
 
 ![寄存器与硬件加速器交互](../img/ch06/R2TC.svg)
 :width:`800px`
