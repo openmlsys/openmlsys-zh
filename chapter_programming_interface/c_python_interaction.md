@@ -14,7 +14,7 @@ Binding）。在Pybind11出现以前，将C和C++函数进行Python绑定的手�
 
 -  Python的ctypes模块，提供了C语言中的类型，以及直接调用动态链接库的能力。缺点是依赖于C的原生的类型，对自定义类型支持不好。
 
-- CPython是结合了Python和C语言的一种语言，可以简单的认为就是给Python加上了静态类型后的语法，使用者可以维持大部分的Python语法。CPython编写的函数会被自动转译为C和C++代码，因此在CPython中可以插入对于C/C++函数的调用。
+- Cython是结合了Python和C语言的一种语言，可以简单的认为就是给Python加上了静态类型后的语法，使用者可以维持大部分的Python语法。Cython编写的函数会被自动转译为C和C++代码，因此在Cython中可以插入对于C/C++函数的调用。
 
 - Boost::Python是一个C++库。它可以将C++函数暴露为Python函数。其原理和Python C-API类似，但是使用方法更简单。然而，由于引入了Boost库，因此有沉重的第三方依赖。
 
