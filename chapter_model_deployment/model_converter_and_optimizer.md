@@ -28,26 +28,26 @@
 :width:`500px`
 :label:`ch08-fig-conv_bn_fusion`
 
-如 :numref:`ch08-fig-conv_bn_fusion`，我们以Convolution算子和Batchnorm算子的融合为例，阐述算子融合的基本原理，图中蓝色框表示算子，黄色框表示融合后新增或者改变的算子，白色框表示算子中的权重或者常数张量。其融合的过程是一个计算表达式简化的过程，Convolution算子的计算过程可以等效为一个矩阵乘，其公式可以表达为 :eqref:`ch08-equ-conv_equation`。
+如 :numref:`ch08-fig-conv_bn_fusion`，我们以Convolution算子和Batchnorm算子的融合为例，阐述算子融合的基本原理，图中蓝色框表示算子，黄色框表示融合后新增或者改变的算子，白色框表示算子中的权重或者常数张量。其融合的过程是一个计算表达式简化的过程，Convolution算子的计算过程可以等效为一个矩阵乘，其公式可以表达为 :numref:`equ:conv-equation`。
 
 $$\pmb{Y_{conv}}=\pmb{W_{conv}}*\pmb{X_{conv}}+\pmb{B_{conv}}$$
-:eqlabel:`ch08-equ-conv_equation`
+:label:`ch08-equ-conv_equation`
 
-这里我们不需要理解公式 :eqref:`ch08-equ-conv_equation`中每个变量的含义，只需要注意到一点，该公式是$\pmb{Y_{conv}}$关于$\pmb{X_{conv}}$的，其他符号均表示常量。
+这里我们不需要理解公式 :numref:`ch08-equ-conv_equation`中每个变量的含义，只需要注意到一点，该公式是$\pmb{Y_{conv}}$关于$\pmb{X_{conv}}$的，其他符号均表示常量。
 
-Batchnorm算子的计算过程如公式 :eqref:`equ:bn-equation`所示。
+Batchnorm算子的计算过程如公式 :numref:`equ:bn-equation`所示。
 
 $$\pmb{Y_{bn}}=\gamma\frac{\pmb{X_{bn}}-\mu_{\mathcal{B}}}{\sqrt{{\sigma_{\mathcal{B}}}^{2}+\epsilon}}+\beta$$
-:eqlabel:`ch08-equ-bn_equation`
+:label:`ch08-equ-bn_equation`
 
-同样，这里我们不需要理解batchnorm中的所有参数的含义，只需要了解公式 :eqref:`ch08-equ-bn_equation`是$\pmb{Y_{bn}}$关于$\pmb{X_{bn}}$的，其他符号均表示常量。
+同样，这里我们不需要理解batchnorm中的所有参数的含义，只需要了解公式 :numref:`ch08-equ-bn_equation`是$\pmb{Y_{bn}}$关于$\pmb{X_{bn}}$的，其他符号均表示常量。
 
-如 :numref:`ch08-fig-conv_bn_fusion`，当Convlution算子的输出作为Batchnorm输入时，最终Batchnorm算子的计算公式也就是要求$\pmb{Y_{bn}}$关于$\pmb{X_{conv}}$的计算公式，我们将$\pmb{Y_{conv}}$代入到$\pmb{X_{bn}}$，然后将常数项合并提取后，可以得到公式 :eqref:`equ:conv-bn-equation-3`。
+如 :numref:`ch08-fig-conv_bn_fusion`，当Convlution算子的输出作为Batchnorm输入时，最终Batchnorm算子的计算公式也就是要求$\pmb{Y_{bn}}$关于$\pmb{X_{conv}}$的计算公式，我们将$\pmb{Y_{conv}}$代入到$\pmb{X_{bn}}$，然后将常数项合并提取后，可以得到公式 :numref:`equ:conv-bn-equation-3`。
 
 $$\pmb{Y_{bn}}=\pmb{A}*\pmb{X_{conv}}+\pmb{B}$$
-:eqlabel:`ch08-equ-conv_bn_equation_3`
+:label:`ch08-equ-conv_bn_equation_3`
 
-其中$\pmb{A}$和$\pmb{B}$为两个矩阵。可以看到,公式 :eqref:`ch08-equ-conv_bn_equation_3`其实就是一个Convolution的计算公式。这个结果表明，在模型部署时，我们可以将Convolution和Batchnorm两个算子的计算等价为一个Convolution算子。我们将上述以计算公式的合并和简化为基础的算子融合称为计算公式融合。
+其中$\pmb{A}$和$\pmb{B}$为两个矩阵。可以看到,公式 :numref:`ch08-equ-conv_bn_equation_3`其实就是一个Convolution的计算公式。这个结果表明，在模型部署时，我们可以将Convolution和Batchnorm两个算子的计算等价为一个Convolution算子。我们将上述以计算公式的合并和简化为基础的算子融合称为计算公式融合。
 
 在Convolution算子和Batchnorm算子融合的前后，网络结构相当于减少了一个Batchnorm算子，相应的网络中的参数量和网络所需的计算量都减少了；同时由于算子数量的减少，访存次数也相应地减少了。综合来看，该融合Pattern优化了模型部署时的功耗、性能，同时对于模型的体积大小也有少许收益。
 
@@ -71,10 +71,10 @@ $$\pmb{Y_{bn}}=\pmb{A}*\pmb{X_{conv}}+\pmb{B}$$
 :width:`500px`
 :label:`ch08-fig-bn_replace`
 
-如 :numref:`ch08-fig-bn_replace`，我们以Batchnorm算子替换成Scale算子为例，阐述算子替换的原理。我们直接将Batchnorm的计算公式 :eqref:`ch08-equ-replace_scale`进行分解，并将常量合并简化，Batchnorm的计算公式可以写成：
+如 :numref:`ch08-fig-bn_replace`，我们以Batchnorm算子替换成Scale算子为例，阐述算子替换的原理。我们直接将Batchnorm的计算公式 :numref:`ch08-equ-replace_scale`进行分解，并将常量合并简化，Batchnorm的计算公式可以写成：
 
 $$\pmb{Y_{bn}}=scale*\pmb{X_{bn}}+offset$$
-:eqlabel:`ch08-equ-replace_scale`
+:label:`ch08-equ-replace_scale`
 
 其中scale和offset为两个标量。可以看到，计算公式简化后，我们可以将其映射到一个Scale算子。
 
