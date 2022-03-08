@@ -74,7 +74,56 @@
         我们给这个图片打了标签img_workflow,此时对其进行引用如下
         机器学习系统工作流如 :numref:`img_workflow` 。必须注意的是在引用时冒号前要空有一个字符距离。
     ```
-   * 表格或者章节引用和图片引用类似，流程依旧是打上标签，然后用 :numref:‘引用的标签’
+   * 表格引用和图片引用类似，流程依旧是打上标签，然后用 :numref:‘引用的标签’
+   ```python
+    下面为表格引用方式：
+  
+    | Year | Number | Comment |
+    | --- | --- | --- |
+    | 2018 | 100 | Good year |
+    :label:`table`
+    表格引用使用 :numref:`table`
+   ```
+   * 公式引用依旧也是打上标签，然后使用 :eqref:`‘引用的标签’
+   ```python
+    下面为公式引用方式：
+  
+    $$\hat{\mathbf{y}}=\mathbf X \mathbf{w}+b$$
+    :eqlabel:`linear`
+    公式引用使用 :eqref:`linear`
+   ```
+  * 参考文献引用方式，目前mlsys.bib文件已经把书籍中参考文献全部导入，如需新增，只需在该文件中添加即可。参考文献使用 :cite:`文献`
+  ```python
+  下面参考文献的引用：
+  1. 单篇参考文献
+  这篇文章参考了论文 :cite:`cnn2015`
+  2. 多篇参考文献可以用逗号分开
+  这篇文章参考了论文 :cite:`cnn2015,rnn2015`
+  
+  此时在mlsys.bib中应该有如下参考文献
+  @inproceedings{cnn2015,
+	title = {CNN},
+	author = {xxx},
+	year = {2015},
+	keywords = {xxx}
+  }
+  @inproceedings{rnn2015,
+	title = {RNN},
+	author = {xxx},
+	year = {2015},
+	keywords = {xxx}
+  }
+  ```
+  * 章节引用方式我们可以在节标题后放置一个标签，以允许该节的标签引用它。标签格式是:label:`标签名`
+  ```python
+  ### Referencing Sections
+  :label:`my_sec3`
+  ```
+  然后，我们可以在代码块中通过:ref:`标签名`引用这一节
+  ```python
+  :ref:`my_sec3` 显示了章节引用.
+  ```
+  
 * 其他转换方式
     * 如果图中有很多公式，使用工具导入可能会有大量公式乱码，此时可以将图保存为.png格式。
     * 使用[在线图片去底工具](https://www.aigei.com/bgremover/) 将图片中的白底去除。

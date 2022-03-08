@@ -23,7 +23,7 @@ Rate）。
 :width:`600px`
 :label:`gradient_descent2`
 
-那么接下来，在深度神经网络中如何实现梯度下降呢，这需要计算出网络中每层参数的偏导数$\frac{\partial \mathcal{L}}{\partial {w}}$，我们可以用**反向传播**（Back-Propagation）[@rumelhart1986learning; @lecun2015deep]来实现。
+那么接下来，在深度神经网络中如何实现梯度下降呢，这需要计算出网络中每层参数的偏导数$\frac{\partial \mathcal{L}}{\partial {w}}$，我们可以用**反向传播**（Back-Propagation） :cite:`rumelhart1986learning,lecun2015deep`来实现。
 接下来，
 我们引入一个中间量${\delta}=\frac{\partial \mathcal{L}}{\partial {z}}$来表示损失函数$\mathcal{L}$
 对于神经网络输出${z}$（未经过激活函数，不是$a$）的偏导数，
@@ -89,6 +89,5 @@ $\frac{\partial \mathcal{L}}{\partial {b}^l}$后，我们就可以用梯度下�
 Descent，SGD）来计算损失值。具体来说，我们计算损失值不用全部训练数据，而是从训练集中随机选取一些数据样本来计算损失值，比如选取16、32、64或者128个数据样本，样本的数量被称为**批大小**（Batch
 Size）。
 此外，学习率的设定也非常重要。如果学习率太大，可能无法接近最小值的山谷，如果太小，训练又太慢。
-自适应学习率，例如Adam [@KingmaAdam2014]、RMSProp [@tieleman2012rmsprop]
-和
-Adagrad [@duchi2011adagrad] 等，在训练的过程中通过自动的方法来修改学习率，实现训练的快速收敛，到达最小值点。
+自适应学习率，例如Adam :cite:`KingmaAdam2014`、RMSProp :cite:`tieleman2012rmsprop`和
+Adagrad :cite:`duchi2011adagrad`等，在训练的过程中通过自动的方法来修改学习率，实现训练的快速收敛，到达最小值点。
