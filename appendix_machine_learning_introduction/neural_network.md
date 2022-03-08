@@ -116,7 +116,7 @@ $$f({z})_{i} = \frac{{\rm e}^{z_{i}}}{\sum_{k=1}^{K}{\rm e}^{z_{k}}}$$
 ![多层感知器例子。$a^l_i$表示神经元输出$z$经过激活函数后的值，其中$l$代表层的序号（$L$代表输出层），$i$代表输出的序号](../img/ch_basic/mlp2.png)
 
 **多层感知器**（Multi-Layer
-Perceptron，MLP）通过叠加多层全连接层来提升网络的表达能力。相比单层网络，多层感知器有很多中间层的输出并不暴露给最终输出，这些层被称为**隐含层**（Hidden
+Perceptron，MLP） :cite:`rosenblatt1958perceptron`通过叠加多层全连接层来提升网络的表达能力。相比单层网络，多层感知器有很多中间层的输出并不暴露给最终输出，这些层被称为**隐含层**（Hidden
 Layers）。这个例子中的网络可以通过下方的串联式矩阵运算实现，其中$W^l$和$b^l$代表不同层的权重矩阵和偏置，$l$代表层号，$L$代表输出层。
 
 $${z} = f({W^L}f({W^3}f({W^2}f({W^1}{x} + {b^1}) + {b^2}) + {b^3}) + {b^L})$$
@@ -136,8 +136,8 @@ Map），在这个例子中因为只有一个卷积核，所以输出的通道�
 :label:`conv_computation_v4`
 
 **卷积神经网络** （Convolutional Neural
-Network，CNN）由多层**卷积层**（Convolutional
-Layer）组成，常用于计算机视觉任务。
+Network，CNN） :cite:`lecun1989backpropagation`由多层**卷积层**（Convolutional
+Layer）组成，常用于计算机视觉任务 :cite:`krizhevsky2012imagenet,he2016deep`。
  :numref:`conv_computation_v4`描述了一个卷积运算的例子。
 根据卷积的特点，我们可以知道两个事实：1）一个卷积核的通道数，等于输入的通道数；2）输出的通道数，等于卷积核的数量。
 
@@ -158,7 +158,7 @@ Pooling）。如 :numref:`pooling_v3`所示，假设池化的卷积核高宽为$
 ### 时序模型
 
 现实生活中除了图像还有大量时间序列数据，例如视频、股票价格等等。**循环神经网络**（Recurrent
-Neural Networks，RNN）是一种处理序列数据的深度学习模型结构。序列数据是一串连续的数据$\{x_1, x_2, \dots, x_n\}$，比如每个$x$代表一个句子中的单词。
+Neural Networks，RNN） :cite:`rumelhart1986learning`是一种处理序列数据的深度学习模型结构。序列数据是一串连续的数据$\{x_1, x_2, \dots, x_n\}$，比如每个$x$代表一个句子中的单词。
 
 为了可以接收一连串的输入序列，如 :numref:`rnn_simple_cell2`所示，朴素循环神经网络使用了循环单元（Cell）作为计算单元，用隐状态（Hidden
 State）来存储过去输入的信息。具体来说，对输入模型的每个数据$x$，根据公式 :eqref:`aligned`，循环单元会反复计算新的隐状态，用于记录当前和过去输入的信息。而新的隐状态会被用到下一单元的计算中。
@@ -172,5 +172,4 @@ $${h}_t = {W}[{x}_t; {h}_{t-1}] + {b}$$
 
 然而这种简单的朴素循环神经网络有严重的信息遗忘问题。比如说我们的输入是"我是中国人，我的母语是___"，隐状态记住了"中国人"的信息，使得网络最后可以预测出"中文"一词；但是如果句子很长的时候，隐状态可能记不住太久之前的信息了，比如说"我是中国人，我去英国读书，后来在法国工作，我的母语是___"，这时候在最后的隐状态中关于"中国人"的信息可能会被因为多次的更新而遗忘了。
 为了解决这个问题，后面有人提出了各种各样的改进方法，其中最有名的是长短期记忆（Long
-Short-Term
-Memory，LSTM）。关于时序的模型还有很多很多，比如近年来出现的Transformer等等。
+Short-Term Memory，LSTM） :cite:`Hochreiter1997lstm`。关于时序的模型还有很多很多，比如近年来出现的Transformer :cite:`vaswani2017attention`等等。

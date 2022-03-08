@@ -31,4 +31,5 @@ chapter_online_machine_learning/index
 :maxdepth: 1
 
 appendix_machine_learning_introduction/index
+chapter_references/index
 ```
