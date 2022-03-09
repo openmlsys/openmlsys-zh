@@ -11,8 +11,8 @@
 :label:`image_process_pipeline`
 
 
-事实上，面向数据计算的编程抽象早已在通用数据并行计算系统领域中被广泛的研究并取得了相对统一的共识------那就是提供类LINQ式\[1\]的编程抽象，其最大的特点是让用户专注于描述基于数据集的生成与变换，而将这些操作的高效实现与调度执行交由数据系统的运行时负责。一些优秀的系统如Naiad\[2\],
-Spark\[3\], DryadLINQ\[4\]等都采用了这种编程模型。我们以Spark为例子进行简要介绍。
+事实上，面向数据计算的编程抽象早已在通用数据并行计算系统领域中被广泛的研究并取得了相对统一的共识------那就是提供类LINQ式 :cite:`meijer2006linq` 的编程抽象，其最大的特点是让用户专注于描述基于数据集的生成与变换，而将这些操作的高效实现与调度执行交由数据系统的运行时负责。一些优秀的系统如Naiad :cite:`murray2013naiad`,
+Spark :cite:`zaharia2010spark`, DryadLINQ :cite:`fetterly2009dryadlinq`等都采用了这种编程模型。我们以Spark为例子进行简要介绍。
 
 Spark向用户提供了基于弹性分布式数据集(Resilient Distributed Dataset, RDD)概念的编程模型。一个RDD是一个只读的分布式数据集合，用户通过Spark的编程接口来主要描述RDD的创建及变换过程，我们以一个Spark示例进行展开讨论。下面展示了一段在一个日志文件中统计包含ERROR字段的行数的Spark代码，我们首先通过文件读取创建一个分布式的数据集file（前文提到RDD表示数据的集合，这里的file实际上是日志行的数据集合）。
 我们对这个file数据集进行filter(过滤)运算得到新的只保留包含ERROR字段的日志行的数据集errs，接着我们对errs中的每一个数据进行map(映射)操作得到数据集ones，最后我们对ones数据集进行reduce操作得到了我们最终想要的统计结果，即file数据集中包含ERROR字段的日志行数。
@@ -32,7 +32,7 @@ val count = ones.reduce(_+_)
 
 :width:`800px`
 :label:`rdd_transformation_example`
-主流机器学习系统中的数据模块同样也采用了类似的编程抽象，如TensorFlow的数据模块tf.data\[5\],
+主流机器学习系统中的数据模块同样也采用了类似的编程抽象，如TensorFlow的数据模块tf.data :cite:`murray2021tf`,
 以及MindSpore的数据模块MindData等。接下来我们以MindData的接口设计为例子来介绍如何面向机器学习这个场景设计好的编程抽象来帮助用户方便的构建模型训练中多种多样的数据处理流水线。
 
 MindData是机器学习系统MindSpore的数据模块，主要负责完成机器学习模型训练中的数据预处理任务，MindData的向用户提供的核心编程抽象为基于Dataset（数据集）的变换处理。这里的Dataset是一个数据帧的概念(Data
@@ -111,7 +111,7 @@ dataset = dataset.map(input_columns="label", operations=onehot_op)
 
 MindData中的数据预处理算子可以分为C层算子以及Python层算子，C层算子能提供较高的执行性能而Python层算子可以很方便借助丰富的第三方Python包进行开发。为了灵活地覆盖更多场景，MindData支持用户使用Python开发自定义算子，如果用户追求更高的性能，MindData也支持用户将开发的C层算子编译后以插件的形式注册到MindSpore的数据处理中进行调用。
 
-对于用户传入map、filter等数据集变换算子中的自定义数据处理算子，MindData的Pipeline启动后会通过创建的Python运行时来执行。需要指出的是自定义的Python算子需要保证需要保一个或多个输入、输出均是numpy.ndarray类型。具体执行过程中，当MindData的Pipeline的数据集变换中执行用户自定义的PyFunc算子时，会将输入数据以numpy.ndarray的类型传递给用户的PyFunc，自定义算子执行完毕后再以numpy.ndarray返回给MindData，在此期间，正在执行的数据集变换算子（如map、filter等）负责该PyFunc的运行时生命周期及异常判断。如果用户追求更高的性能，MindData也支持用户自定义C算子。dataset-plugin仓（插件仓）\[10\]为MindData的算子插件仓，囊括了为特定领域（遥感，医疗，气象等）量身制作的算子，该仓承载MindData的插件能力扩展，为用户编写MindData的新算子提供了便捷易用的入口，用户通过编写算子、编译、安装插件步骤，然后就可以在MindData
+对于用户传入map、filter等数据集变换算子中的自定义数据处理算子，MindData的Pipeline启动后会通过创建的Python运行时来执行。需要指出的是自定义的Python算子需要保证需要保一个或多个输入、输出均是numpy.ndarray类型。具体执行过程中，当MindData的Pipeline的数据集变换中执行用户自定义的PyFunc算子时，会将输入数据以numpy.ndarray的类型传递给用户的PyFunc，自定义算子执行完毕后再以numpy.ndarray返回给MindData，在此期间，正在执行的数据集变换算子（如map、filter等）负责该PyFunc的运行时生命周期及异常判断。如果用户追求更高的性能，MindData也支持用户自定义C算子。dataset-plugin仓（插件仓） :cite:`minddata` 为MindData的算子插件仓，囊括了为特定领域（遥感，医疗，气象等）量身制作的算子，该仓承载MindData的插件能力扩展，为用户编写MindData的新算子提供了便捷易用的入口，用户通过编写算子、编译、安装插件步骤，然后就可以在MindData
 Pipeline的map操作中使用新开发的算子。
 
 
