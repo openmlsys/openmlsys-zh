@@ -1,4 +1,4 @@
-可解释机器学习系统（Huawei）
+可解释机器学习系统
 ============================
 
 背景
@@ -29,12 +29,13 @@
 可解释AI定义
 ------------
 
-按DARPA（美国国防部先进研究项目局）的描述，如图\[fig:ch011/xai\_concept\]所示，
+按DARPA（美国国防部先进研究项目局）的描述，如 :numref:`xai_concept`所示，
 可解释AI的概念在于区别于现有的AI系统，可解释AI系统可以解决用户面对模型黑盒遇到的问题，是的用户知其然并知其所以然。
 
-![可解释AI概念（图片来源于Broad Agency Announcement Explainable
-Artificial Intelligence (XAI)
-DARPA-BAA-16–53）[]{data-label="fig:ch011/xai_concept"}](../img/ch11/xai_concept.png)
+
+![可解释AI概念（图片来源于Broad Agency Announcement Explainable Artificial Intelligence (XAI) DARPA-BAA-16–53）](../img/ch11/xai_concept.png)
+:width:`800px`
+:label:`xai_concept`
 
 然而可解释AI (eXplainable
 AI(XAI))，不论是学术界还是工业界都没有一个统一的定义。这里列举3种典型定义，供大家参考讨论：
