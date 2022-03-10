@@ -32,7 +32,7 @@ ds::Execute preprocessor({decode, resize, center_crop, normalize}, MapTargetDevi
 ret = preprocessor(image, &image);
 ```
 
-相比较Dvpp只支持图像的部分预处理操作，英伟达公司研发的DALI\[8\]是一个更加通用的基于GPU的数据预处理加速框架。DALI中包含如下三个核心概念：
+相比较Dvpp只支持图像的部分预处理操作，英伟达公司研发的DALI :cite:`nvidia_dali`是一个更加通用的基于GPU的数据预处理加速框架。DALI中包含如下三个核心概念：
 
 -   DataNode:表示一组Tensor的集合
 
@@ -85,7 +85,7 @@ outputs = pipe.run()
 -   由于大数据计算框架并不是完全针对机器学习场景，使得某些分布式预处理操作如全局的数据混洗无法被高效的实现。
 
 为了更适配机器学习场景的数据预处理，分布式机器学习框架Ray借助其自身的任务调度能力实现了简单的分布式的数据预处理------
-Ray Dataset\[10\]，由于数据预处理和训练处在同一个框架内，在降低了用户的编程负担的同时也通过数据的零拷贝共享消除了序列化/反序列化带来的额外开销。Ray Dataset支持如map、batch、map、filter等简单并行数据集变换算子、以及如mean等一些基础的聚合操作算子。同时Ray
+Ray Dataset :cite:`moritz2018ray`，由于数据预处理和训练处在同一个框架内，在降低了用户的编程负担的同时也通过数据的零拷贝共享消除了序列化/反序列化带来的额外开销。Ray Dataset支持如map、batch、map、filter等简单并行数据集变换算子、以及如mean等一些基础的聚合操作算子。同时Ray
 Dataset也支持排序、随机打乱、GroupBy等全局混洗操作，该方案目前处在研究开发中，还未被广泛的采用，感兴趣的读者可以翻阅相关资料进一步的了解。
 
 ```python
