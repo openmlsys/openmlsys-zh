@@ -20,6 +20,7 @@ chapter_distributed_training/index
 
 chapter_preface_extension/index
 
+chapter_recommender_system/index
 chapter_federated_learning/index
 chapter_reinforcement_learning/index
 chapter_explainable_AI/index
