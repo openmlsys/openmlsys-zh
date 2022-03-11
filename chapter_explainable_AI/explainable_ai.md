@@ -110,7 +110,7 @@ TCAV就可以通过计算类$k$的具有正$S_{C,k,l}$’s的样本的比率来�
 
 $$\textbf{TCAV}_{Q_{C,k,l}}=\frac{\vert \{\mathbf{x}\in X_{k}:S_{C,k,l}(\mathbf{x})>0\}\vert}{\vert X_{k}\vert}
 \label{eq:TCAV}$$
-结合$t$-分布假设方法，如果$\textbf{TCAV}_{Q_{C,k,l}}$大于0.5，则表明概念$C$对类$k$有重大影响。
+结合$$t$$-分布假设方法，如果$$\textbf{TCAV}_{Q_{C,k,l}}$$大于0.5，则表明概念$$C$$对类$$k$$有重大影响。
 
 = \[rectangle, minimum height=2.5cm, text width=2.4cm, text centered,
 draw=black, font=\] = \[thick,-&gt;,&gt;=stealth\]
