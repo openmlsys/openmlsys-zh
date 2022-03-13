@@ -2,7 +2,7 @@
 
 ### 部署流程
 
-随着端上算力的提升和算法的快速发展，跨设备联邦学习在智能手机或智能设备中的应用越来越广泛。其主要流程如图:numfef:`ch10-federated-learning-flow`所示，可分为如下几步：
+随着端上算力的提升和算法的快速发展，跨设备联邦学习在智能手机或智能设备中的应用越来越广泛。其主要流程如 :numfef:`ch10-federated-learning-flow`所示，可分为如下几步：
 
 1. FL-Client选择：FL-Client主动向FL-Server发起参与联邦学习的请求。FL-Server根据配置筛选出满足条件的FL-Client。选择成功后FL-Server下发模型以及相关联邦学习配置。
 2. FL-Client训练：在终端设备上进行本地模型训练。

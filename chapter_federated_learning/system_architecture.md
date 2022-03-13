@@ -1,6 +1,6 @@
 ## 系统架构
 
-联邦学习系统由调度器模块、服务器模块和客户端模块三个部分组成，其系统架构如图:numref:`ch10-federated-learning-architecture`所示。其中：
+联邦学习系统由调度器模块、服务器模块和客户端模块三个部分组成，其系统架构如 :numref:`ch10-federated-learning-architecture`所示。其中：
 
 - 联邦学习调度器：
 
