@@ -1,0 +1,628 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="189.62125mm"
+   height="116.03821mm"
+   viewBox="0 0 189.62125 116.03821"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.2 (1:1.1+202202050950+0a00cf5339)"
+   sodipodi:docname="ch10-recommendation-systems.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="1.2810466"
+     inkscape:cx="346.98192"
+     inkscape:cy="186.95651"
+     inkscape:window-width="1848"
+     inkscape:window-height="1136"
+     inkscape:window-x="72"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g31" />
+  <defs
+     id="defs2">
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath41">
+      <path
+         d="M 0,0.1090901 H 538.9091 V 329.99999 H 0 Z"
+         id="path39" />
+    </clipPath>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(61.779345,-53.24402)">
+    <g
+       id="g31"
+       inkscape:label="ch11-recommendation-systems(1)"
+       transform="matrix(0.35277777,0,0,-0.35277777,-72.3985,168.34707)">
+      <g
+         id="g33" />
+      <g
+         id="g45"
+         transform="translate(29.128792,-2.9690309)">
+        <path
+           d="M 1.47275,327.6546 H 199.3636 V 64.09095 H 1.47275 Z"
+           style="fill:#e7e6e6;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           id="path47" />
+        <g
+           id="g49"
+           transform="matrix(7.874016e-5,0,0,-7.874016e-5,1.47275,327.6546)">
+          <path
+             d="M 0,0 H 2513214 V 3347258 H 0 Z"
+             style="fill:none;stroke:#2f528f;stroke-width:12700;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:8;stroke-dasharray:none;stroke-opacity:1"
+             id="path51" />
+        </g>
+        <path
+           d="M 220.0909,328.7454 H 363.6546 V 65.18181 H 220.0909 Z"
+           style="fill:#e7e6e6;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           id="path53" />
+        <g
+           id="g55"
+           transform="matrix(7.874016e-5,0,0,-7.874016e-5,220.0909,328.7454)">
+          <path
+             d="M 0,0 H 1823258 V 3347258 H 0 Z"
+             style="fill:none;stroke:#2f528f;stroke-width:12700;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:8;stroke-dasharray:none;stroke-opacity:1"
+             id="path57" />
+        </g>
+        <path
+           d="M 394.4182,328.7454 H 537.9818 V 65.18181 H 394.4182 Z"
+           style="fill:#e7e6e6;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           id="path59" />
+        <g
+           id="g61"
+           transform="matrix(7.874016e-5,0,0,-7.874016e-5,394.4182,328.7454)">
+          <path
+             d="M 0,0 H 1823258 V 3347258 H 0 Z"
+             style="fill:none;stroke:#2f528f;stroke-width:12700;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:8;stroke-dasharray:none;stroke-opacity:1"
+             id="path63" />
+        </g>
+        <path
+           d="m 31.36362,281.7634 c 0,6.1857 5.01448,11.2002 11.20017,11.2002 H 151.7271 c 6.1857,0 11.2001,-5.0145 11.2001,-11.2002 v -44.7996 c 0,-6.1857 -5.0144,-11.2002 -11.2001,-11.2002 H 42.56379 c -6.18569,0 -11.20017,5.0145 -11.20017,11.2002 z"
+           style="fill:#deebf7;fill-opacity:1;fill-rule:evenodd;stroke:none"
+           id="path65" />
+        <g
+           id="g67"
+           transform="matrix(7.874016e-5,0,0,-7.874016e-5,31.36362,292.9636)">
+          <path
+             d="M 0,142242.4 C 0,63684.11 63684,0 142242.2,0 H 1528616 c 78558,0 142242,63684.11 142242,142242.4 v 568955.2 c 0,78558.3 -63684,142242.4 -142242,142242.4 H 142242.2 C 63684,853440 0,789755.9 0,711197.6 Z"
+             style="fill:none;stroke:#2f528f;stroke-width:12700;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:8;stroke-dasharray:none;stroke-opacity:1"
+             id="path69" />
+        </g>
+        <g
+           id="g71"
+           transform="matrix(0.2181818,0,0,0.2181818,52.0736,-54.87271)">
+          <text
+             transform="matrix(1,0,0,-1,0,1512)"
+             style="font-variant:normal;font-weight:normal;font-size:83px;font-family:DengXian;-inkscape-font-specification:DengXian-Regular;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="text75"><tspan
+               x="0 82.501991 165.00398 247.50597 330.00797"
+               y="0"
+               sodipodi:role="line"
+               id="tspan73">参数服务器</tspan></text>
+        </g>
+        <g
+           id="g77"
+           transform="matrix(0.2181818,0,0,0.2181818,79.0736,-76.47271)">
+          <text
+             transform="matrix(1,0,0,-1,0,1512)"
+             style="font-variant:normal;font-weight:normal;font-size:83px;font-family:DengXian;-inkscape-font-specification:DengXian-Regular;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="text81"><tspan
+               x="0 82.501991"
+               y="0"
+               sodipodi:role="line"
+               id="tspan79">集群</tspan></text>
+        </g>
+        <g
+           id="g83"
+           transform="matrix(0.2181818,0,0,0.2181818,45.3236,-98.07271)">
+          <text
+             transform="matrix(1,0,0,-1,0,1512)"
+             style="font-variant:normal;font-weight:normal;font-size:83px;font-family:Calibri;-inkscape-font-specification:Calibri;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="text87"><tspan
+               x="0 25.207096 67.014191 108.82129 150.62839 182.72447"
+               y="0"
+               sodipodi:role="line"
+               id="tspan85">(100s</tspan></text>
+        </g>
+        <g
+           id="g89"
+           transform="matrix(0.2181818,0,0,0.2181818,89.3236,-98.07271)">
+          <text
+             transform="matrix(1,0,0,-1,0,1512)"
+             style="font-variant:normal;font-weight:normal;font-size:83px;font-family:DengXian;-inkscape-font-specification:DengXian-Regular;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="text93"><tspan
+               x="0 82.501991 165.00398"
+               y="0"
+               sodipodi:role="line"
+               id="tspan91">服务器</tspan></text>
+        </g>
+        <g
+           id="g95"
+           transform="matrix(0.2181818,0,0,0.2181818,143.3236,-98.07271)">
+          <text
+             transform="matrix(1,0,0,-1,0,1512)"
+             style="font-variant:normal;font-weight:normal;font-size:83px;font-family:Calibri;-inkscape-font-specification:Calibri;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="text99"><tspan
+               x="0"
+               y="0"
+               id="tspan97">)</tspan></text>
+        </g>
+        <path
+           d="m 32.45456,137.7635 c 0,6.1856 5.01448,11.2001 11.20016,11.2001 H 153.0362 c 6.1857,0 11.2002,-5.0145 11.2002,-11.2001 V 92.96379 c 0,-6.18568 -5.0145,-11.20017 -11.2002,-11.20017 H 43.65472 c -6.18568,0 -11.20016,5.01449 -11.20016,11.20017 z"
+           style="fill:#e2f0d9;fill-opacity:1;fill-rule:evenodd;stroke:none"
+           id="path101" />
+        <g
+           id="g103"
+           transform="matrix(7.874016e-5,0,0,-7.874016e-5,32.45456,148.9636)">
+          <path
+             d="M 0,142242.1 C 0,63683.97 63683.91,0 142242,0 h 1389145 c 78558,0 142242,63683.97 142242,142242.1 v 568955.8 c 0,78558.1 -63684,142242.1 -142242,142242.1 H 142242 C 63683.91,853440 0,789756 0,711197.9 Z"
+             style="fill:none;stroke:#2f528f;stroke-width:12700;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:8;stroke-dasharray:none;stroke-opacity:1"
+             id="path105" />
+        </g>
+        <g
+           id="g107"
+           transform="matrix(0.2181818,0,0,0.2181818,53.21227,-209.5636)">
+          <text
+             transform="matrix(1,0,0,-1,0,1512)"
+             style="font-variant:normal;font-weight:normal;font-size:83px;font-family:DengXian;-inkscape-font-specification:DengXian-Regular;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="text111"><tspan
+               x="0 82.501991 165.00398 247.50597 330.00797"
+               y="0"
+               sodipodi:role="line"
+               id="tspan109">训练服务器</tspan></text>
+        </g>
+        <g
+           id="g113"
+           transform="matrix(0.2181818,0,0,0.2181818,80.21227,-231.1636)">
+          <text
+             transform="matrix(1,0,0,-1,0,1512)"
+             style="font-variant:normal;font-weight:normal;font-size:83px;font-family:DengXian;-inkscape-font-specification:DengXian-Regular;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="text117"><tspan
+               x="0 82.501991"
+               y="0"
+               sodipodi:role="line"
+               id="tspan115">集群</tspan></text>
+        </g>
+        <path
+           d="m 226.2,224.818 c 0,6.1857 5.0145,11.2002 11.2002,11.2002 h 109.1632 c 6.1857,0 11.2002,-5.0145 11.2002,-11.2002 v -44.7996 c 0,-6.1857 -5.0145,-11.2002 -11.2002,-11.2002 H 237.4002 c -6.1857,0 -11.2002,5.0145 -11.2002,11.2002 z"
+           style="fill:#deebf7;fill-opacity:1;fill-rule:evenodd;stroke:none"
+           id="path119" />
+        <g
+           id="g121"
+           transform="matrix(7.874016e-5,0,0,-7.874016e-5,226.2,236.0182)">
+          <path
+             d="M 0,142242.4 C 0,63684.11 63684,0 142242.2,0 H 1528616 c 78558,0 142242,63684.11 142242,142242.4 v 568955.2 c 0,78558.3 -63684,142242.4 -142242,142242.4 H 142242.2 C 63684,853440 0,789755.9 0,711197.6 Z"
+             style="fill:none;stroke:#2f528f;stroke-width:12700;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:8;stroke-dasharray:none;stroke-opacity:1"
+             id="path123" />
+        </g>
+        <g
+           id="g125"
+           transform="matrix(0.2181818,0,0,0.2181818,246.8299,-111.8182)">
+          <text
+             transform="matrix(1,0,0,-1,0,1512)"
+             style="font-variant:normal;font-weight:normal;font-size:83px;font-family:DengXian;-inkscape-font-specification:DengXian-Regular;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="text129"><tspan
+               x="0 82.501991 165.00398 247.50597"
+               y="0"
+               sodipodi:role="line"
+               id="tspan127">参数服务</tspan></text>
+        </g>
+        <g
+           id="g131"
+           transform="matrix(0.2181818,0,0,0.2181818,318.8299,-111.8182)">
+          <text
+             transform="matrix(1,0,0,-1,0,1512)"
+             style="font-variant:normal;font-weight:normal;font-size:83px;font-family:DengXian;-inkscape-font-specification:DengXian-Regular;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="text135"><tspan
+               x="0"
+               y="0"
+               id="tspan133">器</tspan></text>
+        </g>
+        <g
+           id="g137"
+           transform="matrix(0.2181818,0,0,0.2181818,273.8299,-133.4182)">
+          <text
+             transform="matrix(1,0,0,-1,0,1512)"
+             style="font-variant:normal;font-weight:normal;font-size:83px;font-family:DengXian;-inkscape-font-specification:DengXian-Regular;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="text141"><tspan
+               x="0 82.501991"
+               y="0"
+               sodipodi:role="line"
+               id="tspan139">副本</tspan></text>
+        </g>
+        <g
+           id="g143"
+           transform="matrix(0.2181818,0,0,0.2181818,240.0799,-155.0182)">
+          <text
+             transform="matrix(1,0,0,-1,0,1512)"
+             style="font-variant:normal;font-weight:normal;font-size:83px;font-family:Calibri;-inkscape-font-specification:Calibri;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="text147"><tspan
+               x="0"
+               y="0"
+               id="tspan145">(</tspan></text>
+        </g>
+        <g
+           id="g149"
+           transform="matrix(0.2181818,0,0,0.2181818,245.5799,-155.0182)">
+          <text
+             transform="matrix(1,0,0,-1,0,1512)"
+             style="font-variant:normal;font-weight:normal;font-size:83px;font-family:Calibri;-inkscape-font-specification:Calibri;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="text153"><tspan
+               x="0 41.823696 83.647392 125.47108"
+               y="0"
+               sodipodi:role="line"
+               id="tspan151">100s</tspan></text>
+        </g>
+        <g
+           id="g155"
+           transform="matrix(0.2181818,0,0,0.2181818,284.0799,-155.0182)">
+          <text
+             transform="matrix(1,0,0,-1,0,1512)"
+             style="font-variant:normal;font-weight:normal;font-size:83px;font-family:DengXian;-inkscape-font-specification:DengXian-Regular;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="text159"><tspan
+               x="0 82.501991 165.00398"
+               y="0"
+               sodipodi:role="line"
+               id="tspan157">服务器</tspan></text>
+        </g>
+        <g
+           id="g161"
+           transform="matrix(0.2181818,0,0,0.2181818,338.0799,-155.0182)">
+          <text
+             transform="matrix(1,0,0,-1,0,1512)"
+             style="font-variant:normal;font-weight:normal;font-size:83px;font-family:Calibri;-inkscape-font-specification:Calibri;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="text165"><tspan
+               x="0"
+               y="0"
+               id="tspan163">)</tspan></text>
+        </g>
+        <path
+           d="m 400.309,224.818 c 0,6.1857 5.0145,11.2002 11.2002,11.2002 h 109.3816 c 6.1856,0 11.2001,-5.0145 11.2001,-11.2002 v -44.7996 c 0,-6.1857 -5.0145,-11.2002 -11.2001,-11.2002 H 411.5092 c -6.1857,0 -11.2002,5.0145 -11.2002,11.2002 z"
+           style="fill:#deebf7;fill-opacity:1;fill-rule:evenodd;stroke:none"
+           id="path167" />
+        <g
+           id="g169"
+           transform="matrix(7.874016e-5,0,0,-7.874016e-5,400.309,236.0182)">
+          <path
+             d="M 0,142242.1 C 0,63683.97 63683.95,0 142242.1,0 H 1531388 c 78558,0 142242,63683.97 142242,142242.1 v 568955.8 c 0,78558.1 -63684,142242.1 -142242,142242.1 H 142242.1 C 63683.95,853440 0,789756 0,711197.9 Z"
+             style="fill:none;stroke:#2f528f;stroke-width:12700;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:8;stroke-dasharray:none;stroke-opacity:1"
+             id="path171" />
+        </g>
+        <g
+           id="g173"
+           transform="matrix(0.2181818,0,0,0.2181818,421.0908,-111.8182)">
+          <text
+             transform="matrix(1,0,0,-1,0,1512)"
+             style="font-variant:normal;font-weight:normal;font-size:83px;font-family:DengXian;-inkscape-font-specification:DengXian-Regular;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="text177"><tspan
+               x="0 82.501991 165.00398 247.50597"
+               y="0"
+               sodipodi:role="line"
+               id="tspan175">参数服务</tspan></text>
+        </g>
+        <g
+           id="g179"
+           transform="matrix(0.2181818,0,0,0.2181818,493.0908,-111.8182)">
+          <text
+             transform="matrix(1,0,0,-1,0,1512)"
+             style="font-variant:normal;font-weight:normal;font-size:83px;font-family:DengXian;-inkscape-font-specification:DengXian-Regular;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="text183"><tspan
+               x="0"
+               y="0"
+               id="tspan181">器</tspan></text>
+        </g>
+        <g
+           id="g185"
+           transform="matrix(0.2181818,0,0,0.2181818,448.0908,-133.4182)">
+          <text
+             transform="matrix(1,0,0,-1,0,1512)"
+             style="font-variant:normal;font-weight:normal;font-size:83px;font-family:DengXian;-inkscape-font-specification:DengXian-Regular;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="text189"><tspan
+               x="0 82.501991"
+               y="0"
+               sodipodi:role="line"
+               id="tspan187">副本</tspan></text>
+        </g>
+        <g
+           id="g191"
+           transform="matrix(0.2181818,0,0,0.2181818,414.3408,-155.0182)">
+          <text
+             transform="matrix(1,0,0,-1,0,1512)"
+             style="font-variant:normal;font-weight:normal;font-size:83px;font-family:Calibri;-inkscape-font-specification:Calibri;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="text195"><tspan
+               x="0"
+               y="0"
+               id="tspan193">(</tspan></text>
+        </g>
+        <g
+           id="g197"
+           transform="matrix(0.2181818,0,0,0.2181818,419.8408,-155.0182)">
+          <text
+             transform="matrix(1,0,0,-1,0,1512)"
+             style="font-variant:normal;font-weight:normal;font-size:83px;font-family:Calibri;-inkscape-font-specification:Calibri;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="text201"><tspan
+               x="0 41.823696 83.647392 125.47108 157.58379"
+               y="0"
+               sodipodi:role="line"
+               id="tspan199">100s</tspan></text>
+        </g>
+        <g
+           id="g203"
+           transform="matrix(0.2181818,0,0,0.2181818,458.3408,-155.0182)">
+          <text
+             transform="matrix(1,0,0,-1,0,1512)"
+             style="font-variant:normal;font-weight:normal;font-size:83px;font-family:DengXian;-inkscape-font-specification:DengXian-Regular;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="text207"><tspan
+               x="0 82.501991 165.00398"
+               y="0"
+               sodipodi:role="line"
+               id="tspan205">服务器</tspan></text>
+        </g>
+        <g
+           id="g209"
+           transform="matrix(0.2181818,0,0,0.2181818,512.3408,-155.0182)">
+          <text
+             transform="matrix(1,0,0,-1,0,1512)"
+             style="font-variant:normal;font-weight:normal;font-size:83px;font-family:Calibri;-inkscape-font-specification:Calibri;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="text213"><tspan
+               x="0"
+               y="0"
+               id="tspan211">)</tspan></text>
+        </g>
+        <path
+           d="m 162.8182,260.9728 h 130.4181 v -17.2553 h -3 v 15.7553 l 1.5,-1.5 H 162.8182 Z m 133.4181,-15.7553 -4.5,-9 -4.5,9 z"
+           style="fill:#4472c4;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           id="path215" />
+        <path
+           d="m 162.8182,260.9728 h 304.679 v -17.2552 h -3 v 15.7552 l 1.5,-1.5 h -303.179 z m 307.679,-15.7552 -4.5,-9 -4.5,9 z"
+           style="fill:#4472c4;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           id="path217" />
+        <path
+           d="m 226.4182,136.2362 c 0,6.1857 5.0145,11.2002 11.2002,11.2002 h 109.1632 c 6.1857,0 11.2002,-5.0145 11.2002,-11.2002 V 91.43657 c 0,-6.1857 -5.0145,-11.20019 -11.2002,-11.20019 H 237.6184 c -6.1857,0 -11.2002,5.01449 -11.2002,11.20019 z"
+           style="fill:#e2f0d9;fill-opacity:1;fill-rule:evenodd;stroke:none"
+           id="path219" />
+        <g
+           id="g221"
+           transform="matrix(7.874016e-5,0,0,-7.874016e-5,226.4182,147.4364)">
+          <path
+             d="M 0,142242.4 C 0,63684.11 63684,0 142242.2,0 H 1528616 c 78558,0 142242,63684.11 142242,142242.4 v 568955.2 c 0,78558.3 -63684,142242.4 -142242,142242.4 H 142242.2 C 63684,853440 0,789755.9 0,711197.6 Z"
+             style="fill:none;stroke:#2f528f;stroke-width:12700;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:8;stroke-dasharray:none;stroke-opacity:1"
+             id="path223" />
+        </g>
+        <g
+           id="g225"
+           transform="matrix(0.2181818,0,0,0.2181818,247.0946,-211.3091)">
+          <text
+             transform="matrix(1,0,0,-1,0,1512)"
+             style="font-variant:normal;font-weight:normal;font-size:83px;font-family:DengXian;-inkscape-font-specification:DengXian-Regular;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="text229"><tspan
+               x="0 82.501991 165.00398 247.50597 330.00797"
+               y="0"
+               sodipodi:role="line"
+               id="tspan227">推理服务器</tspan></text>
+        </g>
+        <g
+           id="g231"
+           transform="matrix(0.2181818,0,0,0.2181818,274.0946,-232.9091)">
+          <text
+             transform="matrix(1,0,0,-1,0,1512)"
+             style="font-variant:normal;font-weight:normal;font-size:83px;font-family:DengXian;-inkscape-font-specification:DengXian-Regular;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="text235"><tspan
+               x="0 82.501991"
+               y="0"
+               sodipodi:role="line"
+               id="tspan233">集群</tspan></text>
+        </g>
+        <path
+           d="m 400.309,136.6726 c 0,6.1857 5.0145,11.2002 11.2002,11.2002 h 109.3816 c 6.1856,0 11.2001,-5.0145 11.2001,-11.2002 V 91.87292 c 0,-6.18568 -5.0145,-11.20017 -11.2001,-11.20017 H 411.5092 c -6.1857,0 -11.2002,5.01449 -11.2002,11.20017 z"
+           style="fill:#e2f0d9;fill-opacity:1;fill-rule:evenodd;stroke:none"
+           id="path237" />
+        <g
+           id="g239"
+           transform="matrix(7.874016e-5,0,0,-7.874016e-5,400.309,147.8728)">
+          <path
+             d="M 0,142242.1 C 0,63683.97 63683.95,0 142242.1,0 H 1531388 c 78558,0 142242,63683.97 142242,142242.1 v 568955.8 c 0,78558.1 -63684,142242.1 -142242,142242.1 H 142242.1 C 63683.95,853440 0,789756 0,711197.9 Z"
+             style="fill:none;stroke:#2f528f;stroke-width:12700;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:8;stroke-dasharray:none;stroke-opacity:1"
+             id="path241" />
+        </g>
+        <g
+           id="g243"
+           transform="matrix(0.2181818,0,0,0.2181818,421.0908,-210.6545)">
+          <text
+             transform="matrix(1,0,0,-1,0,1512)"
+             style="font-variant:normal;font-weight:normal;font-size:83px;font-family:DengXian;-inkscape-font-specification:DengXian-Regular;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="text247"><tspan
+               x="0 82.501991 165.00398 247.50597 330.00797"
+               y="0"
+               sodipodi:role="line"
+               id="tspan245">推理服务器</tspan></text>
+        </g>
+        <g
+           id="g249"
+           transform="matrix(0.2181818,0,0,0.2181818,448.0908,-232.2545)">
+          <text
+             transform="matrix(1,0,0,-1,0,1512)"
+             style="font-variant:normal;font-weight:normal;font-size:83px;font-family:DengXian;-inkscape-font-specification:DengXian-Regular;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="text253"><tspan
+               x="0 82.501991"
+               y="0"
+               sodipodi:role="line"
+               id="tspan251">集群</tspan></text>
+        </g>
+        <path
+           d="m 98.75653,218.3959 0.91612,-61.7416 -2.99967,-0.0445 -0.91611,61.7416 z m -5.97708,-1.5889 4.36598,9.0658 4.63307,-8.9323 z m 9.87065,-58.6083 -4.36601,-9.0658 -4.63303,8.9323 z"
+           style="fill:#4472c4;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           id="path255" />
+        <path
+           d="m 293.2635,168.9458 0.1719,-13.8983 -2.9997,-0.0371 -0.172,13.8983 z m 3.1532,-12.3613 -4.3884,-9.055 -4.611,8.9437 z"
+           style="fill:#4472c4;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           id="path257" />
+        <path
+           d="m 467.591,168.9273 v -13.3886 h -3 v 13.3885 z m 3,-11.8885 -4.5,-9.0001 -4.5,9 z"
+           style="fill:#4472c4;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           id="path259" />
+        <g
+           id="g261"
+           transform="matrix(0.2181818,0,0,0.2181818,56.79727,-24.76362)">
+          <text
+             transform="matrix(1,0,0,-1,0,1512)"
+             style="font-variant:normal;font-weight:normal;font-size:83px;font-family:MicrosoftYaHei;-inkscape-font-specification:MicrosoftYaHei;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="text265"><tspan
+               x="0 82.501991"
+               y="0"
+               sodipodi:role="line"
+               id="tspan263">数据</tspan></text>
+        </g>
+        <g
+           id="g267"
+           transform="matrix(0.2181818,0,0,0.2181818,92.79727,-24.76362)">
+          <text
+             transform="matrix(1,0,0,-1,0,1512)"
+             style="font-variant:normal;font-weight:normal;font-size:83px;font-family:MicrosoftYaHei;-inkscape-font-specification:MicrosoftYaHei;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="text271"><tspan
+               x="0 82.501991"
+               y="0"
+               sodipodi:role="line"
+               id="tspan269">中心</tspan></text>
+        </g>
+        <g
+           id="g273"
+           transform="matrix(0.2181818,0,0,0.2181818,133.7973,-24.76362)">
+          <text
+             transform="matrix(1,0,0,-1,0,1512)"
+             style="font-variant:normal;font-weight:normal;font-size:83px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="text277"><tspan
+               x="0"
+               y="0"
+               id="tspan275">1</tspan></text>
+        </g>
+        <g
+           id="g279"
+           transform="matrix(0.2181818,0,0,0.2181818,248.3299,-24.76362)">
+          <text
+             transform="matrix(1,0,0,-1,0,1512)"
+             style="font-variant:normal;font-weight:normal;font-size:83px;font-family:MicrosoftYaHei;-inkscape-font-specification:MicrosoftYaHei;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="text283"><tspan
+               x="0 82.501991"
+               y="0"
+               sodipodi:role="line"
+               id="tspan281">数据</tspan></text>
+        </g>
+        <g
+           id="g285"
+           transform="matrix(0.2181818,0,0,0.2181818,284.3299,-24.76362)">
+          <text
+             transform="matrix(1,0,0,-1,0,1512)"
+             style="font-variant:normal;font-weight:normal;font-size:83px;font-family:MicrosoftYaHei;-inkscape-font-specification:MicrosoftYaHei;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="text289"><tspan
+               x="0 82.501991"
+               y="0"
+               sodipodi:role="line"
+               id="tspan287">中心</tspan></text>
+        </g>
+        <g
+           id="g291"
+           transform="matrix(0.2181818,0,0,0.2181818,325.3299,-24.76362)">
+          <text
+             transform="matrix(1,0,0,-1,0,1512)"
+             style="font-variant:normal;font-weight:normal;font-size:83px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="text295"><tspan
+               x="0"
+               y="0"
+               id="tspan293">2</tspan></text>
+        </g>
+        <g
+           id="g297"
+           transform="matrix(0.2181818,0,0,0.2181818,422.5908,-24.76362)">
+          <text
+             transform="matrix(1,0,0,-1,0,1512)"
+             style="font-variant:normal;font-weight:normal;font-size:83px;font-family:MicrosoftYaHei;-inkscape-font-specification:MicrosoftYaHei;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="text301"><tspan
+               x="0 82.501991"
+               y="0"
+               sodipodi:role="line"
+               id="tspan299">数据</tspan></text>
+        </g>
+        <g
+           id="g303"
+           transform="matrix(0.2181818,0,0,0.2181818,458.5908,-24.76362)">
+          <text
+             transform="matrix(1,0,0,-1,0,1512)"
+             style="font-variant:normal;font-weight:normal;font-size:83px;font-family:MicrosoftYaHei;-inkscape-font-specification:MicrosoftYaHei;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="text307"><tspan
+               x="0 82.501991"
+               y="0"
+               sodipodi:role="line"
+               id="tspan305">中心</tspan></text>
+        </g>
+        <g
+           id="g309"
+           transform="matrix(0.2181818,0,0,0.2181818,499.5908,-24.76362)">
+          <text
+             transform="matrix(1,0,0,-1,0,1512)"
+             style="font-variant:normal;font-weight:normal;font-size:83px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="text313"><tspan
+               x="0"
+               y="0"
+               id="tspan311">3</tspan></text>
+        </g>
+        <path
+           d="M 1.47275,47.72725 H 537.9818 V 0.8181903 H 1.47275 Z"
+           style="fill:#fff2cc;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           id="path315" />
+        <g
+           id="g317"
+           transform="matrix(7.874016e-5,0,0,-7.874016e-5,1.47275,47.72725)">
+          <path
+             d="M 0,0 H 6813665 V 595745 H 0 Z"
+             style="fill:none;stroke:#2f528f;stroke-width:12700;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:8;stroke-dasharray:none;stroke-opacity:1"
+             id="path319" />
+        </g>
+        <g
+           id="g321"
+           transform="matrix(0.2181818,0,0,0.2181818,188.5966,-311.4545)">
+          <text
+             transform="matrix(1,0,0,-1,0,1512)"
+             style="font-variant:normal;font-weight:normal;font-size:83px;font-family:DengXian;-inkscape-font-specification:DengXian-Regular;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="text325"><tspan
+               x="0 82.501991 165.00398 247.50597 330.00797 412.50995 495.01193 577.51392 660.01593"
+               y="0"
+               sodipodi:role="line"
+               id="tspan323">推荐服务的全球用户</tspan></text>
+        </g>
+        <path
+           d="m 292.609,79.25458 1e-4,-21.70339 -3,-10e-6 -1e-4,21.70339 z m 3.0001,-20.20338 -4.5,-9.00001 -4.5,8.99998 z"
+           style="fill:#4472c4;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           id="path327" />
+        <path
+           d="M 467.591,79.25458 V 57.55119 l -3,-10e-6 v 21.70339 z m 3,-20.20338 -4.5,-9.00001 -4.5,8.99998 z"
+           style="fill:#4472c4;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           id="path329" />
+        <path
+           d="m 99.73637,50.58244 6e-5,23.79031 -3,1e-5 -6e-5,-23.79032 z m 3.00003,22.2903 -4.49995,9.00001 -4.50002,-8.99999 z"
+           style="fill:#4472c4;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           id="path331" />
+      </g>
+    </g>
+  </g>
+</svg>
