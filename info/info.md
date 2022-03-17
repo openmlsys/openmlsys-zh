@@ -77,8 +77,8 @@ d2lbook build pdf
 
 ## 样式规范
 
-贡献请遵照本教程的[样式规范](STYLE_GUIDE.md)。
+贡献请遵照本教程的[样式规范](style.md)。
 
 ## 中英文术语对照
 
-翻译请参照[中英文术语对照](TERMINOLOGY.md)。
+翻译请参照[中英文术语对照](terminology.md)。
