@@ -2,6 +2,8 @@
 
 本书由超过30位人工智能系统领域的学术专家和开发人员共同完成。以下为各个章节编辑负责人：
 
+项目README: [@luomai](https://github.com/luomai)
+
 第1章 - 导论：[@luomai](https://github.com/luomai)
 
 第2章 - 编程模型：[@Laicheng0830](https://github.com/Laicheng0830)
@@ -18,7 +20,7 @@
 
 第7章 - 数据处理框架： [@eedalong](https://github.com/eedalong)
 
-第8章 - 模型部署： [TODO], [@ganzhiliang](https://github.com/ganzhiliang) 
+第8章 - 模型部署： [TODO]
 
 第9章 - 分布式训练系统： [@luomai](https://github.com/luomai)
 
