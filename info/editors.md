@@ -6,7 +6,7 @@
 
 第1章 - 导论：[@luomai](https://github.com/luomai)
 
-第2章 - 编程模型：[@Laicheng0830](https://github.com/Laicheng0830)
+第2章 - 编程接口：[@Laicheng0830](https://github.com/Laicheng0830)
 
 第3章 - 计算图：[@hanjr92](https://github.com/hanjr92)
 

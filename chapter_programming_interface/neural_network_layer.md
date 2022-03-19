@@ -98,7 +98,7 @@ Transformer又是BERT模型架构的重要组成。随着深度神经网络的�
 随着网络层数的增加，手动管理训练变量是一个繁琐的过程，因此2.3.1中描述的接口在机器学习库中属于低级API。
 机器学习编程库大都提供了更高级用户友好的API，它将神经网络层抽象成一个基类，所有的神经网络层实现都继承基类调用低级API。
 如MindSpore提供的mindspore.nn.Cell、mindspore.nn.Conv2d、mindspore.dataset；
-PyTorch提供的torch.nn.Module、torch.nn.Conv2d、torch.utils.data.Datset。
+PyTorch提供的torch.nn.Module、torch.nn.Conv2d、torch.utils.data.Dataset。
 
  :numref:`model_build`描述了神经网络构建过程中的基本细节。
 神经网络层需要的功能有该层的训练参数（变量，包括初始化方法和训练状态）以及计算过程；
