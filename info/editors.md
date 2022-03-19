@@ -14,7 +14,7 @@
 
 第4章 - 编译器前端和IR： [@LiangZhibo](https://github.com/LiangZhibo)
 
-第5章 - 编译器后端和运行时： [TODO]
+第5章 - 编译器后端和运行时： [@chujinjin101](https://github.com/chujinjin101)
 
 第6章 - 硬件加速器：[@anyrenwei](https://github.com/anyrenwei)
 
