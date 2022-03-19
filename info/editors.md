@@ -20,7 +20,7 @@
 
 第7章 - 数据处理框架： [@eedalong](https://github.com/eedalong)
 
-第8章 - 模型部署： [TODO]
+第8章 - 模型部署： [@AssassinG](https://github.com/AssassinGQ)
 
 第9章 - 分布式训练系统： [@luomai](https://github.com/luomai)
 
