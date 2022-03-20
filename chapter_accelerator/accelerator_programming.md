@@ -41,7 +41,7 @@
 
  -   **华为TBE/AKG**
  TBE（Tensor Boost Engine）是华为的Ascend芯片及其CANN软件栈基于TVM 开发的一套算子编译优化工具，用于对Ascend芯片进行调度优化、指令映射、及后端pass优化等。不仅提供了一个优化过的神经网络标准算子库，同时还提供了算子开发能力及融合能力。通过TBE提供的API和自定义算子编程开发界面可以完成相应神经网络算子的开发，帮助用户较容易的去使能硬件加速器上的AI_CORE 相关指令，以实现高性能的神经网络计算。为了简化算子开发流程，TBE还实现了一个Auto Schedule工具，开放了自定义算子编程DSL，用于自动完成复杂算子的调度生成。此外，TBE还实现了端到端的动态shape算子编译能力。
- ![TBE](../img/ch06/tbe.png)
+                                                                                                                                                                       ![TBE](../img/ch06/tbe.png)
 :width:`800px`
 :label:`tbe`
 
