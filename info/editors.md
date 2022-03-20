@@ -12,15 +12,15 @@
 
 进阶篇序言：[@ganzhiliang](https://github.com/ganzhiliang) 
 
-第4章 - 编译器前端和IR： [TODO] [@LiangZhibo](https://github.com/LiangZhibo)
+第4章 - 编译器前端和IR： [@LiangZhibo](https://github.com/LiangZhibo)
 
-第5章 - 编译器后端和运行时： [TODO]
+第5章 - 编译器后端和运行时： [@chujinjin101](https://github.com/chujinjin101)
 
-第6章 - 硬件加速器：[TODO]
+第6章 - 硬件加速器：[@anyrenwei](https://github.com/anyrenwei)
 
 第7章 - 数据处理框架： [@eedalong](https://github.com/eedalong)
 
-第8章 - 模型部署： [TODO]
+第8章 - 模型部署： [@AssassinG](https://github.com/AssassinGQ)
 
 第9章 - 分布式训练系统： [@luomai](https://github.com/luomai)
 
@@ -28,10 +28,10 @@
 
 第10章 - 深度学习推荐系统：[@future-xy](https://github.com/future-xy)
 
-第11章 - 联邦学习系统：[TODO]
+第11章 - 联邦学习系统：[@chengtianwu](https://github.com/chengtianwu)
 
 第12章 - 强化学习系统：[@quantumiracle](https://github.com/quantumiracle)
 
-第13章 - 可解释性AI系统：[TODO]
+第13章 - 可解释性AI系统：[@HaoyangLee](https://github.com/HaoyangLee)
 
 附录：机器学习介绍：[@zsdonghao](https://github.com/zsdonghao)
