@@ -2,6 +2,8 @@
 
 本开源项目试图给读者讲解现代机器学习系统的设计原理和实现经验。
 
+[机器学习系统：设计和实现](https://openmlsys.github.io/) |  [PDF](https://git.openi.org.cn/attachments/f3b71767-584c-4258-9745-3d309c356c76?type=0)  
+
 ## 发布
 
 - 17/03/2022: 本书处于勘误阶段。如发现文字和图片错误，可创建Issue并@[章节编辑](info/editors.md)。我们非常欢迎社区提交PR直接勘误。
