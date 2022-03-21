@@ -26,55 +26,6 @@ d2lbook build html
 
 需要注意的是docs目录下的.nojekyll不要删除了，不然网页会没有渲染。
 
-## 编译PDF版本
-
-编译pdf版本需要xelatex、librsvg2-bin（svg图片转pdf）和思源字体。在Ubuntu可以这样安装。
-
-```
-sudo apt-get install texlive-full
-sudo apt-get install librsvg2-bin
-```
-
-```
-wget https://github.com/adobe-fonts/source-han-sans/raw/release/OTF/SourceHanSansSC.zip
-wget https://github.com/adobe-fonts/source-han-serif/raw/release/OTF/SourceHanSerifSC_SB-H.zip
-wget https://github.com/adobe-fonts/source-han-serif/raw/release/OTF/SourceHanSerifSC_EL-M.zip
-
-unzip SourceHanSansSC.zip
-unzip SourceHanSerifSC_EL-M.zip
-unzip SourceHanSerifSC_SB-H.zip
-
-sudo mv SourceHanSansSC SourceHanSerifSC_EL-M SourceHanSerifSC_SB-H /usr/share/fonts/opentype/
-sudo fc-cache -f -v
-```
-
-
-这时候可以通过 `fc-list :lang=zh` 来查看安装的中文字体。
-
-同样的去下载和安装英文字体
-
-```
-wget -O source-serif-pro.zip https://www.fontsquirrel.com/fonts/download/source-serif-pro
-unzip source-serif-pro -d source-serif-pro
-sudo mv source-serif-pro /usr/share/fonts/opentype/
-
-wget -O source-sans-pro.zip https://www.fontsquirrel.com/fonts/download/source-sans-pro
-unzip source-sans-pro -d source-sans-pro
-sudo mv source-sans-pro /usr/share/fonts/opentype/
-
-wget -O source-code-pro.zip https://www.fontsquirrel.com/fonts/download/source-code-pro
-unzip source-code-pro -d source-code-pro
-sudo mv source-code-pro /usr/share/fonts/opentype/
-
-sudo fc-cache -f -v
-```
-
-然后就可以编译了。
-
-```
-d2lbook build pdf
-```
-
 ## 样式规范
 
 贡献请遵照本教程的[样式规范](style.md)。
