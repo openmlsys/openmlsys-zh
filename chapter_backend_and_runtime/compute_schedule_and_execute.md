@@ -68,28 +68,28 @@ Kernel，以及被标记为被Python语言运行时执行的Python
 Kernel。主流框架均提供了指定算子所在运行设备的能力，以MindSpore为例，一段简单的异构计算代码如下所示：
 
 ```python
-    import numpy as np
-    from mindspore import Tensor
-    import mindspore.ops.operations as ops
-    from mindspore.common.api import ms_function
+import numpy as np
+from mindspore import Tensor
+import mindspore.ops.operations as ops
+from mindspore.common.api import ms_function
 
-    # 创建算子并指定执行算子的硬件设备
-    add = ops.Add().add_prim_attr('primitive_target', 'CPU')
-    sub = ops.Sub().add_prim_attr('primitive_target', 'GPU')
+# 创建算子并指定执行算子的硬件设备
+add = ops.Add().add_prim_attr('primitive_target', 'CPU')
+sub = ops.Sub().add_prim_attr('primitive_target', 'GPU')
 
-    # 指定按照静态计算图模式执行函数
-    @ms_function
-    def compute(x, y, z):
-        r = add(x, y)
-        return sub(r, z)
+# 指定按照静态计算图模式执行函数
+@ms_function
+def compute(x, y, z):
+    r = add(x, y)
+    return sub(r, z)
 
-    # 创建实参
-    x = Tensor(np.ones([2, 2]).astype(np.float32))
-    y = Tensor(np.ones([2, 2]).astype(np.float32))
-    z = Tensor(np.ones([2, 2]).astype(np.float32))
+# 创建实参
+x = Tensor(np.ones([2, 2]).astype(np.float32))
+y = Tensor(np.ones([2, 2]).astype(np.float32))
+z = Tensor(np.ones([2, 2]).astype(np.float32))
 
-    # 执行计算
-    output = compute(x, y, z)
+# 执行计算
+output = compute(x, y, z)
 ```
 
 上述代码片段完成了x + y -
@@ -103,25 +103,25 @@ z的计算逻辑，其中Add算子被设置为在CPU上执行，Sub算子被设�
 虽然在计算图上可以充分表达算子间的并发关系，在实际代码中会产生由于并发而引起的一些不预期的副作用场景，例如如下代码所示：
 
 ```python
-    import mindspore as ms
-    from mindspore import Parameter, Tensor
-    import mindspore.ops.operations as ops
-    from mindspore.common.api import ms_function
+import mindspore as ms
+from mindspore import Parameter, Tensor
+import mindspore.ops.operations as ops
+from mindspore.common.api import ms_function
 
-    # 定义全局变量
-    x = Parameter(Tensor([1.0], ms.float32), name="x")
-    y = Tensor([0.2], ms.float32)
-    z = Tensor([0.3], ms.float32)
+# 定义全局变量
+x = Parameter(Tensor([1.0], ms.float32), name="x")
+y = Tensor([0.2], ms.float32)
+z = Tensor([0.3], ms.float32)
 
-    # 指定按照静态计算图模式执行函数
-    @ms_function
-    def compute(y, z):
-        ops.Assign()(x, y)
-        ops.Assign()(x, z)
-        r = ops.Sub()(x, y)
-        return r
+# 指定按照静态计算图模式执行函数
+@ms_function
+def compute(y, z):
+    ops.Assign()(x, y)
+    ops.Assign()(x, z)
+    r = ops.Sub()(x, y)
+    return r
 
-    compute(y, z)
+compute(y, z)
 ```
 
 上述代码表达了如下计算逻辑：
