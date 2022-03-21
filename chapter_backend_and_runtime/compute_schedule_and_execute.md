@@ -7,24 +7,24 @@
 单算子调度是相对于计算图而言，算法或者模型中包含的算子通过Python语言的运行时被逐个调度执行。例如PyTorch的默认执行方式，TensorFlow的eager模式，以及MindSpore的PyNative模式。以如下MindSpore示例代码所示：
 
 ```python
-    import mindspore.nn as nn
-        from mindspore import context
-        from mindspore import ms_function
+import mindspore.nn as nn
+from mindspore import context
+from mindspore import ms_function
 
-        # 以单算子方式执行后续计算中的算子。
-        context.set_context(mode=context.PYNATIVE_MODE)
+# 以单算子方式执行后续计算中的算子。
+context.set_context(mode=context.PYNATIVE_MODE)
 
-        class Computation(nn.Cell):
-            def construct(self, x, y):
-                m = x * y
-                n = x - y
-                print(m)
-                z = m + n
-                return z
+class Computation(nn.Cell):
+   def construct(self, x, y):
+     m = x * y
+     n = x - y
+     print(m)
+     z = m + n
+     return z
 
-        compute = Computation()
-        c = compute(1, 2)
-        print(c)
+compute = Computation()
+c = compute(1, 2)
+print(c)
 ```
 
 上述脚本将所有的计算逻辑定义在Computation类的construct方法中，由于在脚本开头的context中预先设置了单算子执行模式，construct中的计算将被Python的运行时逐行调用执行，同时可以在代码中的任意位置添加print命令以便打印中间的计算结果。
