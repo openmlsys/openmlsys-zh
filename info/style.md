@@ -37,17 +37,17 @@
     * 使用PPT制图，以pdf导出，再使用Inkscape转成svg。
     * Inkscape软件使用：
         * 用Inkscape打开pdf，渐变曲线精细度选择为精细。
-        ![Inkscape打开PDF](./img/guide/step1.png)
+        ![Inkscape打开PDF](../img/guide/step1.png)
         * 选中图片，我们可以看到图和其白底
-        ![1](./img/guide/step2.png)
+        ![1](../img/guide/step2.png)
         * 随意找一块能选择的图，此时会出现周边有虚框
-        ![2](./img/guide/step3.png)
+        ![2](../img/guide/step3.png)
         * 按住ctrl拉一下白色框，此时能将图片和白框分离出来，按Delete删除白框。
-        ![3](./img/guide/step4.png)
+        ![3](../img/guide/step4.png)
         * 选择文件-文档属性-缩放页面内容-缩放页面到绘图或选区。
-        ![4](./img/guide/step5.png)
+        ![4](../img/guide/step5.png)
         * 最后保存图片，用Pycharm看图片效果如下：无白色底，大小刚好框住整图。
-        ![5](./img/guide/step6.png)
+        ![5](../img/guide/step6.png)
         
 * 样式
     * 格式：
