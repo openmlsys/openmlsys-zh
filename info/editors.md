@@ -1,6 +1,8 @@
-## 编辑
+# 编辑和作者
 
-本书由超过30位人工智能系统领域的学术专家和开发人员共同完成。以下为各个章节编辑负责人：
+## 章节编辑
+
+本书由超过30位人工智能系统领域的学术专家和开发人员共同完成。以下为各个章节编辑：
 
 项目README: [@luomai](https://github.com/luomai)
 
@@ -35,3 +37,9 @@
 第13章 - 可解释性AI系统：[@HaoyangLee](https://github.com/HaoyangLee)
 
 附录：机器学习介绍：[@zsdonghao](https://github.com/zsdonghao)
+
+## 加入我们
+
+我们创建了OpenMLSys微信群来讨论书籍的写作和拓展。如果希望加入我们，可以扫以下二维码（加的时候请介绍自己，并说明希望参与书籍的哪方面工作）：
+
+![OpenMLSys社区微信群](./mlsys_group.png)
