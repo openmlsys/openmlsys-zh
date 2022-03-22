@@ -7,24 +7,24 @@
 单算子调度是相对于计算图而言，算法或者模型中包含的算子通过Python语言的运行时被逐个调度执行。例如PyTorch的默认执行方式，TensorFlow的eager模式，以及MindSpore的PyNative模式。以如下MindSpore示例代码所示：
 
 ```python
-    import mindspore.nn as nn
-    from mindspore import context
-    from mindspore import ms_function
+import mindspore.nn as nn
+from mindspore import context
+from mindspore import ms_function
 
-    # 以单算子方式执行后续计算中的算子。
-    context.set_context(mode=context.PYNATIVE_MODE)
+# 以单算子方式执行后续计算中的算子。
+context.set_context(mode=context.PYNATIVE_MODE)
 
-    class Computation(nn.Cell):
-        def construct(self, x, y):
-            m = x * y
-            n = x - y
-            print(m)
-            z = m + n
-            return z
+class Computation(nn.Cell):
+   def construct(self, x, y):
+     m = x * y
+     n = x - y
+     print(m)
+     z = m + n
+     return z
 
-    compute = Computation()
-    c = compute(1, 2)
-    print(c)
+compute = Computation()
+c = compute(1, 2)
+print(c)
 ```
 
 上述脚本将所有的计算逻辑定义在Computation类的construct方法中，由于在脚本开头的context中预先设置了单算子执行模式，construct中的计算将被Python的运行时逐行调用执行，同时可以在代码中的任意位置添加print命令以便打印中间的计算结果。
@@ -68,28 +68,28 @@ Kernel，以及被标记为被Python语言运行时执行的Python
 Kernel。主流框架均提供了指定算子所在运行设备的能力，以MindSpore为例，一段简单的异构计算代码如下所示：
 
 ```python
-    import numpy as np
-    from mindspore import Tensor
-    import mindspore.ops.operations as ops
-    from mindspore.common.api import ms_function
+import numpy as np
+from mindspore import Tensor
+import mindspore.ops.operations as ops
+from mindspore.common.api import ms_function
 
-    # 创建算子并指定执行算子的硬件设备
-    add = ops.Add().add_prim_attr('primitive_target', 'CPU')
-    sub = ops.Sub().add_prim_attr('primitive_target', 'GPU')
+# 创建算子并指定执行算子的硬件设备
+add = ops.Add().add_prim_attr('primitive_target', 'CPU')
+sub = ops.Sub().add_prim_attr('primitive_target', 'GPU')
 
-    # 指定按照静态计算图模式执行函数
-    @ms_function
-    def compute(x, y, z):
-        r = add(x, y)
-        return sub(r, z)
+# 指定按照静态计算图模式执行函数
+@ms_function
+def compute(x, y, z):
+    r = add(x, y)
+    return sub(r, z)
 
-    # 创建实参
-    x = Tensor(np.ones([2, 2]).astype(np.float32))
-    y = Tensor(np.ones([2, 2]).astype(np.float32))
-    z = Tensor(np.ones([2, 2]).astype(np.float32))
+# 创建实参
+x = Tensor(np.ones([2, 2]).astype(np.float32))
+y = Tensor(np.ones([2, 2]).astype(np.float32))
+z = Tensor(np.ones([2, 2]).astype(np.float32))
 
-    # 执行计算
-    output = compute(x, y, z)
+# 执行计算
+output = compute(x, y, z)
 ```
 
 上述代码片段完成了x + y -
@@ -103,25 +103,25 @@ z的计算逻辑，其中Add算子被设置为在CPU上执行，Sub算子被设�
 虽然在计算图上可以充分表达算子间的并发关系，在实际代码中会产生由于并发而引起的一些不预期的副作用场景，例如如下代码所示：
 
 ```python
-    import mindspore as ms
-    from mindspore import Parameter, Tensor
-    import mindspore.ops.operations as ops
-    from mindspore.common.api import ms_function
+import mindspore as ms
+from mindspore import Parameter, Tensor
+import mindspore.ops.operations as ops
+from mindspore.common.api import ms_function
 
-    # 定义全局变量
-    x = Parameter(Tensor([1.0], ms.float32), name="x")
-    y = Tensor([0.2], ms.float32)
-    z = Tensor([0.3], ms.float32)
+# 定义全局变量
+x = Parameter(Tensor([1.0], ms.float32), name="x")
+y = Tensor([0.2], ms.float32)
+z = Tensor([0.3], ms.float32)
 
-    # 指定按照静态计算图模式执行函数
-    @ms_function
-    def compute(y, z):
-        ops.Assign()(x, y)
-        ops.Assign()(x, z)
-        r = ops.Sub()(x, y)
-        return r
+# 指定按照静态计算图模式执行函数
+@ms_function
+def compute(y, z):
+    ops.Assign()(x, y)
+    ops.Assign()(x, z)
+    r = ops.Sub()(x, y)
+    return r
 
-    compute(y, z)
+compute(y, z)
 ```
 
 上述代码表达了如下计算逻辑：
