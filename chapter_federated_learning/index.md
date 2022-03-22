@@ -6,6 +6,7 @@
 - 掌握联邦系统架构组成部分。
 - 掌握联邦平均和隐私加密算法。
 - 了解联邦学习实际部署时的挑战。
+- 了解纵向联邦学习算法。
 
 ```toc
 :maxdepth: 2
@@ -15,5 +16,6 @@ system_architecture
 fedavg
 privacy_encryption_algorithm
 challenge
+vertical_fl
 summary
 ```
