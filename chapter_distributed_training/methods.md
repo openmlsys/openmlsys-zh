@@ -51,7 +51,7 @@ Communication）的Allreduce操作来完成。
 
 ### 模型并行
 
-![模型并行系统：算子内并行](../img/ch09/ch10-model-parallel-intra-op.svg)
+![模型并行系统：算子内并行](../img/ch09/ch10-model-parallel-intra-op.png)
 :width:`800px`
 :label:`ch10-model-parallel-intra-op`
 

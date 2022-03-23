@@ -98,7 +98,7 @@ Transformer又是BERT模型架构的重要组成。随着深度神经网络的�
 随着网络层数的增加，手动管理训练变量是一个繁琐的过程，因此2.3.1中描述的接口在机器学习库中属于低级API。
 机器学习编程库大都提供了更高级用户友好的API，它将神经网络层抽象成一个基类，所有的神经网络层实现都继承基类调用低级API。
 如MindSpore提供的mindspore.nn.Cell、mindspore.nn.Conv2d、mindspore.dataset；
-PyTorch提供的torch.nn.Module、torch.nn.Conv2d、torch.utils.data.Datset。
+PyTorch提供的torch.nn.Module、torch.nn.Conv2d、torch.utils.data.Dataset。
 
  :numref:`model_build`描述了神经网络构建过程中的基本细节。
 神经网络层需要的功能有该层的训练参数（变量，包括初始化方法和训练状态）以及计算过程；
@@ -187,6 +187,7 @@ class CNN(Cell):
         z = self.dense2(z)
         z = self.dense3(z)
         return z
+net = CNN()
 ```
     
-上述卷积模型进行实例化，其执行将从\_\_init\_\_开始，第一个是Conv2D，Conv2D也是Cell的子类，会进入到Conv2D的\_\_init\_\_，此时会将第一个Conv2D的卷积参数收集到self.\_params，之后回到Conv2D，将第一个Conv2D收集到self.\_cells；第二个的组件是MaxPool2D，因为其没有训练参数，因此将MaxPool2D收集到self.\_cells；依次类推，分别收集第二个卷积参数和卷积层，三个全连接层的参数和全连接层。实例化之后可以调用.parameters_and_names来返回训练参数；调用用conv.cells_and_names查看神经网络层列表。
+上述卷积模型进行实例化，其执行将从\_\_init\_\_开始，第一个是Conv2D，Conv2D也是Cell的子类，会进入到Conv2D的\_\_init\_\_，此时会将第一个Conv2D的卷积参数收集到self.\_params，之后回到Conv2D，将第一个Conv2D收集到self.\_cells；第二个的组件是MaxPool2D，因为其没有训练参数，因此将MaxPool2D收集到self.\_cells；依次类推，分别收集第二个卷积参数和卷积层，三个全连接层的参数和全连接层。实例化之后可以调用net.parameters_and_names来返回训练参数；调用net.cells_and_names查看神经网络层列表。
