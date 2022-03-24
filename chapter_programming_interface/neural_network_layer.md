@@ -76,10 +76,10 @@ fc3_weights = variable(random(size=(64, 10)))
 all_weights = [conv1_filters, conv2_filters, fc1_weights, fc2_weights, fc3_weights]
 
 # 构建卷积模型的连接过程
-output = convolution(input, conv1_filters, stride=1, padding=0)
-output = pooling(output, kernel_size=3, stride=1, padding=0, mode='max')
-output = convolution(output, conv2_filters, stride=1, padding=0)
-output = pooling(output, kernel_size=3, stride=1, padding=0, mode='max')
+output = convolution(input, conv1_filters, stride=1, padding='same')
+output = pooling(output, kernel_size=3, stride=2, padding='same', mode='max')
+output = convolution(output, conv2_filters, stride=1, padding='same')
+output = pooling(output, kernel_size=3, stride=2, padding='same', mode='max')
 output=flatten(output)
 output = fully_connected(output, fc1_weights)
 output = fully_connected(output, fc2_weights)
