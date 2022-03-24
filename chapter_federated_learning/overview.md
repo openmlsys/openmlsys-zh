@@ -20,7 +20,7 @@
 
 联邦学习和参数服务器（数据中心分布式学习）架构非常相似，都是采用中心化的服务器和分散的客户端去构建同一个机器学习模型。此外，根据客户端来源和规模的不同，联邦学习还可以细分为跨设备（cross-device）与跨组织（cross-silo）联邦学习。一般而言，跨组织联邦学习的用户一般是企业、机构单位级别的，而跨设备联邦学习针对的则是便携式电子设备、移动端设备等。 :numref:`ch10-federated-learning-different-connection`展示了三者的区别和联系：
 
-![1647486083496](..\img\ch10\ch10-federated-learning-different-connection.png)
+![数据中心分布式训练、跨组织和跨设备联邦学习的区别和联系](../img/ch10/ch10-federated-learning-different-connection.png)
 
 :label:`ch10-federated-learning-different-connection`
 
