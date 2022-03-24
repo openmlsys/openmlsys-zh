@@ -103,15 +103,15 @@ def control(A, B, C, conditional = True):
 
  :numref:`if`描述上述代码的前向计算图和反向计算图。对于具有if-条件的模型，梯度计算需要知道采用了条件的哪个分支，然后将梯度逻辑应用于该分支。在前向计算图中张量${C}$经过条件控制不参与计算，在反向计算时同样遵守控制流决策，不会计算关于张量$C$的梯度。
 
-当模型中有循环控制时，循环中的操作可以执行零次或者多次。此时采用展开机制，对每一次操作都赋予独特的运算标识符，以此来区分相同运算操作的多次调用。每一次循环都直接依赖于前一次循环的计算结果，所以在循环控制中需要维护一个张量列表，将循环迭代的中间结果缓存起来，这些中间结果将参与前向计算和梯度计算。下面这段代码描述了简单的循环控制，将其展开得到等价代码后，可以清楚的理解需要维护张量$\boldsymbol{Y_i}$和$\boldsymbol{W_i}$的列表。
+当模型中有循环控制时，循环中的操作可以执行零次或者多次。此时采用展开机制，对每一次操作都赋予独特的运算标识符，以此来区分相同运算操作的多次调用。每一次循环都直接依赖于前一次循环的计算结果，所以在循环控制中需要维护一个张量列表，将循环迭代的中间结果缓存起来，这些中间结果将参与前向计算和梯度计算。下面这段代码描述了简单的循环控制，将其展开得到等价代码后，可以清楚的理解需要维护张量$\boldsymbol{X_i}$和$\boldsymbol{W_i}$的列表。
 ```python
-def recurrent_control(X, W, cur_num = 3):
+def recurrent_control(X : Tensor, W : Sequence[Tensor], cur_num = 3):
     for i in range(cur_num):    
-        Y = matmul(X, W) 
-    return Y
+        X = matmul(X, W[i]) 
+    return X
 #利用展开机制将上述代码展开，可得到等价表示
-def recurrent_control(X, W, cur_num = 3):
-    X1 = matmul(X, W)
+def recurrent_control(X : Tensor, W : Sequence[Tensor]):
+    X1 = matmul(X, W)   #为便于表示与后续说明，此处W = W[0], W1 = W[1], W2 = W[2]
     X2 = matmul(X1, W1)
     Y = matmul(X2, W2) 
     return Y
