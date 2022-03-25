@@ -756,3 +756,83 @@ series = {ADKDD'17}
   journal={arXiv preprint arXiv:1906.00091},
   year={2019}
 }
+
+@inproceedings{NIPS2015_86df7dcf,
+ author = {Sculley, D. and Holt, Gary and Golovin, Daniel and Davydov, Eugene and Phillips, Todd and Ebner, Dietmar and Chaudhary, Vinay and Young, Michael and Crespo, Jean-Fran\c{c}ois and Dennison, Dan},
+ booktitle = {Advances in Neural Information Processing Systems},
+ editor = {C. Cortes and N. Lawrence and D. Lee and M. Sugiyama and R. Garnett},
+ pages = {},
+ publisher = {Curran Associates, Inc.},
+ title = {Hidden Technical Debt in Machine Learning Systems},
+ url = {https://proceedings.neurips.cc/paper/2015/file/86df7dcfd896fcaf2674f757a2463eba-Paper.pdf},
+ volume = {28},
+ year = {2015}
+}
+
+@misc{Merlin,
+    note={Accessed on 2022-03-24},
+    author = {NVIDIA},
+    year = {2022},
+    title = {{{NVIDIA Merlin}}},
+    howpublished = {\url{https://github.com/NVIDIA-Merlin/Merlin}},
+}
+
+@misc{NVTabular,
+    note={Accessed on 2022-03-24},
+    author = {NVIDIA},
+    year = {2022},
+    title = {{{NVIDIA NVTabular}}},
+    howpublished = {\url{https://github.com/NVIDIA-Merlin/NVTabular}},
+}
+
+@misc{HugeCTR,
+    note={Accessed on 2022-03-24},
+    author = {NVIDIA},
+    year = {2022},
+    title = {{{NVIDIA HugeCTR}}},
+    howpublished = {\url{https://github.com/NVIDIA-Merlin/HugeCTR}},
+}
+
+@misc{Triton,
+    note={Accessed on 2022-03-24},
+    author = {NVIDIA},
+    year = {2022},
+    title = {{{NVIDIA Triton}}},
+    howpublished = {\url{https://github.com/triton-inference-server/server}},
+}
+
+@inproceedings{10.1145/3437801.3441578,
+author = {Fang, Jiarui and Yu, Yang and Zhao, Chengduo and Zhou, Jie},
+title = {TurboTransformers: An Efficient GPU Serving System for Transformer Models},
+year = {2021},
+isbn = {9781450382946},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3437801.3441578},
+doi = {10.1145/3437801.3441578},
+abstract = {The transformer is the most critical algorithm innovation of the Nature Language Processing (NLP) field in recent years. Unlike the Recurrent Neural Network (RNN) models, transformers are able to process on dimensions of sequence lengths in parallel, therefore leads to better accuracy on long sequences. However, efficient deployments of them for online services in data centers equipped with GPUs are not easy. First, more computation introduced by transformer structures makes it more challenging to meet the latency and throughput constraints of serving. Second, NLP tasks take in sentences of variable length. The variability of input dimensions brings a severe problem to efficient memory management and serving optimization.To solve the above challenges, this paper designed a transformer serving system called TurboTransformers, which consists of a computing runtime and a serving framework. Three innovative features make it stand out from other similar works. An efficient parallel algorithm is proposed for GPU-based batch reduction operations, like Softmax and LayerNorm, which are major hot spots besides BLAS routines. A memory allocation algorithm, which better balances the memory footprint and allocation/free efficiency, is designed for variable-length input situations. A serving framework equipped with a new batch scheduler using dynamic programming achieves the optimal throughput on variable-length requests. The system can achieve the state-of-the-art transformer model serving performance on GPU platforms and can be seamlessly integrated into your PyTorch code with a few lines of code.},
+booktitle = {Proceedings of the 26th ACM SIGPLAN Symposium on Principles and Practice of Parallel Programming},
+pages = {389–402},
+numpages = {14},
+keywords = {serving system, deep learning runtime, GPU, transformers},
+location = {Virtual Event, Republic of Korea},
+series = {PPoPP '21}
+}
+
+@inproceedings{wang-etal-2021-lightseq,
+    title = "{L}ight{S}eq: A High Performance Inference Library for Transformers",
+    author = "Wang, Xiaohui  and
+      Xiong, Ying  and
+      Wei, Yang  and
+      Wang, Mingxuan  and
+      Li, Lei",
+    booktitle = "Proceedings of the 2021 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies: Industry Papers",
+    month = jun,
+    year = "2021",
+    address = "Online",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2021.naacl-industry.15",
+    doi = "10.18653/v1/2021.naacl-industry.15",
+    pages = "113--120",
+    abstract = "Transformer and its variants have achieved great success in natural language processing. Since Transformer models are huge in size, serving these models is a challenge for real industrial applications. In this paper, we propose , a highly efficient inference library for models in the Transformer family. includes a series of GPU optimization techniques to both streamline the computation of Transformer layers and reduce memory footprint. supports models trained using PyTorch and Tensorflow. Experimental results on standard machine translation benchmarks show that achieves up to 14x speedup compared with TensorFlow and 1.4x speedup compared with , a concurrent CUDA implementation. The code will be released publicly after the review.",
+}
