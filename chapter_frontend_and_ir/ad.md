@@ -157,7 +157,7 @@ def ADDiv(x, dx, y, dy, z, dz):
 ```
 基本表达式法的优缺点显而易见，优点是实现简单直接，可为任意语言快速实现微分的库函数；而缺点是增加了用户的工作量，用户必须先手工分解程序为一些基本表达式，才能使用这些库函数进行编程，无法方便地使用语言原生的表达式。
 
-（2）操作符重载法（Operator Overlading,
+（2）操作符重载法（Operator Overloading,
 OO）：依赖于现代编程语言的多态特性，使用操作符重载对编程语言中的基本操作语义进行重定义，封装其微分规则。每个基本操作类型及其输入关系，在程序运行时会被记录在一个所谓的"tape"的数据结构里面，最后，这些"tape"会形成一个跟踪轨迹(trace)，我们就可以使用链式法则沿着轨迹正向或者反向地将基本操作组成起来进行微分。以自动微分库AutoDiff为例，对编程语言的基本运算操作符进行了重载：
 ```C++
 namespace AutoDiff
@@ -179,7 +179,7 @@ namespace AutoDiff
         return TermBuilder.Product(numerator, TermBuilder.Power(denominator, -1));
     }
     }
-    
+
     // Tape 数据结构中的基本元素，主要包含：
     // 1) 操作的运算结果
     // 2) 操作的运算结果对应的导数结果
@@ -190,7 +190,7 @@ namespace AutoDiff
     public double Value;
     public double Adjoint;
     public InputEdges Inputs;
-    
+
     public abstract void Eval();
     public abstract void Diff();
     }
@@ -229,10 +229,10 @@ F(v): {
 MindSpore解析器模块首先根据Python的AST生成MindIR，再经过特化模块使得中间表示中的算子可识别，然后调用自动微分模块。自动微分模块的入口函数如下所示：
 ```C++
 function Grad {
-    Init(); 
+    Init();
     MapObject();  // 实现Parameter/Primitive/FuncGraph/FreeVariable对象的映射
     MapMorphism();  // 实现CNode的映射
-    Finish(); 
+    Finish();
     Return GetKGraph();  // 获取梯度函数计算图
 }
 ```
@@ -242,7 +242,7 @@ Grad函数先通过MapObject实现图上自由变量、Parameter和ValueNode（P
 def get_bprop_relu(self):
     """Grad definition for `ReLU` operation."""
     input_grad = G.ReluGrad()
-    
+
     def bprop(x, out, dout):
         dx = input_grad(dout, out)
         return (dx,)
