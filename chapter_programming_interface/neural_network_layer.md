@@ -89,7 +89,7 @@ output = fully_connected(output, fc3_weights)
 随着深度神经网络应用领域的扩大，诞生出了丰富的模型构建组件。在卷积神经网络的计算过程中，前后的输入是没有联系的，然而在很多任务中往往需要处理序列信息，如语句、语音、视频等，为了解决此类问题诞生出循环神经网络（Recurrent Neural Network，RNN）；
 循环神经网络很好的解决了序列数据的问题，但是随着序列的增加，长序列又导致了训练过程中梯度消失和梯度爆炸的问题，因此有了长短期记忆（Long Short-term Memory，LSTM）；
 在语言任务中还有Seq2Seq它将RNN当成编解码（Encoder-Decoder）结构的编码器（Encoder）和解码器（Decode）；
-在解码器中又常常使用注意力机制（Attention）;基于编解码器和注意力机制又有Transformer；
+在解码器中又常常使用注意力机制（Attention）；基于编解码器和注意力机制又有Transformer；
 Transformer又是BERT模型架构的重要组成。随着深度神经网络的发展，未来也会诞生各类模型架构，架构的创新可以通过各类神经网络基本组件的组合来实现。
 
 ### 神经网络层的实现原理
