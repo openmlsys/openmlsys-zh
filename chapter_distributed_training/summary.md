@@ -26,7 +26,7 @@
 
 ## 扩展阅读
 
-- 分布式机器学习系统[综述](https://dl.acm.org/doi/abs/10.1145/3377454)
+- 分布式机器学习系统：[综述](https://dl.acm.org/doi/abs/10.1145/3377454)
 
 - 利用集合通讯支持并行训练的实践：[Horovod](https://arxiv.org/abs/1802.05799)
 
