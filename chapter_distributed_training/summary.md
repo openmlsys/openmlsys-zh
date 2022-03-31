@@ -22,3 +22,16 @@
 -   参数服务器可以帮助机器学习集群实现计算-存储的分离，从而更好的支持大型稀疏模型。
 
 -   参数服务器常用数据副本技术解决数据热点问题，同时它们也可以被用来解决同步训练系统中常见的掉队者问题。
+
+
+## 扩展阅读
+
+- 分布式机器学习系统：[综述](https://dl.acm.org/doi/abs/10.1145/3377454)
+
+- 利用集合通讯支持并行训练的实践：[Horovod](https://arxiv.org/abs/1802.05799)
+
+- 流水线并行的实践：[gPipe](https://arxiv.org/abs/1811.06965)
+
+- 在大规模数据并行下的实践：[Accurate, Large Minibatch SGD: Training ImageNet in 1 Hour](https://arxiv.org/abs/1706.02677)
+
+- 模型并行在超大模型上的实践：[ZeRO](https://arxiv.org/abs/1910.02054)
