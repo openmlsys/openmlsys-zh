@@ -88,6 +88,6 @@ $$\pmb{Y_{bn}}=scale*\pmb{X_{bn}}+offset$$
 :width:`500px`
 :label:`ch08-fig-crop_reorder`
 
-如 :numref:`ch08-fig-crop_reorder`，Crop算子是从输入的feature map中裁取一部分作为输出，经过Crop算子后，feature map的size就降低了。如果我们将这个裁切的过程前移，提前对feature map进行裁切，那么后续算子的计算量也会相应地减少，从而提高模型部署时的推理性能。Crop算子前移带来的性能提升跟Crop算子的参数有关。但是Crop算子一般只能沿着的element wise类算子前移。
+如 :numref:`ch08-fig-crop_reorder`，Crop算子是从输入的feature map中裁取一部分作为输出，经过Crop算子后，feature map的size就降低了。如果我们将这个裁切的过程前移，提前对feature map进行裁切，那么后续算子的计算量也会相应地减少，从而提高模型部署时的推理性能。Crop算子前移带来的性能提升跟Crop算子的参数有关。但是Crop算子一般只能沿着element wise类算子前移。
 
 通过前面的实验数据我们可以看到，通过推理前的模型优化，可以为推理的时延、功耗、内存占用带来极大的收益。
