@@ -62,7 +62,7 @@ $$
 下面，我们进一步介绍用于维度选择的EM-MDS算法。简单来说，EM-MDS算法的目的是从输出维度域$\mathcal{J}$中以一定概率$\mathcal{P}$随机选择一个维度集合$J\in\mathcal{J}$，不同维度集合对应的概率不同。我们假设$J$总共包含$h$个维度，其中有$\nu$个维度属于topk集合（即$|S_k \cap J|=\nu$，且$\nu\in[0,h]$），另外$h-\nu$个维度属于非topk集合。直观上，$\nu$越大，$J$中包含的topk维度越多，模型收敛越好。因此，我们希望给$\nu$较大的维度集合分配更高的概率。基于这个想法，我们将评分函数定义为：
 
 $$
-u(S_{k}, J) = \mathbbm{1}(|S_k\cap J| \geq \nu_{th}) =  \mathbbm{1}(\nu \geq \nu_{th})
+u(S_{k}, J) = 𝟙(|S_k\cap J| \geq \nu_{th}) =  𝟙(\nu \geq \nu_{th})
 $$
 :eqlabel:`score_function`
 
@@ -82,9 +82,9 @@ $$
 $$
     \mathcal{P}=\frac{\textup{exp}(\frac{\epsilon}{\phi}\cdot u(S_{k}, J))}{\sum_{J'\in\mathcal{J}}\textup{exp}(\frac{\epsilon}{\phi}\cdot u(S_{k}, J'))} 
     = 
-    \frac{\textup{exp}(\epsilon\cdot \mathbbm{1}(\nu \geq \nu_{th}))}{\sum_{\tau=0}^{\tau=h}\omega_{\tau}\cdot \textup{exp}(\epsilon\cdot\mathbbm{1}(\tau\geq\nu_{th}))}
+    \frac{\textup{exp}(\epsilon\cdot 𝟙(\nu \geq \nu_{th}))}{\sum_{\tau=0}^{\tau=h}\omega_{\tau}\cdot \textup{exp}(\epsilon\cdot 𝟙(\tau\geq\nu_{th}))}
     =
-    \frac{\textup{exp}(\epsilon\cdot \mathbbm{1}(\nu \geq \nu_{th}))}{\sum_{\tau=0}^{\tau=\nu_{th}-1}\omega_{\tau} + \sum_{\tau=\nu_{th}}^{\tau=h}\omega_{\tau}\cdot \textup{exp}(\epsilon)}
+    \frac{\textup{exp}(\epsilon\cdot 𝟙(\nu \geq \nu_{th}))}{\sum_{\tau=0}^{\tau=\nu_{th}-1}\omega_{\tau} + \sum_{\tau=\nu_{th}}^{\tau=h}\omega_{\tau}\cdot \textup{exp}(\epsilon)}
 $$
 :eqlabel:`emmds`
 
@@ -96,10 +96,10 @@ $$
 
 $$
     \frac{\textup{Pr}\[J|\Delta\]}{\textup{Pr}\[J|\Delta'\]} = \frac{\textup{Pr}\[J|S_{k}\]}{\textup{Pr}\[J|S'_{k}\]} = \frac{\frac{\textup{exp}(\frac{\epsilon}{\phi}\cdot u(S_{k}, J))}{\sum_{J'\in\mathcal{J}}\textup{exp}(\frac{\epsilon}{\phi}\cdot u(S_{k}, J'))}}{\frac{\textup{exp}(\frac{\epsilon}{\phi}\cdot u(S'_{k}, J))}{\sum_{J'\in\mathcal{J}}\textup{exp}(\frac{\epsilon}{\phi}\cdot u(S'_{k}, J'))}} 
-    = \frac{\frac{\textup{exp}(\epsilon\cdot \mathbbm{1}(\nu \geq \nu_{th}))}{\sum_{\tau=0}^{\tau=h}\omega_{\tau}\cdot \textup{exp}(\epsilon\cdot\mathbbm{1}(\tau\geq\nu_{th}))}}{\frac{
-    \textup{exp}(\epsilon\cdot \mathbbm{1}(\nu' \geq \nu_{th}))}{\sum_{\tau=0}^{\tau=h}\omega_{\tau}\cdot \textup{exp}(\epsilon\cdot\mathbbm{1}(\tau\geq\nu_{th}))}} \\
-    = \frac{\textup{exp}(\epsilon\cdot \mathbbm{1}(\nu \geq \nu_{th}))}{
-    \textup{exp}(\epsilon\cdot \mathbbm{1}(\nu' \geq \nu_{th}))} 
+    = \frac{\frac{\textup{exp}(\epsilon\cdot 𝟙(\nu \geq \nu_{th}))}{\sum_{\tau=0}^{\tau=h}\omega_{\tau}\cdot \textup{exp}(\epsilon\cdot 𝟙(\tau\geq\nu_{th}))}}{\frac{
+    \textup{exp}(\epsilon\cdot 𝟙(\nu' \geq \nu_{th}))}{\sum_{\tau=0}^{\tau=h}\omega_{\tau}\cdot \textup{exp}(\epsilon\cdot 𝟙(\tau\geq\nu_{th}))}} \\
+    = \frac{\textup{exp}(\epsilon\cdot 𝟙(\nu \geq \nu_{th}))}{
+    \textup{exp}(\epsilon\cdot 𝟙(\nu' \geq \nu_{th}))} 
     \leq \frac{\textup{exp}(\epsilon\cdot 1)}{\textup{exp}(\epsilon\cdot 0)} = \textup{exp}(\epsilon)
 $$
 
