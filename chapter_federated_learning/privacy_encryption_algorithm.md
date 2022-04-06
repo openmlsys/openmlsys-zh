@@ -124,7 +124,7 @@ $$
 这里，$\Omega$为 :eqref:`emmds`中$\mathcal{P}$的分母部分。直觉上，$\mathbb{E}\[\nu|\nu_{th}\]$越高，随机采样的$J$集合中包含的topk维度的概率就越大，从而模型效用就越好。因此，我们将$\mathbb{E}\[\nu|\nu_{th}\]$最高时的阈值确定为目标阈值$\nu_{th}^{\*}$，即：
 
 $$
-    \nu^{\*}_{th} = \underset{\nu_{th}\in\[1, h\]}{\operatorname{argmax}} \mathbb{E}\[\nu|\nu_{th}\]
+    \nu_{th}^{\*} = \underset{\nu_{th}\in\[1, h\]}{\operatorname{argmax}} \mathbb{E}\[\nu|\nu_{th}\]
 $$
 :eqlabel:`threshold`
 
