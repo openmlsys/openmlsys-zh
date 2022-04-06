@@ -130,6 +130,6 @@ $$
 
 最后，我们在 :numref:`signds_workflow`中描述了SignDS算法的详细流程。给定本地模型更新$\Delta$，我们首先随机采样一个符号值$s$并构建topk集合$S_k$。接下来，我们根据 :eqref:`threshold`确定阈值$\nu_{th}^{\*}$并遵循 :eqref:`emmds`定义的概率选择输出集合$J$。考虑到输出域$\mathcal{J}$包含$\binom{d}{k}$个可能的维度集合，以一定概率直接从$\mathcal{J}$中随机采样一个组合需要很大的计算成本和空间成本。因此，我们采用了逆采样算法以提升计算效率。具体来说，我们首先从标准均匀分布中采样一个随机值$\beta\sim U(0,1)$，并根据 :eqref:`discrete-prob`中$p(\nu=\tau|\nu_{th})$的累计概率分布$CDF_{\tau}$确定输出维度集合中包含的topk维度数$\nu$。最后，我们从topk集合$S_k$中随机选取$\nu$个维度，从非topk集合中随机采样$h-\nu$个维度，用以构建最终的输出维度集合$J$。
 
-![SignDS工作流程](../img/ch10/ch10-federated-learning-signds.png)
+![SignDS工作流程](../img/ch10/ch10-federated-learning-signds.PNG)
 :width:`800px`
 :label:`signds_workflow`
