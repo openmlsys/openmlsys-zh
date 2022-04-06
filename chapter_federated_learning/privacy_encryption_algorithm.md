@@ -53,31 +53,31 @@ $$
 
 ### 基于LDP-SignDS算法的安全聚合
 
-对于先前的基于维度加噪的LDP算法，在隐私预算一定时，添加到每个维度的噪声规模基本上与模型参数的数量成正比。因此，对于高维模型，可能需要非常多的参与方来减轻噪音对模型收敛的影响。为了解决上述“维度依赖”问题，MindSpore Federated Learning进一步提供了基于维度选择的Sign-based Dimension Selection (SignDS) [1]算法，进一步提升模型可用性。该算法的主要思想是，对于每一条真实的本地更新$$\Delta\in\mathbb{R}^{d}$$，用户端首先选择一小部分更新最明显的维度构建topk集合$$S_k$$，并以此选择一个维度集合$$J$$返回给服务器。服务器根据维度集合$$J$$构建一条对应的稀疏更新$$\Delta'$$，并聚合所有稀疏更新进用于更新全局模型。由于本地模型更新与本地数据信息相关联，直接选取真实的最大更新维度可能导致隐私泄露。对此，SignDS算法在两方面实现了隐私保证。一方面，算法使用了一种基于指数机制（Exponential Mechanism， EM [2]）的维度选择算法EM-MDS，使得所选维度集满足$$\epsilon$$-LDP保证；另一方面，在构建稀疏更新时，对所选维度分配一个常量值而不直接使用实际更新值，以保证稀疏更新和本地数据不再直接关联。由于维度选择满足$$\epsilon$$-LDP，且分配给所选维度的更新值与本地数据无关，根据差分隐私的传递性 [3]，所构建的稀疏更新同样满足$$\epsilon$$-LDP保证。
+对于先前的基于维度加噪的LDP算法，在隐私预算一定时，添加到每个维度的噪声规模基本上与模型参数的数量成正比。因此，对于高维模型，可能需要非常多的参与方来减轻噪音对模型收敛的影响。为了解决上述“维度依赖”问题，MindSpore Federated Learning进一步提供了基于维度选择的Sign-based Dimension Selection (SignDS) [1]算法，进一步提升模型可用性。该算法的主要思想是，对于每一条真实的本地更新$\Delta\in\mathbb{R}^{d}$，用户端首先选择一小部分更新最明显的维度构建topk集合$S_k$，并以此选择一个维度集合$J$返回给服务器。服务器根据维度集合$J$构建一条对应的稀疏更新$\Delta'$，并聚合所有稀疏更新进用于更新全局模型。由于本地模型更新与本地数据信息相关联，直接选取真实的最大更新维度可能导致隐私泄露。对此，SignDS算法在两方面实现了隐私保证。一方面，算法使用了一种基于指数机制（Exponential Mechanism， EM [2]）的维度选择算法EM-MDS，使得所选维度集满足$\epsilon$-LDP保证；另一方面，在构建稀疏更新时，对所选维度分配一个常量值而不直接使用实际更新值，以保证稀疏更新和本地数据不再直接关联。由于维度选择满足$\epsilon$-LDP，且分配给所选维度的更新值与本地数据无关，根据差分隐私的传递性 [3]，所构建的稀疏更新同样满足$\epsilon$-LDP保证。
 
-下面，我们分别对topk集合$$S_k$$的构建和EM-MDS维度选择算法进行详细介绍。
+下面，我们分别对topk集合$S_k$的构建和EM-MDS维度选择算法进行详细介绍。
 
-首先，由于实际更新值有正负，直接给所有选定的维度分配相同的常量值可能会明显改变模型更新方向，影响模型收敛。为了解决这个问题，SignDS提出了一种基于符号的topk集合构建策略。具体来讲，算法引入了一个额外的符号变量$$s\in\{-1,1\}$$。该变量由客户端以等概率随机采样，用于确定本地更新$$\Delta$$的topk集合$$S_k$$。如果$$s=1$$，我们将$$\Delta$$按真实更新值排序，并将**最大**的$$k$$个更新维度记为$$S_k$$。我们进一步从$$S_k$$中随机选择一部分维度，并将$$s=1$$作为这些维度的更新值用以构建稀疏更新。直觉上，$$S_k$$中维度的更新值很可能大于零。因此，将$$s=1$$分配给选定的维度不会导致模型更新方向的太大差异，从而减轻了对模型精度的影响。类似的，当$$s=-1$$时，我们选取**最小**的$$k$$个更新维度记为$$S_k$$，并将$$s=-1$$分配给所选维度。
+首先，由于实际更新值有正负，直接给所有选定的维度分配相同的常量值可能会明显改变模型更新方向，影响模型收敛。为了解决这个问题，SignDS提出了一种基于符号的topk集合构建策略。具体来讲，算法引入了一个额外的符号变量$s\in\{-1,1\}$。该变量由客户端以等概率随机采样，用于确定本地更新$\Delta$的topk集合$S_k$。如果$s=1$，我们将$\Delta$按真实更新值排序，并将**最大**的$$k$$个更新维度记为$S_k$。我们进一步从$S_k$中随机选择一部分维度，并将$s=1$作为这些维度的更新值用以构建稀疏更新。直觉上，$S_k$中维度的更新值很可能大于零。因此，将$s=1$分配给选定的维度不会导致模型更新方向的太大差异，从而减轻了对模型精度的影响。类似的，当$s=-1$时，我们选取**最小**的$k$个更新维度记为$S_k$，并将$s=-1$分配给所选维度。
 
-下面，我们进一步介绍用于维度选择的EM-MDS算法。简单来说，EM-MDS算法的目的是从输出维度域$$\mathcal{J}$$中以一定概率$$\mathcal{P}$$随机选择一个维度集合$$J\in\mathcal{J}$$，不同维度集合对应的概率不同。我们假设$$J$$总共包含$$h$$个维度，其中有$$\nu$$个维度属于topk集合（即$$|S_k \cap J|=\nu$$，且$$\nu\in[0,h]$$），另外$$h-\nu$$个维度属于非topk集合。直观上，$$\nu$$越大，$$J$$中包含的topk维度越多，模型收敛越好。因此，我们希望给$$\nu$$较大的维度集合分配更高的概率。基于这个想法，我们将评分函数定义为：
+下面，我们进一步介绍用于维度选择的EM-MDS算法。简单来说，EM-MDS算法的目的是从输出维度域$\mathcal{J}$中以一定概率$\mathcal{P}$随机选择一个维度集合$J\in\mathcal{J}$，不同维度集合对应的概率不同。我们假设$J$总共包含$h$个维度，其中有$\nu$个维度属于topk集合（即$|S_k \cap J|=\nu$，且$\nu\in[0,h]$），另外$h-\nu$个维度属于非topk集合。直观上，$\nu$越大，$J$中包含的topk维度越多，模型收敛越好。因此，我们希望给$\nu$较大的维度集合分配更高的概率。基于这个想法，我们将评分函数定义为：
 
 $$\begin{equation}
 u(S_{k}, J) = \mathbbm{1}(|S_k\cap J| \geq \nu_{th}) =  \mathbbm{1}(\nu \geq \nu_{th})
 \label{eq:score}
 \end{equation}$$
 
-$$u(S_{k}, J)$$用来衡量输出维度集合$$J$$中包含的topk维度的数量是否超过某一阈值$$\nu_{th}$$（$$\nu_{th}\in[1,h]$$），超过则为1，否则为0。进一步，$$u(S_{k}, J)$$的敏感度可计算为：
+$u(S_{k}, J)$用来衡量输出维度集合$J$中包含的topk维度的数量是否超过某一阈值$\nu_{th}$（$\nu_{th}\in[1,h]$），超过则为1，否则为0。进一步，$u(S_{k}, J)$的敏感度可计算为：
 
 $$\begin{equation}
 \phi = \max_{J\in\mathcal{J}} ||u(S_{k}, J) - u(S'_{k}, J)||= 1 - 0 = 1
 \label{eq:sensitivity}
 \end{equation}$$
 
-注意$$\eqref{eq:sensitivity}$$对于任意一对不同的topk集合$$S_k$$和$$S_k'$$均成立。
+注意$\eqref{eq:sensitivity}$对于任意一对不同的topk集合$S_k$和$S_k'$均成立。
 
 根据以上定义，EM-MDS算法描述如下：
 
-*给定真实本地更新$$\Delta\in\mathbb{R}^{d}$$的topk集合$$S_k$$和隐私预算$$\epsilon$$，输出维度集合$$J\in\mathcal{J}$$的采样概率为：*
+*给定真实本地更新$\Delta\in\mathbb{R}^{d}$的topk集合$S_k$和隐私预算$\epsilon$，输出维度集合$J\in\mathcal{J}$的采样概率为：*
 
 $$\begin{equation}
     \mathcal{P}&=\frac{\textup{exp}(\frac{\epsilon}{\phi}\cdot u(S_{k}, J))}{\sum_{J'\in\mathcal{J}}\textup{exp}(\frac{\epsilon}{\phi}\cdot u(S_{k}, J'))} 
@@ -88,11 +88,11 @@ $$\begin{equation}
 \label{eq:emmds}
 \end{equation}$$
 
-*其中，$$\nu$$是$$J$$中包含的topk维度数量，$$\nu_{th}$$是评分函数的阈值，$$J'$$是任意一输出维度集合，$$\omega_{\tau}=\binom{k}{\tau}\binom{d-k}{h-\tau}$$是所有包含$$\tau$$个topk维度的集合数。*
+*其中，$\nu$是$J$中包含的topk维度数量，$\nu_{th}$是评分函数的阈值，$J'$是任意一输出维度集合，$\omega_{\tau}=\binom{k}{\tau}\binom{d-k}{h-\tau}$是所有包含$\tau$个topk维度的集合数。*
 
 我们进一步提供了EM-MDS算法的隐私证明:
 
-*对于每个客户端，给定随机采样的符号值$$x$$，任意两个本地更新$$\Delta$$，$$\Delta'$$的topk集合记为$$S_k$$和$$S_k'$$，对于任意输出维度集合$$J\in\mathcal{J}$$，令$$\nu=|S_k \cap J|$$, $$\nu'=|S_k' \cap J|$$为$$J$$与两组topk维度集的交集数量。根据$$\eqref{eq:emmds}$$，以下不等式成立：*
+*对于每个客户端，给定随机采样的符号值$x$，任意两个本地更新$\Delta$，$\Delta'$的topk集合记为$S_k$和$S_k'$，对于任意输出维度集合$J\in\mathcal{J}$，令$\nu=|S_k \cap J|$, $\nu'=|S_k' \cap J|$为$J$与两组topk维度集的交集数量。根据$\eqref{eq:emmds}$，以下不等式成立：*
 
 $$\begin{equation}
     \frac{\textup{Pr}[J|\Delta]}{\textup{Pr}[J|\Delta']} = \frac{\textup{Pr}[J|S_{k}]}{\textup{Pr}[J|S'_{k}]} = \frac{\frac{\textup{exp}(\frac{\epsilon}{\phi}\cdot u(S_{k}, J))}{\sum_{J'\in\mathcal{J}}\textup{exp}(\frac{\epsilon}{\phi}\cdot u(S_{k}, J'))}}{\frac{\textup{exp}(\frac{\epsilon}{\phi}\cdot u(S'_{k}, J))}{\sum_{J'\in\mathcal{J}}\textup{exp}(\frac{\epsilon}{\phi}\cdot u(S'_{k}, J'))}} 
@@ -103,9 +103,9 @@ $$\begin{equation}
     \leq \frac{\textup{exp}(\epsilon\cdot 1)}{\textup{exp}(\epsilon\cdot 0)} = \textup{exp}(\epsilon)
 \end{equation}$$
 
-*证明EM-MDS算法满足$$\epsilon$$-LDP保证。*
+*证明EM-MDS算法满足$\epsilon$-LDP保证。*
 
-值得注意的是，计算$$\eqref{eq:emmds}$$需要先确定topk维度数的阈值$$\nu_{th}$$。为此，我们首先推导在给定阈值$$\nu_{th}$$时，任意一组输出维度集合$$J$$包含的topk维度的概率分布和期望：
+值得注意的是，计算$\eqref{eq:emmds}$需要先确定topk维度数的阈值$\nu_{th}$。为此，我们首先推导在给定阈值$\nu_{th}$时，任意一组输出维度集合$J$包含的topk维度的概率分布和期望：
 
 $$\begin{equation}
 p(\nu=\tau|\nu_{th}) = \begin{cases}
@@ -120,14 +120,14 @@ $$\begin{equation}
 \label{eq:expectation}
 \end{equation}$$
 
-这里，$$\Omega$$为$$\eqref{eq:emmds}$$中$$\mathcal{P}$$的分母部分。直觉上，$$\mathbb{E}[\nu|\nu_{th}]$$越高，随机采样的$$J$$集合中包含的topk维度的概率就越大，从而模型效用就越好。因此，我们将$$\mathbb{E}[\nu|\nu_{th}]$$最高时的阈值确定为目标阈值$$\nu_{th}^*$$，即：
+这里，$\Omega$为$\eqref{eq:emmds}$中$\mathcal{P}$的分母部分。直觉上，$\mathbb{E}[\nu|\nu_{th}]$越高，随机采样的$J$集合中包含的topk维度的概率就越大，从而模型效用就越好。因此，我们将$\mathbb{E}[\nu|\nu_{th}]$最高时的阈值确定为目标阈值$\nu_{th}^*$，即：
 
 $$\begin{equation}
 \nu^{*}_{th} = \textup{argmax}_{\nu_{th}\in[1, h]}\mathbb{E}[\nu|\nu_{th}]
 \label{eq:threshold}
 \end{equation}$$
 
-最后，我们在Algorithm 1中描述了SignDS算法的详细流程。给定本地模型更新$$\Delta$$，我们首先随机采样一个符号值$$s$$并构建topk集合$$S_k$$。接下来，我们根据$$\eqref{eq:threshold}$$确定阈值$$\nu_{th}^*$$并遵循$$\eqref{eq:emmds}$$定义的概率选择输出集合$$J$$。考虑到输出域$$\mathcal{J}$$包含$$\binom{d}{k}$$个可能的维度集合，以一定概率直接从$$\mathcal{J}$$中随机采样一个组合需要很大的计算成本和空间成本。因此，我们采用了逆采样算法以提升计算效率。具体来说，我们首先从标准均匀分布中采样一个随机值$$\beta\sim U(0,1)$$，并根据$$\eqref{eq:discrete-prob}$$中$$p(\nu=\tau|\nu_{th})$$的累计概率分布$$CDF_{\tau}$$确定输出维度集合中包含的topk维度数$$\nu$$。最后，我们从topk集合$$S_k$$中随机选取$$\nu$$个维度，从非topk集合中随机采样$$h-\nu$$个维度，用以构建最终的输出维度集合$$J$$。
+最后，我们在Algorithm 1中描述了SignDS算法的详细流程。给定本地模型更新$\Delta$，我们首先随机采样一个符号值$s$并构建topk集合$S_k$。接下来，我们根据$\eqref{eq:threshold}$确定阈值$\nu_{th}^*$并遵循$\eqref{eq:emmds}$定义的概率选择输出集合$J$。考虑到输出域$\mathcal{J}$包含$\binom{d}{k}$个可能的维度集合，以一定概率直接从$\mathcal{J}$中随机采样一个组合需要很大的计算成本和空间成本。因此，我们采用了逆采样算法以提升计算效率。具体来说，我们首先从标准均匀分布中采样一个随机值$\beta\sim U(0,1)$，并根据$\eqref{eq:discrete-prob}$中$p(\nu=\tau|\nu_{th})$的累计概率分布$CDF_{\tau}$确定输出维度集合中包含的topk维度数$\nu$。最后，我们从topk集合$S_k$中随机选取$\nu$个维度，从非topk集合中随机采样$h-\nu$个维度，用以构建最终的输出维度集合$J$。
 
 ---(see the attached figure)---
 
