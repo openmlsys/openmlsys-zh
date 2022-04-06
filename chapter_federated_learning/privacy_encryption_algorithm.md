@@ -95,7 +95,7 @@ $$
 *对于每个客户端，给定随机采样的符号值$x$，任意两个本地更新$\Delta$，$\Delta'$的topk集合记为$S_k$和$S_k'$，对于任意输出维度集合$J\in\mathcal{J}$，令$\nu=|S_k \cap J|$, $\nu'=|S_k' \cap J|$为$J$与两组topk维度集的交集数量。根据 :eqref:`emmds`，以下不等式成立：*
 
 $$
-    \frac{\mathrm{Pr}\[J|\Delta\]}{\mathrm{Pr}\[J|\Delta'\]} = \frac{\mathrm{Pr}\[J|S_{k}\]}{\mathrm{Pr}\[J|S\prime_{k}\]} = \frac{\frac{\mathrm{exp}(\frac{\epsilon}{\phi}\cdot u(S_{k}, J))}{\sum_{J'\in\mathcal{J}}\mathrm{exp}(\frac{\epsilon}{\phi}\cdot u(S_{k}, J'))}}{\frac{\mathrm{exp}(\frac{\epsilon}{\phi}\cdot u(S\prime_{k}, J))}{\sum_{J'\in\mathcal{J}}\mathrm{exp}(\frac{\epsilon}{\phi}\cdot u(S\prime_{k}, J'))}} 
+    \frac{\mathrm{Pr}\[J|\Delta\]}{\mathrm{Pr}\[J|\Delta'\]} = \frac{\mathrm{Pr}\[J|S_{k}\]}{\mathrm{Pr}\[J|S^\prime_{k}\]} = \frac{\frac{\mathrm{exp}(\frac{\epsilon}{\phi}\cdot u(S_{k}, J))}{\sum_{J'\in\mathcal{J}}\mathrm{exp}(\frac{\epsilon}{\phi}\cdot u(S_{k}, J'))}}{\frac{\mathrm{exp}(\frac{\epsilon}{\phi}\cdot u(S^\prime_{k}, J))}{\sum_{J'\in\mathcal{J}}\mathrm{exp}(\frac{\epsilon}{\phi}\cdot u(S^\prime_{k}, J'))}} 
     = \frac{\frac{\mathrm{exp}(\epsilon\cdot 𝟙(\nu \geq \nu_{th}))}{\sum_{\tau=0}^{\tau=h}\omega_{\tau}\cdot \mathrm{exp}(\epsilon\cdot 𝟙(\tau\geq\nu_{th}))}}{\frac{
     \mathrm{exp}(\epsilon\cdot 𝟙(\nu' \geq \nu_{th}))}{\sum_{\tau=0}^{\tau=h}\omega_{\tau}\cdot \mathrm{exp}(\epsilon\cdot 𝟙(\tau\geq\nu_{th}))}} \\
     = \frac{\mathrm{exp}(\epsilon\cdot 𝟙(\nu \geq \nu_{th}))}{
@@ -110,16 +110,8 @@ $$
 $$
 p(\nu=\tau|\nu_{th})=
     \begin{cases}
-        \omega_{\tau} / \Omega \quad \quad \quad \quad \quad \mathrm{ } &if \quad \tau\in\[0,\nu_{th}\)\\
+        \omega_{\tau} / \Omega \quad \quad \quad \quad \quad \mathrm{ } &if \quad \tau\in\[0,\nu_{th}\) \\
         \omega_{\tau}\cdot\mathrm{exp}(\epsilon) / \Omega \quad \quad &if \quad \tau\in\[\nu_{th},h\]
-    \end{cases}
-$$
-
-$$
-p(\nu=\tau|\nu_{th}) = 
-    \begin{cases}
-        \displaystyle \omega_{\tau} / \Omega \quad \quad \quad \quad \quad \mathrm{ } if \quad \tau\in\[0,\nu_{th}\) \\
-        \displaystyle \omega_{\tau}\cdot\mathrm{exp}(\epsilon) / \Omega \quad \quad if \quad \tau\in\[\nu_{th},h\]
     \end{cases}
 $$
 :eqlabel:`discrete-prob`
