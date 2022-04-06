@@ -95,7 +95,7 @@ $$
 *对于每个客户端，给定随机采样的符号值$x$，任意两个本地更新$\Delta$，$\Delta'$的topk集合记为$S_k$和$S_k'$，对于任意输出维度集合$J\in\mathcal{J}$，令$\nu=|S_k \cap J|$, $\nu'=|S_k' \cap J|$为$J$与两组topk维度集的交集数量。根据 :eqref:`emmds`，以下不等式成立：*
 
 $$
-    \frac{\mathrm{Pr}\[J|\Delta\]}{\mathrm{Pr}\[J|\Delta'\]} = \frac{\mathrm{Pr}\[J|S_{k}\]}{\mathrm{Pr}\[J|S'_{k}\]} = \frac{\frac{\mathrm{exp}(\frac{\epsilon}{\phi}\cdot u(S_{k}, J))}{\sum_{J'\in\mathcal{J}}\mathrm{exp}(\frac{\epsilon}{\phi}\cdot u(S_{k}, J'))}}{\frac{\mathrm{exp}(\frac{\epsilon}{\phi}\cdot u(S'_{k}, J))}{\sum_{J'\in\mathcal{J}}\mathrm{exp}(\frac{\epsilon}{\phi}\cdot u(S'_{k}, J'))}} 
+    \frac{\mathrm{Pr}\[J|\Delta\]}{\mathrm{Pr}\[J|\Delta'\]} = \frac{\mathrm{Pr}\[J|S_{k}\]}{\mathrm{Pr}\[J|S\prime_{k}\]} = \frac{\frac{\mathrm{exp}(\frac{\epsilon}{\phi}\cdot u(S_{k}, J))}{\sum_{J'\in\mathcal{J}}\mathrm{exp}(\frac{\epsilon}{\phi}\cdot u(S_{k}, J'))}}{\frac{\mathrm{exp}(\frac{\epsilon}{\phi}\cdot u(S\prime_{k}, J))}{\sum_{J'\in\mathcal{J}}\mathrm{exp}(\frac{\epsilon}{\phi}\cdot u(S\prime_{k}, J'))}} 
     = \frac{\frac{\mathrm{exp}(\epsilon\cdot 𝟙(\nu \geq \nu_{th}))}{\sum_{\tau=0}^{\tau=h}\omega_{\tau}\cdot \mathrm{exp}(\epsilon\cdot 𝟙(\tau\geq\nu_{th}))}}{\frac{
     \mathrm{exp}(\epsilon\cdot 𝟙(\nu' \geq \nu_{th}))}{\sum_{\tau=0}^{\tau=h}\omega_{\tau}\cdot \mathrm{exp}(\epsilon\cdot 𝟙(\tau\geq\nu_{th}))}} \\
     = \frac{\mathrm{exp}(\epsilon\cdot 𝟙(\nu \geq \nu_{th}))}{
@@ -132,7 +132,7 @@ $$
 这里，$\Omega$为 :eqref:`emmds`中$\mathcal{P}$的分母部分。直觉上，$\mathbb{E}\[\nu|\nu_{th}\]$越高，随机采样的$J$集合中包含的topk维度的概率就越大，从而模型效用就越好。因此，我们将$\mathbb{E}\[\nu|\nu_{th}\]$最高时的阈值确定为目标阈值$\nu_{th}^{\*}$，即：
 
 $$
-    \nu^{\*} = \underset{\theta}{\operatorname{arg max}} \arg\max_{\nu_{th}\in\[1, h\]}\mathbb{E}\[\nu|\nu_{th}\]
+    \nu^{\*} = \underset{\nu_{th}\in\[1, h\]}{\operatorname{argmax}} \mathbb{E}\[\nu|\nu_{th}\]
 $$
 :eqlabel:`threshold`
 
