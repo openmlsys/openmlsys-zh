@@ -80,7 +80,7 @@ $$
 *给定真实本地更新$\Delta\in\mathbb{R}^{d}$的topk集合$S_k$和隐私预算$\epsilon$，输出维度集合$J\in\mathcal{J}$的采样概率为：*
 
 $$
-    \mathcal{P}&=\frac{\textup{exp}(\frac{\epsilon}{\phi}\cdot u(S_{k}, J))}{\sum_{J'\in\mathcal{J}}\textup{exp}(\frac{\epsilon}{\phi}\cdot u(S_{k}, J'))} 
+    \mathcal{P}=\frac{\textup{exp}(\frac{\epsilon}{\phi}\cdot u(S_{k}, J))}{\sum_{J'\in\mathcal{J}}\textup{exp}(\frac{\epsilon}{\phi}\cdot u(S_{k}, J'))} 
     = 
     \frac{\textup{exp}(\epsilon\cdot \mathbbm{1}(\nu \geq \nu_{th}))}{\sum_{\tau=0}^{\tau=h}\omega_{\tau}\cdot \textup{exp}(\epsilon\cdot\mathbbm{1}(\tau\geq\nu_{th}))}
     =
@@ -95,7 +95,7 @@ $$
 *对于每个客户端，给定随机采样的符号值$x$，任意两个本地更新$\Delta$，$\Delta'$的topk集合记为$S_k$和$S_k'$，对于任意输出维度集合$J\in\mathcal{J}$，令$\nu=|S_k \cap J|$, $\nu'=|S_k' \cap J|$为$J$与两组topk维度集的交集数量。根据 :eqref:`emmds`，以下不等式成立：*
 
 $$
-    \frac{\textup{Pr}[J|\Delta]}{\textup{Pr}[J|\Delta']} = \frac{\textup{Pr}[J|S_{k}]}{\textup{Pr}[J|S'_{k}]} = \frac{\frac{\textup{exp}(\frac{\epsilon}{\phi}\cdot u(S_{k}, J))}{\sum_{J'\in\mathcal{J}}\textup{exp}(\frac{\epsilon}{\phi}\cdot u(S_{k}, J'))}}{\frac{\textup{exp}(\frac{\epsilon}{\phi}\cdot u(S'_{k}, J))}{\sum_{J'\in\mathcal{J}}\textup{exp}(\frac{\epsilon}{\phi}\cdot u(S'_{k}, J'))}} 
+    \frac{\textup{Pr}\[J|\Delta\]}{\textup{Pr}\[J|\Delta'\]} = \frac{\textup{Pr}\[J|S_{k}\]}{\textup{Pr}\[J|S'_{k}\]} = \frac{\frac{\textup{exp}(\frac{\epsilon}{\phi}\cdot u(S_{k}, J))}{\sum_{J'\in\mathcal{J}}\textup{exp}(\frac{\epsilon}{\phi}\cdot u(S_{k}, J'))}}{\frac{\textup{exp}(\frac{\epsilon}{\phi}\cdot u(S'_{k}, J))}{\sum_{J'\in\mathcal{J}}\textup{exp}(\frac{\epsilon}{\phi}\cdot u(S'_{k}, J'))}} 
     = \frac{\frac{\textup{exp}(\epsilon\cdot \mathbbm{1}(\nu \geq \nu_{th}))}{\sum_{\tau=0}^{\tau=h}\omega_{\tau}\cdot \textup{exp}(\epsilon\cdot\mathbbm{1}(\tau\geq\nu_{th}))}}{\frac{
     \textup{exp}(\epsilon\cdot \mathbbm{1}(\nu' \geq \nu_{th}))}{\sum_{\tau=0}^{\tau=h}\omega_{\tau}\cdot \textup{exp}(\epsilon\cdot\mathbbm{1}(\tau\geq\nu_{th}))}} \\
     = \frac{\textup{exp}(\epsilon\cdot \mathbbm{1}(\nu \geq \nu_{th}))}{
@@ -110,21 +110,21 @@ $$
 $$
 p(\nu=\tau|\nu_{th}) = 
     \begin{cases}
-        \omega_{\tau} / \Omega \quad \quad \quad \quad \quad \textup{ } if \quad \tau\in[0,\nu_{th})
-        \omega_{\tau}\cdot\textup{exp}(\epsilon) / \Omega \quad \quad if \quad \tau\in[\nu_{th},h]
+        \omega_{\tau} / \Omega \quad \quad \quad \quad \quad \textup{ } if \quad \tau\in\[0,\nu_{th}\)
+        \omega_{\tau}\cdot\textup{exp}(\epsilon) / \Omega \quad \quad if \quad \tau\in\[\nu_{th},h\]
     \end{cases}
 $$
 :eqlabel:`discrete-prob`
 
 $$
-    \mathbb{E}[\nu|\nu_{th}] = \sum_{\tau=0}^{\tau=h}\tau\cdot p(\nu=\tau|\nu_{th}) 
+    \mathbb{E}\[\nu|\nu_{th}\] = \sum_{\tau=0}^{\tau=h}\tau\cdot p(\nu=\tau|\nu_{th}) 
 $$
 :eqlabel:`expectation`
 
-这里，$\Omega$为 :eqref:`emmds`中$\mathcal{P}$的分母部分。直觉上，$\mathbb{E}[\nu|\nu_{th}]$越高，随机采样的$J$集合中包含的topk维度的概率就越大，从而模型效用就越好。因此，我们将$\mathbb{E}[\nu|\nu_{th}]$最高时的阈值确定为目标阈值$\nu_{th}^*$，即：
+这里，$\Omega$为 :eqref:`emmds`中$\mathcal{P}$的分母部分。直觉上，$\mathbb{E}\[\nu|\nu_{th}\]$越高，随机采样的$J$集合中包含的topk维度的概率就越大，从而模型效用就越好。因此，我们将$\mathbb{E}\[\nu|\nu_{th}\]$最高时的阈值确定为目标阈值$\nu_{th}^*$，即：
 
 $$
-\nu^{*}_{th} = \textup{argmax}_{\nu_{th}\in[1, h]}\mathbb{E}[\nu|\nu_{th}]
+\nu^{*}_{th} = \textup{argmax}_{\nu_{th}\in\[1, h\]}\mathbb{E}\[\nu|\nu_{th}\]
 $$
 :eqlabel:`threshold`
 
