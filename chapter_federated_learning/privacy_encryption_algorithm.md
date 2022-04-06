@@ -108,6 +108,14 @@ $$
 值得注意的是，计算 :eqref:`emmds`需要先确定topk维度数的阈值$\nu_{th}$。为此，我们首先推导在给定阈值$\nu_{th}$时，任意一组输出维度集合$J$包含的topk维度的概率分布和期望：
 
 $$
+p(\nu=\tau|\nu_{th})=
+    \begin{cases}
+        \omega_{\tau} / \Omega \quad \quad \quad \quad \quad \mathrm{ } &if \quad \tau\in\[0,\nu_{th}\)\\
+        \omega_{\tau}\cdot\mathrm{exp}(\epsilon) / \Omega \quad \quad &if \quad \tau\in\[\nu_{th},h\]
+    \end{cases}
+$$
+
+$$
 p(\nu=\tau|\nu_{th}) = 
     \begin{cases}
         \displaystyle \omega_{\tau} / \Omega \quad \quad \quad \quad \quad \mathrm{ } if \quad \tau\in\[0,\nu_{th}\) \\
