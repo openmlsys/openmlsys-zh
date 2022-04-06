@@ -110,8 +110,8 @@ $$
 $$
 p(\nu=\tau|\nu_{th}) = 
     \begin{cases}
-        \omega_{\tau} / \Omega \quad \quad \quad \quad \quad \mathrm{ } if \quad \tau\in\[0,\nu_{th}\)
-        \omega_{\tau}\cdot\mathrm{exp}(\epsilon) / \Omega \quad \quad if \quad \tau\in\[\nu_{th},h\]
+        \displaystyle \omega_{\tau} / \Omega \quad \quad \quad \quad \quad \mathrm{ } if \quad \tau\in\[0,\nu_{th}\) \\
+        \displaystyle \omega_{\tau}\cdot\mathrm{exp}(\epsilon) / \Omega \quad \quad if \quad \tau\in\[\nu_{th},h\]
     \end{cases}
 $$
 :eqlabel:`discrete-prob`
