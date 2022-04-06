@@ -53,7 +53,7 @@ $$
 
 ### 基于LDP-SignDS算法的安全聚合
 
-对于先前的基于维度加噪的LDP算法，在隐私预算一定时，添加到每个维度的噪声规模基本上与模型参数的数量成正比。因此，对于高维模型，可能需要非常多的参与方来减轻噪音对模型收敛的影响。为了解决上述“维度依赖”问题，MindSpore Federated Learning进一步提供了基于维度选择的Sign-based Dimension Selection (SignDS) :cite:`jiang2022signds`算法，进一步提升模型可用性。该算法的主要思想是，对于每一条真实的本地更新$\Delta\in\mathbb{R}^{d}$，用户端首先选择一小部分更新最明显的维度构建topk集合$S_k$，并以此选择一个维度集合$J$返回给服务器。服务器根据维度集合$J$构建一条对应的稀疏更新$\Delta'$，并聚合所有稀疏更新进用于更新全局模型。由于本地模型更新与本地数据信息相关联，直接选取真实的最大更新维度可能导致隐私泄露。对此，SignDS算法在两方面实现了隐私保证。一方面，算法使用了一种基于指数机制（Exponential Mechanism， EM :cite:`mcsherry2007mechanism`）的维度选择算法EM-MDS，使得所选维度集满足$\epsilon$-LDP保证；另一方面，在构建稀疏更新时，对所选维度分配一个常量值而不直接使用实际更新值，以保证稀疏更新和本地数据不再直接关联。由于维度选择满足$\epsilon$-LDP，且分配给所选维度的更新值与本地数据无关，根据差分隐私的传递性 :cite:`dwork2014algorithmic`，所构建的稀疏更新同样满足$\epsilon$-LDP保证。
+对于先前的基于维度加噪的LDP算法，在隐私预算一定时，添加到每个维度的噪声规模基本上与模型参数的数量成正比。因此，对于高维模型，可能需要非常多的参与方来减轻噪音对模型收敛的影响。为了解决上述“维度依赖”问题，MindSpore Federated Learning进一步提供了基于维度选择的Sign-based Dimension Selection (SignDS) :cite:`jiang2022signds`算法，进一步提升模型可用性。该算法的主要思想是，对于每一条真实的本地更新$\Delta\in\mathbb{R}^{d}$，用户端首先选择一小部分更新最明显的维度构建topk集合$S_k$，并以此选择一个维度集合$J$返回给服务器。服务器根据维度集合$J$构建一条对应的稀疏更新$\Delta^\prime$，并聚合所有稀疏更新进用于更新全局模型。由于本地模型更新与本地数据信息相关联，直接选取真实的最大更新维度可能导致隐私泄露。对此，SignDS算法在两方面实现了隐私保证。一方面，算法使用了一种基于指数机制（Exponential Mechanism， EM :cite:`mcsherry2007mechanism`）的维度选择算法EM-MDS，使得所选维度集满足$\epsilon$-LDP保证；另一方面，在构建稀疏更新时，对所选维度分配一个常量值而不直接使用实际更新值，以保证稀疏更新和本地数据不再直接关联。由于维度选择满足$\epsilon$-LDP，且分配给所选维度的更新值与本地数据无关，根据差分隐私的传递性 :cite:`dwork2014algorithmic`，所构建的稀疏更新同样满足$\epsilon$-LDP保证。
 
 下面，我们分别对topk集合$S_k$的构建和EM-MDS维度选择算法进行详细介绍。
 
@@ -69,18 +69,18 @@ $$
 $u(S_{k}, J)$用来衡量输出维度集合$J$中包含的topk维度的数量是否超过某一阈值$\nu_{th}$（$\nu_{th}\in[1,h]$），超过则为1，否则为0。进一步，$u(S_{k}, J)$的敏感度可计算为：
 
 $$
-\phi = \max_{J\in\mathcal{J}} ||u(S_{k}, J) - u(S'_{k}, J)||= 1 - 0 = 1
+\phi = \max_{J\in\mathcal{J}} ||u(S_{k}, J) - u(S^\prime_{k}, J)||= 1 - 0 = 1
 $$
 :eqlabel:`sensitivity`
 
-注意 :eqref:`sensitivity`对于任意一对不同的topk集合$S_k$和$S_k'$均成立。
+注意 :eqref:`sensitivity`对于任意一对不同的topk集合$S_k$和$S_k^\prime$均成立。
 
 根据以上定义，EM-MDS算法描述如下：
 
 *给定真实本地更新$\Delta\in\mathbb{R}^{d}$的topk集合$S_k$和隐私预算$\epsilon$，输出维度集合$J\in\mathcal{J}$的采样概率为：*
 
 $$
-    \mathcal{P}=\frac{\mathrm{exp}(\frac{\epsilon}{\phi}\cdot u(S_{k}, J))}{\sum_{J'\in\mathcal{J}}\mathrm{exp}(\frac{\epsilon}{\phi}\cdot u(S_{k}, J'))} 
+    \mathcal{P}=\frac{\mathrm{exp}(\frac{\epsilon}{\phi}\cdot u(S_{k}, J))}{\sum_{J^\prime\in\mathcal{J}}\mathrm{exp}(\frac{\epsilon}{\phi}\cdot u(S_{k}, J^\prime))} 
     = 
     \frac{\mathrm{exp}(\epsilon\cdot 𝟙(\nu \geq \nu_{th}))}{\sum_{\tau=0}^{\tau=h}\omega_{\tau}\cdot \mathrm{exp}(\epsilon\cdot 𝟙(\tau\geq\nu_{th}))}
     =
@@ -88,18 +88,18 @@ $$
 $$
 :eqlabel:`emmds`
 
-*其中，$\nu$是$J$中包含的topk维度数量，$\nu_{th}$是评分函数的阈值，$J'$是任意一输出维度集合，$\omega_{\tau}=\binom{k}{\tau}\binom{d-k}{h-\tau}$是所有包含$\tau$个topk维度的集合数。*
+*其中，$\nu$是$J$中包含的topk维度数量，$\nu_{th}$是评分函数的阈值，$J^\prime$是任意一输出维度集合，$\omega_{\tau}=\binom{k}{\tau}\binom{d-k}{h-\tau}$是所有包含$\tau$个topk维度的集合数。*
 
 我们进一步提供了EM-MDS算法的隐私证明:
 
-*对于每个客户端，给定随机采样的符号值$x$，任意两个本地更新$\Delta$，$\Delta'$的topk集合记为$S_k$和$S_k'$，对于任意输出维度集合$J\in\mathcal{J}$，令$\nu=|S_k \cap J|$, $\nu'=|S_k' \cap J|$为$J$与两组topk维度集的交集数量。根据 :eqref:`emmds`，以下不等式成立：*
+*对于每个客户端，给定随机采样的符号值$x$，任意两个本地更新$\Delta$，$\Delta^\prime$的topk集合记为$S_k$和$S_k^\prime$，对于任意输出维度集合$J\in\mathcal{J}$，令$\nu=|S_k \cap J|$, $\nu^\prime=|S_k^\prime \cap J|$为$J$与两组topk维度集的交集数量。根据 :eqref:`emmds`，以下不等式成立：*
 
 $$
-    \frac{\mathrm{Pr}\[J|\Delta\]}{\mathrm{Pr}\[J|\Delta'\]} = \frac{\mathrm{Pr}\[J|S_{k}\]}{\mathrm{Pr}\[J|S^\prime_{k}\]} = \frac{\frac{\mathrm{exp}(\frac{\epsilon}{\phi}\cdot u(S_{k}, J))}{\sum_{J'\in\mathcal{J}}\mathrm{exp}(\frac{\epsilon}{\phi}\cdot u(S_{k}, J'))}}{\frac{\mathrm{exp}(\frac{\epsilon}{\phi}\cdot u(S^\prime_{k}, J))}{\sum_{J'\in\mathcal{J}}\mathrm{exp}(\frac{\epsilon}{\phi}\cdot u(S^\prime_{k}, J'))}} 
+    \frac{\mathrm{Pr}\[J|\Delta\]}{\mathrm{Pr}\[J|\Delta^\prime\]} = \frac{\mathrm{Pr}\[J|S_{k}\]}{\mathrm{Pr}\[J|S^\prime_{k}\]} = \frac{\frac{\mathrm{exp}(\frac{\epsilon}{\phi}\cdot u(S_{k}, J))}{\sum_{J^\prime\in\mathcal{J}}\mathrm{exp}(\frac{\epsilon}{\phi}\cdot u(S_{k}, J^\prime))}}{\frac{\mathrm{exp}(\frac{\epsilon}{\phi}\cdot u(S^\prime_{k}, J))}{\sum_{J^\prime\in\mathcal{J}}\mathrm{exp}(\frac{\epsilon}{\phi}\cdot u(S^\prime_{k}, J^\prime))}} 
     = \frac{\frac{\mathrm{exp}(\epsilon\cdot 𝟙(\nu \geq \nu_{th}))}{\sum_{\tau=0}^{\tau=h}\omega_{\tau}\cdot \mathrm{exp}(\epsilon\cdot 𝟙(\tau\geq\nu_{th}))}}{\frac{
-    \mathrm{exp}(\epsilon\cdot 𝟙(\nu' \geq \nu_{th}))}{\sum_{\tau=0}^{\tau=h}\omega_{\tau}\cdot \mathrm{exp}(\epsilon\cdot 𝟙(\tau\geq\nu_{th}))}} \\
+    \mathrm{exp}(\epsilon\cdot 𝟙(\nu^\prime \geq \nu_{th}))}{\sum_{\tau=0}^{\tau=h}\omega_{\tau}\cdot \mathrm{exp}(\epsilon\cdot 𝟙(\tau\geq\nu_{th}))}} \\
     = \frac{\mathrm{exp}(\epsilon\cdot 𝟙(\nu \geq \nu_{th}))}{
-    \mathrm{exp}(\epsilon\cdot 𝟙(\nu' \geq \nu_{th}))} 
+    \mathrm{exp}(\epsilon\cdot 𝟙(\nu^\prime \geq \nu_{th}))} 
     \leq \frac{\mathrm{exp}(\epsilon\cdot 1)}{\mathrm{exp}(\epsilon\cdot 0)} = \mathrm{exp}(\epsilon)
 $$
 
@@ -110,7 +110,7 @@ $$
 $$
 p(\nu=\tau|\nu_{th})=
     \begin{cases}
-        \omega_{\tau} / \Omega \quad \quad \quad \quad \quad \mathrm{ } &if \quad \tau\in\[0,\nu_{th}\) \\
+        \omega_{\tau} / \Omega \quad \quad \quad \quad \quad \mathrm{ } &if \quad \tau\in\[0,\nu_{th}\) \\[2ex]
         \omega_{\tau}\cdot\mathrm{exp}(\epsilon) / \Omega \quad \quad &if \quad \tau\in\[\nu_{th},h\]
     \end{cases}
 $$
