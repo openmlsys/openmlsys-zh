@@ -57,28 +57,22 @@ $$
 
 下面，我们分别对topk集合$S_k$的构建和EM-MDS维度选择算法进行详细介绍。
 
-首先，由于实际更新值有正负，直接给所有选定的维度分配相同的常量值可能会明显改变模型更新方向，影响模型收敛。为了解决这个问题，SignDS提出了一种基于符号的topk集合构建策略。具体来讲，算法引入了一个额外的符号变量$s\in\{-1,1\}$。该变量由客户端以等概率随机采样，用于确定本地更新$\Delta$的topk集合$S_k$。如果$s=1$，我们将$\Delta$按真实更新值排序，并将**最大**的$$k$$个更新维度记为$S_k$。我们进一步从$S_k$中随机选择一部分维度，并将$s=1$作为这些维度的更新值用以构建稀疏更新。直觉上，$S_k$中维度的更新值很可能大于零。因此，将$s=1$分配给选定的维度不会导致模型更新方向的太大差异，从而减轻了对模型精度的影响。类似的，当$s=-1$时，我们选取**最小**的$k$个更新维度记为$S_k$，并将$s=-1$分配给所选维度。
+首先，由于实际更新值有正负，直接给所有选定的维度分配相同的常量值可能会明显改变模型更新方向，影响模型收敛。为了解决这个问题，SignDS提出了一种基于符号的topk集合构建策略。具体来讲，算法引入了一个额外的符号变量$s\in\{-1,1\}$。该变量由客户端以等概率随机采样，用于确定本地更新$\Delta$的topk集合$S_k$。如果$s=1$，我们将$\Delta$按真实更新值排序，并将**最大**的$k$个更新维度记为$S_k$。我们进一步从$S_k$中随机选择一部分维度，并将$s=1$作为这些维度的更新值用以构建稀疏更新。直觉上，$S_k$中维度的更新值很可能大于零。因此，将$s=1$分配给选定的维度不会导致模型更新方向的太大差异，从而减轻了对模型精度的影响。类似的，当$s=-1$时，我们选取**最小**的$k$个更新维度记为$S_k$，并将$s=-1$分配给所选维度。
 
 下面，我们进一步介绍用于维度选择的EM-MDS算法。简单来说，EM-MDS算法的目的是从输出维度域$\mathcal{J}$中以一定概率$\mathcal{P}$随机选择一个维度集合$J\in\mathcal{J}$，不同维度集合对应的概率不同。我们假设$J$总共包含$h$个维度，其中有$\nu$个维度属于topk集合（即$|S_k \cap J|=\nu$，且$\nu\in[0,h]$），另外$h-\nu$个维度属于非topk集合。直观上，$\nu$越大，$J$中包含的topk维度越多，模型收敛越好。因此，我们希望给$\nu$较大的维度集合分配更高的概率。基于这个想法，我们将评分函数定义为：
-
 $$
 u(S_{k}, J) = \mathbbm{1}(|S_k\cap J| \geq \nu_{th}) =  \mathbbm{1}(\nu \geq \nu_{th})
-\label{eq:score}
 $$
-
+:eqlabel:`score_function`
 $u(S_{k}, J)$用来衡量输出维度集合$J$中包含的topk维度的数量是否超过某一阈值$\nu_{th}$（$\nu_{th}\in[1,h]$），超过则为1，否则为0。进一步，$u(S_{k}, J)$的敏感度可计算为：
-
 $$
 \phi = \max_{J\in\mathcal{J}} ||u(S_{k}, J) - u(S'_{k}, J)||= 1 - 0 = 1
-\label{eq:sensitivity}
 $$
-
-注意$\eqref{eq:sensitivity}$对于任意一对不同的topk集合$S_k$和$S_k'$均成立。
+:eqlabel:`sensitivity`
+注意 :eqref:`sensitivity`对于任意一对不同的topk集合$S_k$和$S_k'$均成立。
 
 根据以上定义，EM-MDS算法描述如下：
-
 *给定真实本地更新$\Delta\in\mathbb{R}^{d}$的topk集合$S_k$和隐私预算$\epsilon$，输出维度集合$J\in\mathcal{J}$的采样概率为：*
-
 $$
     \mathcal{P}&=\frac{\textup{exp}(\frac{\epsilon}{\phi}\cdot u(S_{k}, J))}{\sum_{J'\in\mathcal{J}}\textup{exp}(\frac{\epsilon}{\phi}\cdot u(S_{k}, J'))} 
     = 
@@ -87,7 +81,6 @@ $$
     \frac{\textup{exp}(\epsilon\cdot \mathbbm{1}(\nu \geq \nu_{th}))}{\sum_{\tau=0}^{\tau=\nu_{th}-1}\omega_{\tau} + \sum_{\tau=\nu_{th}}^{\tau=h}\omega_{\tau}\cdot \textup{exp}(\epsilon)}
 \label{eq:emmds}
 $$
-
 *其中，$\nu$是$J$中包含的topk维度数量，$\nu_{th}$是评分函数的阈值，$J'$是任意一输出维度集合，$\omega_{\tau}=\binom{k}{\tau}\binom{d-k}{h-\tau}$是所有包含$\tau$个topk维度的集合数。*
 
 我们进一步提供了EM-MDS算法的隐私证明:
