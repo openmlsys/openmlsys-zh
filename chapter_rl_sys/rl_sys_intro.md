@@ -15,7 +15,7 @@ TruckSim [@benekohal1988carsim]，它们可以作为各种自动驾驶算法的
 D3 (Dynamic
 Deadline-Driven) [@10.1145/3492321.3519576]和强调模块化思想的Pylot [@gog2021pylot].
 
-![**车辆计算框架图 [@9491826]**](../img/ch13/vehicle_computing){width="\linewidth"}
+![**车辆计算框架图 [@9491826]**](../img/ch13/vehicle_computing.png}
 
 [\[fig:vehicle\_computing\]]{#fig:vehicle_computing
 label="fig:vehicle_computing"}
@@ -24,7 +24,7 @@ label="fig:vehicle_computing"}
 reference="fig:learning_decision_modulei"}是一个典型的感知、规划、控制的模块化设计的自动驾驶系统框架图，接下来，我们也将按照这个顺序依次介绍通用框架、感知系统、规划系统和控制系统。
 
 ![**通过模仿学习进行自动驾驶框架图。**
-绿线表示自主驾驶系统的模块化流程。橙色实线表示神经判别器的训练。而蓝色虚线表示规划和控制模块是不可微的。但是决策策略可以通过判别器对控制行动的奖励，重新参数化技术进行训练，如红色虚线所示 [@pmlr-v155-huang21a]。](../img/ch13/idm.png){width="\linewidth"}
+绿线表示自主驾驶系统的模块化流程。橙色实线表示神经判别器的训练。而蓝色虚线表示规划和控制模块是不可微的。但是决策策略可以通过判别器对控制行动的奖励，重新参数化技术进行训练，如红色虚线所示 [@pmlr-v155-huang21a]。](../img/ch13/idm.png.png}
 
 [\[fig:learning\_decision\_modulei\]]{#fig:learning_decision_modulei
 label="fig:learning_decision_modulei"}

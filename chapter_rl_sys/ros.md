@@ -40,7 +40,7 @@ Graph连接）的列表。
 
 ![一个完整的机器人系统由许多协同工作的节点组成。在ROS 2
 中，单个可执行文件（C++ 程序、Python
-程序等）可以包含一个或多个节点](../img/ch13/ros2_graph){width="\linewidth"}
+程序等）可以包含一个或多个节点](../img/ch13/ros2_graph.png}
 
 [\[fig:ros2\_graph\]]{#fig:ros2_graph label="fig:ros2_graph"}
 
@@ -67,7 +67,7 @@ rqt是ROS的一个软件框架，以插件的形式实现了各种 GUI 工具。
 中将所有现有的GUI工具作为可停靠窗口运行！这些工具仍然可以以传统的独立方法运行，但rqt可以更轻松地同时管理屏幕上的所有各种窗口。
 `rqt_graph`可以用来可视化不断变化的节点和主题，以及它们之间的联系。运行`ros2 topic list`命令将返回系统中当前活动的所有主题的列表。`ros2 topic echo`可以查看某个主题上发布的数据。有了消息结构之后，可以使用` ros2 topic pub`直接从命令行将数据发布到主题。` ros2 topic hz`可以查看数据发布的速率。
 
-![一个节点可以向任意数量的主题发布数据，同时订阅任意数量的主题](../img/ch13/ros2_topics){width="\linewidth"}
+![一个节点可以向任意数量的主题发布数据，同时订阅任意数量的主题](../img/ch13/ros2_topics.png}
 
 [\[fig:ros2\_topics\]]{#fig:ros2_topics label="fig:ros2_topics"}
 
@@ -78,7 +78,7 @@ ROS 2 Services
 图中节点的另一种通信方式。服务基于调用和响应模型，而不是主题的发布者-订阅者模型。虽然主题允许节点订阅数据流并获得持续更新，但服务仅在客户端专门调用它们时才提供数据。节点可以使用ROS2中的服务进行通信。与主题那种单向通信模式，节点发布可由一个或多个订阅者使用的信息的方式不同
 服务是客户端向节点发出请求的请求/响应模式提供服务，服务处理请求并生成响应。
 
-![ROS2服务](../img/ch13/ros2_services){width="\linewidth"}
+![ROS2服务](../img/ch13/ros2_services.png}
 
 [\[fig:ros2\_services\]]{#fig:ros2_services label="fig:ros2_services"}
 
@@ -100,11 +100,11 @@ ROS 2 Actions
 `ros2 action list`可以查看ROS
 Graph中的所有动作列表。`ros2 action info`可以返回动作信息。`ros2 interface show`可以将动作显示出来。`ros2 action send_goal`可以从命令行发送一个动作目标。
 
-![ROS2动作](../img/ch13/ros2_actions){width="\linewidth"}
+![ROS2动作](../img/ch13/ros2_actions.png}
 
 [\[fig:ros2\_actions\]]{#fig:ros2_actions label="fig:ros2_actions"}
 
-![**ROS/ROS2架构概述** [@maruyama2016exploring]](../img/ch13/ROS2_arch){width="\linewidth"}
+![**ROS/ROS2架构概述** [@maruyama2016exploring]](../img/ch13/ROS2_arch.png}
 
 [\[fig:ROS2\_arch\]]{#fig:ROS2_arch label="fig:ROS2_arch"}
 
