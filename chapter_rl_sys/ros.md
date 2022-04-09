@@ -1,6 +1,6 @@
 ## 通用机器人操作系统
 
-机器人操作系统(ROS) [@quigley2009ros; @maruyama2016exploring; @koubaa2017robot]起源于斯坦福大学人工智能实验室的一个机器人项目。它是一个自由、开源的框架，提供接口、工具来构建先进的机器人。由于机器人领域的快速发展和复杂化，代码复用和模块化的需求日益强烈，ROS适用于机器人这种多节点多任务的复杂场景。目前也有一些机器人、无人机甚至无人车都开始采用ROS作为开发平台。在机器人学习方面，ROS/ROS2可以与深度学习结合，有开发人员为ROS/ROS2开发了的深度学习节点，并支持NVIDIA
+机器人操作系统(ROS) 起源于斯坦福大学人工智能实验室的一个机器人项目。它是一个自由、开源的框架，提供接口、工具来构建先进的机器人。由于机器人领域的快速发展和复杂化，代码复用和模块化的需求日益强烈，ROS适用于机器人这种多节点多任务的复杂场景。目前也有一些机器人、无人机甚至无人车都开始采用ROS作为开发平台。在机器人学习方面，ROS/ROS2可以与深度学习结合，有开发人员为ROS/ROS2开发了的深度学习节点，并支持NVIDIA
 Jetson和TensorRT。
 
 作为一个适用于机器人编程的框架，ROS把原本松散的零部件耦合在了一起，为他们提供了通信架构。虽然叫做"操作系统"，ROS更像是一个中间件，给各种基于ROS的应用程序建立起了沟通的桥梁，通过这个中间件，机器人的感知、决策、控制算法可以组织和运行。ROS采用了分布式的设计思想，支持C++、Pyhton等多种编程语言，方便移植。对ROS来讲，最小的进程单元是节点，由节点管理器来管理。参数配置存储在参数服务器中。ROS的通信方式包含：主题（Topic）、服务（Service）、参数服务器（Parameter
@@ -9,11 +9,11 @@ Server）、动作库（ActionLib）这四种。
 ROS提供了很多内置工具，比如三维可视化器rviz，用于可视化机器人、它们工作的环境和传感器数据。它是一个高度可配置的工具，具有许多不同类型的可视化和插件。catkin是ROS
 构建系统（类似于Linux下的CMake），Catkin
 Workspace是创建、修改、编译catkin软件包的目录。roslaunch可用于在本地和远程启动多个ROS
-节点以及在ROS参数服务器上设置参数的工具。此外还有机器人仿真工具Gazebo和移动操作软件和规划框架MoveIt! [@coleman2014reducing]。ROS为机器人开发者提供了不同编程语言的接口，比如C++语言ROS接口roscpp，python语言的ROS接口rospy。ROS中提供了许多机器人的统一机器人描述格式URDF（Unified
+节点以及在ROS参数服务器上设置参数的工具。此外还有机器人仿真工具Gazebo和移动操作软件和规划框架MoveIt!。ROS为机器人开发者提供了不同编程语言的接口，比如C++语言ROS接口roscpp，python语言的ROS接口rospy。ROS中提供了许多机器人的统一机器人描述格式URDF（Unified
 Robot Description
 Format）文件，URDF使用XML格式描述机器人文件。ROS也有一些需要提高的地方，比如它的通信实时性能有限，与工业级要求的系统稳定性还有一定差距。
 
-ROS2 [@maruyama2016exploring]项目在ROSCon 2014上被宣布，第一个ROS2发行版
+ROS2项目在ROSCon 2014上被宣布，第一个ROS2发行版
 Ardent Apalone
 是于2017年发布。ROS2增加了对多机器人系统的支持，提高了多机器人之间通信的网络性能，而且支持微控制器和跨系统平台，不仅可以运行在现有的X86和ARM系统上，还将支持MCU等嵌入式微控制器，不止能运行在Linux系统之上，还增加了对Windows、MacOS、RTOS等系统的支持。更重要的是，ROS
 2还加入了实时控制的支持，可以提高控制的时效性和整体机器人的性能。ROS
@@ -35,12 +35,9 @@ ROS 2 中，单个可执行文件（C++ 程序、Python
 程序等）可以包含一个或多个节点，如图 [\[fig:ros2\_graph\]](#fig:ros2_graph){reference-type="ref"
 reference="fig:ros2_graph"}。
 
-`ros2 run`命令可以从包中启动可执行文件。`ros2 node list`将显示所有正在运行的节点的名称。"重新映射"允许用户将默认节点属性（如节点名称、主题名称、服务名称等）重新分配给自定义值。知道节点的名称后，可以通过`ros2 node info`访问有关它们的更多信息，它可以返回与该节点交互的订阅者、发布者、服务和操作（ROS
-Graph连接）的列表。
-
 ![一个完整的机器人系统由许多协同工作的节点组成。在ROS 2
 中，单个可执行文件（C++ 程序、Python
-程序等）可以包含一个或多个节点](../img/ch13/ros2_graph.png}
+程序等）可以包含一个或多个节点](../img/ch13/ros2_graph.png})
 
 [\[fig:ros2\_graph\]]{#fig:ros2_graph label="fig:ros2_graph"}
 
@@ -65,9 +62,8 @@ reference="fig:ros2_topics"}所示。主题是数据在节点之间以及因此�
 
 rqt是ROS的一个软件框架，以插件的形式实现了各种 GUI 工具。可以在 rqt
 中将所有现有的GUI工具作为可停靠窗口运行！这些工具仍然可以以传统的独立方法运行，但rqt可以更轻松地同时管理屏幕上的所有各种窗口。
-`rqt_graph`可以用来可视化不断变化的节点和主题，以及它们之间的联系。运行`ros2 topic list`命令将返回系统中当前活动的所有主题的列表。`ros2 topic echo`可以查看某个主题上发布的数据。有了消息结构之后，可以使用` ros2 topic pub`直接从命令行将数据发布到主题。` ros2 topic hz`可以查看数据发布的速率。
 
-![一个节点可以向任意数量的主题发布数据，同时订阅任意数量的主题](../img/ch13/ros2_topics.png}
+![一个节点可以向任意数量的主题发布数据，同时订阅任意数量的主题](../img/ch13/ros2_topics.png})
 
 [\[fig:ros2\_topics\]]{#fig:ros2_topics label="fig:ros2_topics"}
 
@@ -78,11 +74,9 @@ ROS 2 Services
 图中节点的另一种通信方式。服务基于调用和响应模型，而不是主题的发布者-订阅者模型。虽然主题允许节点订阅数据流并获得持续更新，但服务仅在客户端专门调用它们时才提供数据。节点可以使用ROS2中的服务进行通信。与主题那种单向通信模式，节点发布可由一个或多个订阅者使用的信息的方式不同
 服务是客户端向节点发出请求的请求/响应模式提供服务，服务处理请求并生成响应。
 
-![ROS2服务](../img/ch13/ros2_services.png}
+![ROS2服务](../img/ch13/ros2_services.png})
 
 [\[fig:ros2\_services\]]{#fig:ros2_services label="fig:ros2_services"}
-
-在新终端中运行`ros2 service list`将返回系统中当前处于活动状态的所有服务的列表。`ros2 service type`可以返回服务的类型。`ros2 service find`可以查找特定类型的所有服务。`ros2 service call`可以调用服务。
 
 ROS 2 Parameters
 ----------------
@@ -90,21 +84,16 @@ ROS 2 Parameters
 参数（Parameters）是节点的配置值。您可以将参数视为节点设置。节点可以将参数存储为整数、浮点数、布尔值、字符串和列表。在ROS2
 中，每个节点都维护自己的参数。
 
-`ros2 param list`可以查看属于节点的参数。`ros2 param get`要显示参数的类型和当前值。`ros2 param set`可以在运行时更改参数的值。`ros2 param dump`可以将节点的所有当前参数值"转储"到文件中以供以后使用。`ros2 param load`可以将参数从文件加载到当前运行的节点。
-
 ROS 2 Actions
 -------------
 
 动作（Actions）是ROS2中的一种通信类型，适用于长时间运行的任务。它们由三个部分组成：目标、反馈和结果。动作建立在主题和服务之上。它们的功能类似于服务，除了可以取消动作。它们还提供稳定的反馈，而不是返回单一响应的服务。动作使用客户端-服务器模型，类似于发布者-订阅者模型（在主题教程中描述）。"动作客户端"节点将目标发送到"动作服务器"节点，该节点确认目标并返回反馈流和结果。动作类似于允许您执行长时间运行的任务、提供定期反馈并且可以取消的服务。机器人系统可能会使用动作进行导航。动作目标可以告诉机器人前往某个位置。当机器人导航到该位置时，它可以沿途发送更新（即反馈），然后在到达目的地后发送最终结果消息。
 
-`ros2 action list`可以查看ROS
-Graph中的所有动作列表。`ros2 action info`可以返回动作信息。`ros2 interface show`可以将动作显示出来。`ros2 action send_goal`可以从命令行发送一个动作目标。
-
-![ROS2动作](../img/ch13/ros2_actions.png}
+![ROS2动作](../img/ch13/ros2_actions.png})
 
 [\[fig:ros2\_actions\]]{#fig:ros2_actions label="fig:ros2_actions"}
 
-![**ROS/ROS2架构概述** [@maruyama2016exploring]](../img/ch13/ROS2_arch.png}
+![**ROS/ROS2架构概述**](../img/ch13/ROS2_arch.png})
 
 [\[fig:ROS2\_arch\]]{#fig:ROS2_arch label="fig:ROS2_arch"}
 
