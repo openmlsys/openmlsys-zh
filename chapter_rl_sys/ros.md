@@ -93,7 +93,7 @@ ROS 2 Actions
 
 [\[fig:ros2\_actions\]]{#fig:ros2_actions label="fig:ros2_actions"}
 
-![**ROS/ROS2架构概述**](../img/ch13/ROS2_arch.png)
+![ROS/ROS2架构概述](../img/ch13/ROS2_arch.png)
 
 [\[fig:ROS2\_arch\]]{#fig:ROS2_arch label="fig:ROS2_arch"}
 

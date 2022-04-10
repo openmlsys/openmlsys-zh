@@ -18,5 +18,5 @@ RGB-D 视频在测试时提高性能。其中，Bundle Adjustment
 SLAM
 的模块化系统帮助智能机器人在未知环境中的高效探索。
 
-![**ORB-SLAM3主要系统组件**[]{label="fig:orbslam3"}](../img/ch13/orbslam3.png){#fig:orbslam3
+![ORB-SLAM3主要系统组件](../img/ch13/orbslam3.png){#fig:orbslam3
 width="\linewidth"}
