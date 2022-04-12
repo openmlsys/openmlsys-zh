@@ -1,7 +1,10 @@
 ## 通用机器人操作系统
 
-机器人操作系统(ROS) 起源于斯坦福大学人工智能实验室的一个机器人项目。它是一个自由、开源的框架，提供接口、工具来构建先进的机器人。由于机器人领域的快速发展和复杂化，代码复用和模块化的需求日益强烈，ROS适用于机器人这种多节点多任务的复杂场景。目前也有一些机器人、无人机甚至无人车都开始采用ROS作为开发平台。在机器人学习方面，ROS/ROS2可以与深度学习结合，有开发人员为ROS/ROS2开发了的深度学习节点，并支持NVIDIA
-Jetson和TensorRT。
+机器人操作系统(ROS)起源于斯坦福大学人工智能实验室的一个机器人项目。它是一个自由、开源的框架，提供接口、工具来构建先进的机器人。由于机器人领域的快速发展和复杂化，代码复用和模块化的需求日益强烈，ROS适用于机器人这种多节点多任务的复杂场景。目前也有一些机器人、无人机甚至无人车都开始采用ROS作为开发平台。在机器人学习方面，ROS/ROS2可以与深度学习结合，有开发人员为ROS/ROS2开发了的深度学习节点，并支持NVIDIA
+Jetson和TensorRT。NVIDIA
+Jetson是NVIDIA为自主机器开发的一个嵌入式系统，包括CPU、GPU、PMIC、DRAM
+和闪存的一个模组化系统，可以将自主机器软件运作系统运行速率提升。TensorRT
+是由 Nvidia 发布的机器学习框架，用于在其硬件上运行机器学习推理。
 
 作为一个适用于机器人编程的框架，ROS把原本松散的零部件耦合在了一起，为他们提供了通信架构。虽然叫做"操作系统"，ROS更像是一个中间件，给各种基于ROS的应用程序建立起了沟通的桥梁，通过这个中间件，机器人的感知、决策、控制算法可以组织和运行。ROS采用了分布式的设计思想，支持C++、Pyhton等多种编程语言，方便移植。对ROS来讲，最小的进程单元是节点，由节点管理器来管理。参数配置存储在参数服务器中。ROS的通信方式包含：主题（Topic）、服务（Service）、参数服务器（Parameter
 Server）、动作库（ActionLib）这四种。
@@ -25,8 +28,7 @@ ROS2依赖于使用shell环境组合工作区。"工作区"（Workspace）是一
 工作区称为Underlay。随后的工作区称为Overlays。使用ROS2
 进行开发时，通常会同时有多个工作区处于活动状态。接下来我们详细介绍一下ROS2的核心概念（这一部分我们参考了文献 [^1]）。
 
-ROS2 Nodes
-----------
+### ROS2 Nodes
 
 ROS
 Graph是一个由ROS2元素组成的网络，在同一时间一起处理数据。它包括所有的可执行文件和它们之间的联系。ROS2
@@ -37,7 +39,7 @@ reference="fig:ros2_graph"}。
 
 ![一个完整的机器人系统由许多协同工作的节点组成。在ROS 2
 中，单个可执行文件（C++ 程序、Python
-程序等）可以包含一个或多个节点](../img/ch13/ros2_graph.png)
+程序等）可以包含一个或多个节点](figure/ros2_graph){width="\linewidth"}
 
 [\[fig:ros2\_graph\]]{#fig:ros2_graph label="fig:ros2_graph"}
 
@@ -53,8 +55,7 @@ reference="fig:ros2_graph"}。
 
 -   节点在下线前它也会广播其他节点自己要下线了。
 
-ROS2 Topics
------------
+### ROS2 Topics
 
 ROS2将复杂系统分解为许多模块化节点。主题（Topics）是 ROS
 Graph的重要元素，它充当节点交换消息的总线。一个节点可以向任意数量的主题发布数据，同时订阅任意数量的主题，如图 [\[fig:ros2\_topics\]](#fig:ros2_topics){reference-type="ref"
@@ -63,39 +64,32 @@ reference="fig:ros2_topics"}所示。主题是数据在节点之间以及因此�
 rqt是ROS的一个软件框架，以插件的形式实现了各种 GUI 工具。可以在 rqt
 中将所有现有的GUI工具作为可停靠窗口运行！这些工具仍然可以以传统的独立方法运行，但rqt可以更轻松地同时管理屏幕上的所有各种窗口。
 
-![一个节点可以向任意数量的主题发布数据，同时订阅任意数量的主题](../img/ch13/ros2_topics.png)
+![一个节点可以向任意数量的主题发布数据，同时订阅任意数量的主题](figure/ros2_topics){width="\linewidth"}
 
 [\[fig:ros2\_topics\]]{#fig:ros2_topics label="fig:ros2_topics"}
 
-ROS 2 Services
---------------
+### ROS 2 Services
 
 服务（Services）是 ROS
 图中节点的另一种通信方式。服务基于调用和响应模型，而不是主题的发布者-订阅者模型。虽然主题允许节点订阅数据流并获得持续更新，但服务仅在客户端专门调用它们时才提供数据。节点可以使用ROS2中的服务进行通信。与主题那种单向通信模式，节点发布可由一个或多个订阅者使用的信息的方式不同
 服务是客户端向节点发出请求的请求/响应模式提供服务，服务处理请求并生成响应。
 
-![ROS2服务](../img/ch13/ros2_services.png)
+![ROS2服务](figure/ros2_services){width="\linewidth"}
 
 [\[fig:ros2\_services\]]{#fig:ros2_services label="fig:ros2_services"}
 
-ROS 2 Parameters
-----------------
+### ROS 2 Parameters
 
 参数（Parameters）是节点的配置值。您可以将参数视为节点设置。节点可以将参数存储为整数、浮点数、布尔值、字符串和列表。在ROS2
 中，每个节点都维护自己的参数。
 
-ROS 2 Actions
--------------
+### ROS 2 Actions
 
 动作（Actions）是ROS2中的一种通信类型，适用于长时间运行的任务。它们由三个部分组成：目标、反馈和结果。动作建立在主题和服务之上。它们的功能类似于服务，除了可以取消动作。它们还提供稳定的反馈，而不是返回单一响应的服务。动作使用客户端-服务器模型，类似于发布者-订阅者模型（在主题教程中描述）。"动作客户端"节点将目标发送到"动作服务器"节点，该节点确认目标并返回反馈流和结果。动作类似于允许您执行长时间运行的任务、提供定期反馈并且可以取消的服务。机器人系统可能会使用动作进行导航。动作目标可以告诉机器人前往某个位置。当机器人导航到该位置时，它可以沿途发送更新（即反馈），然后在到达目的地后发送最终结果消息。
 
-![ROS2动作](../img/ch13/ros2_actions.png)
+![ROS2动作](figure/ros2_actions){width="\linewidth"}
 
 [\[fig:ros2\_actions\]]{#fig:ros2_actions label="fig:ros2_actions"}
-
-![**ROS/ROS2架构概述**](../img/ch13/ROS2_arch.png)
-
-[\[fig:ROS2\_arch\]]{#fig:ROS2_arch label="fig:ROS2_arch"}
 
 
 [^1]: https://docs.ros.org/en/foxy/Tutorials/Understanding-ROS2-Nodes.html
