@@ -8,6 +8,6 @@ Imitation Learning、Offline
 RL），样本效率极高，是单纯强化学习算法的50倍。为了更好地说明强化学习是如何应用在自动驾驶中的，图 [\[fig:rl\_ad\]](#fig:rl_ad){reference-type="ref"
 reference="fig:rl_ad"}展示了一个基于深度强化学习的自动驾驶POMDP模型。
 
-![基于深度强化学习的自动驾驶POMDP模型](figure/rl_ad){width="\linewidth"}
+![基于深度强化学习的自动驾驶POMDP模型](../img/ch13/rl_ad.png)
 
 [\[fig:rl\_ad\]]{#fig:rl_ad label="fig:rl_ad"}

@@ -1,9 +1,5 @@
 ## 概述
 
-![ROS/ROS2架构概述](figure/ROS2_arch){width="\linewidth"}
-
-[\[fig:ROS2\_arch\]]{#fig:ROS2_arch label="fig:ROS2_arch"}
-
 机器人学是一个交叉学科，它涉及了计算机科学、机械工程、电气工程、生物医学工程、数学等多种学科，并有诸多应用，比如自动驾驶汽车、机械臂、无人机、医疗机器人等。机器人能够自主地完成一种或多种任务或者辅助人类完成指定任务。通常，人们把机器人系统划分为感知系统、决策（规划）和控制系统等组成部分。
 
 近些年，随着机器学习的兴起，经典机器人技术出现和机器学习技术结合的趋势，称为机器人学习（Robot
@@ -19,7 +15,7 @@ TruckSim，它们可以作为各种自动驾驶算法的训练场并对算法效
 D3 (Dynamic
 Deadline-Driven)和强调模块化思想的Pylot，可以让模型训练与部署系统与这些平台对接。
 
-![车辆计算框架图](figure/vehicle_computing){width="\linewidth"}
+![车辆计算框架图](../img/ch13/vehicle_computing.png)
 
 [\[fig:vehicle\_computing\]]{#fig:vehicle_computing
 label="fig:vehicle_computing"}
@@ -28,7 +24,7 @@ label="fig:vehicle_computing"}
 reference="fig:learning_decision_modulei"}是一个典型的感知、规划、控制的模块化设计的自动驾驶系统框架图，接下来，我们也将按照这个顺序依次介绍通用框架、感知系统、规划系统和控制系统。
 
 ![通过模仿学习进行自动驾驶框架图。
-绿线表示自主驾驶系统的模块化流程。橙色实线表示神经判别器的训练。而橙色虚线表示规划和控制模块是不可微的。但是决策策略可以通过判别器对控制行动的奖励，重新参数化技术进行训练，如蓝色虚线所示 [@pmlr-v155-huang21a]。](figure/idm.png){width="\linewidth"}
+绿线表示自主驾驶系统的模块化流程。橙色实线表示神经判别器的训练。而橙色虚线表示规划和控制模块是不可微的。但是决策策略可以通过判别器对控制行动的奖励，重新参数化技术进行训练，如蓝色虚线所示。](../img/ch13/idm.png.png)
 
 [\[fig:learning\_decision\_modulei\]]{#fig:learning_decision_modulei
 label="fig:learning_decision_modulei"}

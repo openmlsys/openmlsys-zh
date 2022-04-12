@@ -1,5 +1,9 @@
 ## 通用机器人操作系统
 
+![ROS/ROS2架构概述](../img/ch13/ROS2_arch)
+
+[\[fig:ROS2\_arch\]]{#fig:ROS2_arch label="fig:ROS2_arch"}
+
 机器人操作系统(ROS)起源于斯坦福大学人工智能实验室的一个机器人项目。它是一个自由、开源的框架，提供接口、工具来构建先进的机器人。由于机器人领域的快速发展和复杂化，代码复用和模块化的需求日益强烈，ROS适用于机器人这种多节点多任务的复杂场景。目前也有一些机器人、无人机甚至无人车都开始采用ROS作为开发平台。在机器人学习方面，ROS/ROS2可以与深度学习结合，有开发人员为ROS/ROS2开发了的深度学习节点，并支持NVIDIA
 Jetson和TensorRT。NVIDIA
 Jetson是NVIDIA为自主机器开发的一个嵌入式系统，包括CPU、GPU、PMIC、DRAM
@@ -39,7 +43,7 @@ reference="fig:ros2_graph"}。
 
 ![一个完整的机器人系统由许多协同工作的节点组成。在ROS 2
 中，单个可执行文件（C++ 程序、Python
-程序等）可以包含一个或多个节点](figure/ros2_graph){width="\linewidth"}
+程序等）可以包含一个或多个节点](../img/ch13/ros2_graph)
 
 [\[fig:ros2\_graph\]]{#fig:ros2_graph label="fig:ros2_graph"}
 
@@ -64,7 +68,7 @@ reference="fig:ros2_topics"}所示。主题是数据在节点之间以及因此�
 rqt是ROS的一个软件框架，以插件的形式实现了各种 GUI 工具。可以在 rqt
 中将所有现有的GUI工具作为可停靠窗口运行！这些工具仍然可以以传统的独立方法运行，但rqt可以更轻松地同时管理屏幕上的所有各种窗口。
 
-![一个节点可以向任意数量的主题发布数据，同时订阅任意数量的主题](figure/ros2_topics){width="\linewidth"}
+![一个节点可以向任意数量的主题发布数据，同时订阅任意数量的主题](../img/ch13/ros2_topics)
 
 [\[fig:ros2\_topics\]]{#fig:ros2_topics label="fig:ros2_topics"}
 
@@ -74,7 +78,7 @@ rqt是ROS的一个软件框架，以插件的形式实现了各种 GUI 工具。
 图中节点的另一种通信方式。服务基于调用和响应模型，而不是主题的发布者-订阅者模型。虽然主题允许节点订阅数据流并获得持续更新，但服务仅在客户端专门调用它们时才提供数据。节点可以使用ROS2中的服务进行通信。与主题那种单向通信模式，节点发布可由一个或多个订阅者使用的信息的方式不同
 服务是客户端向节点发出请求的请求/响应模式提供服务，服务处理请求并生成响应。
 
-![ROS2服务](figure/ros2_services){width="\linewidth"}
+![ROS2服务](../img/ch13/ros2_services)
 
 [\[fig:ros2\_services\]]{#fig:ros2_services label="fig:ros2_services"}
 
@@ -87,7 +91,7 @@ rqt是ROS的一个软件框架，以插件的形式实现了各种 GUI 工具。
 
 动作（Actions）是ROS2中的一种通信类型，适用于长时间运行的任务。它们由三个部分组成：目标、反馈和结果。动作建立在主题和服务之上。它们的功能类似于服务，除了可以取消动作。它们还提供稳定的反馈，而不是返回单一响应的服务。动作使用客户端-服务器模型，类似于发布者-订阅者模型（在主题教程中描述）。"动作客户端"节点将目标发送到"动作服务器"节点，该节点确认目标并返回反馈流和结果。动作类似于允许您执行长时间运行的任务、提供定期反馈并且可以取消的服务。机器人系统可能会使用动作进行导航。动作目标可以告诉机器人前往某个位置。当机器人导航到该位置时，它可以沿途发送更新（即反馈），然后在到达目的地后发送最终结果消息。
 
-![ROS2动作](figure/ros2_actions){width="\linewidth"}
+![ROS2动作](../img/ch13/ros2_actions)
 
 [\[fig:ros2\_actions\]]{#fig:ros2_actions label="fig:ros2_actions"}
 
