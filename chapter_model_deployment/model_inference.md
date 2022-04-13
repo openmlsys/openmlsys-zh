@@ -20,8 +20,6 @@
 
 - 处理离群值: 离群值是与数据中的其他值保持一定距离的数据点，适当地排除离群值可以提升模型的准确性。
 
-针对特定的原始数据，往往存在特定的数据处理手段。在前述8.2"机器学习数据基本类型及常见数据变换方式"章节中，分别详细介绍了图像、音频、文本等数据的预处理方法。
-
 #### 后处理
 
 通常，模型推理结束后，需要把推理的输出数据传递给用户完成后处理，常见的数据后处理手段有：
@@ -125,17 +123,17 @@ ARMv8系列的CPU上有32个NEON寄存器v0-v31，如 :numref:`ch08-fig-register
 
 卷积计算归根到底是矩阵乘法，两个二维矩阵相乘的时间复杂度是$O(n^3)$。我们可以使用Winograd来降低矩阵乘法的复杂度。
 
-以一维卷积运算为例，记为F(m，r)，其中，m代表输出的个数，r为卷积核的个数。输入为$d=[d_0 \ d_0 \ d_2 \ d_3]$，卷积核为$g=[g_0 \ g_0 \ g_2]^T$，该卷积计算可以写成矩阵形式如公式 :eqref:`ch08-equ-conv_matmul_one_dimension`所示，需要6次乘法和4次加法。
+以一维卷积运算为例，记为F(m，r)，其中，m代表输出的个数，r为卷积核的个数。输入为$d=[d_0 \ d_1 \ d_2 \ d_3]$，卷积核为$g=[g_0 \ g_1 \ g_2]^T$，该卷积计算可以写成矩阵形式如公式 :eqref:`ch08-equ-conv_matmul_one_dimension`所示，需要6次乘法和4次加法。
 
 $$F(2, 3)=
-\left[ \begin{matrix} d_0 & d_0 & d_2 \\ d_1 & d_2 & d_3 \end{matrix} \right] \left[ \begin{matrix} g_0 \\ g_1 \\ g_2 \end{matrix} \right]=
+\left[ \begin{matrix} d_0 & d_1 & d_2 \\ d_1 & d_2 & d_3 \end{matrix} \right] \left[ \begin{matrix} g_0 \\ g_1 \\ g_2 \end{matrix} \right]=
 \left[ \begin{matrix} y_0 \\ y_1 \end{matrix} \right]$$
 :eqlabel:`ch08-equ-conv_matmul_one_dimension`
 
 可以观察到，卷积运算转换为矩阵乘法时输入矩阵中存在着重复元素$d_1$和$d_2$，因此，卷积转换的矩阵乘法相对一般的矩阵乘有了优化空间。可以通过计算中间变量$m_0-m_3$得到矩阵乘的结果，见公式 :eqref:`ch08-equ-conv-2-winograd`：
 
 $$F(2, 3)=
-\left[ \begin{matrix} d_0 & d_0 & d_2 \\ d_1 & d_2 & d_3 \end{matrix} \right] \left[ \begin{matrix} g_0 \\ g_1 \\ g_2 \end{matrix} \right]=
+\left[ \begin{matrix} d_0 & d_1 & d_2 \\ d_1 & d_2 & d_3 \end{matrix} \right] \left[ \begin{matrix} g_0 \\ g_1 \\ g_2 \end{matrix} \right]=
 \left[ \begin{matrix} m_0+m_1+m_2 \\ m_1-m_2+m_3 \end{matrix} \right]$$
 :eqlabel:`ch08-equ-conv-2-winograd`
 
@@ -155,7 +153,7 @@ m_2=(d_1-d_3)*g_2
 计算过程写成矩阵形式如公式 :eqref:`ch08-equ-winograd-matrix`所示，其中，⊙为对应位置相乘，A、B、G都是常量矩阵。这里写成矩阵计算是为了表达清晰，实际使用时，按照公式 :eqref:`ch08-equ-winograd-param`手写展开的计算速度更快。
 
 $$\mathbf{Y}=\mathbf{A^T}(\mathbf{G}g)*(\mathbf{B^T}d)$$
-:label:`ch08-equ-winograd-matrix`
+:eqlabel:`ch08-equ-winograd-matrix`
 
 $$\mathbf{B^T}=
 \left[ \begin{matrix} 1 & 0 & -1 & 0 \\ 0 & 1 & 1 & 0 \\ 0 & -1 & 1 & 0 \\ 0 & 1 & 0 & -1 \end{matrix} \right]$$
