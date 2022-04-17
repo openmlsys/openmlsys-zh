@@ -4,8 +4,7 @@
 一提到感知系统，不得不提的就是即时定位与建图（Simultaneous Localization
 and
 Mapping，SLAM)系统。SLAM大致过程包括地标提取、数据关联、状态估计、状态更新以及地标更新等。视觉里程计Visual
-Odometry是SLAM中的重要部分，它估计两个时刻机器人的相对运动（Ego-motion）。ORB-SLAM系列是视觉SLAM中有代表性的工作，图 [1](#fig:orbslam3){reference-type="ref"
-reference="fig:orbslam3"}展示了最新的ORB-SLAM3的主要系统组件。香港科技大学开源的基于单目视觉与惯导融合的SLAM技术VINS-Mono也很值得关注。多传感器融合、优化数据关联与回环检测、与前端异构处理器集成、提升鲁棒性和重定位精度都是SLAM技术接下来的发展方向。
+Odometry是SLAM中的重要部分，它估计两个时刻机器人的相对运动（Ego-motion）。ORB-SLAM系列是视觉SLAM中有代表性的工作，图 :numref:`orbslam3` 展示了最新的ORB-SLAM3的主要系统组件。香港科技大学开源的基于单目视觉与惯导融合的SLAM技术VINS-Mono也很值得关注。多传感器融合、优化数据关联与回环检测、与前端异构处理器集成、提升鲁棒性和重定位精度都是SLAM技术接下来的发展方向。
 
 最近，随着机器学习的兴起，基于学习的SLAM框架也被提了出来。TartanVO是第一个基于学习的视觉里程计（VO）模型，该模型可以推广到多个数据集和现实世界场景，并优于传统基于几何的方法。
 UnDeepVO是一个无监督深度学习方案，能够通过使用深度神经网络估计单目相机的
@@ -17,5 +16,8 @@ RGB-D 视频在测试时提高性能。其中，Bundle Adjustment
 SLAM
 的模块化系统帮助智能机器人在未知环境中的高效探索。
 
-![ORB-SLAM3主要系统组件](../img/ch13/orbslam3.png){#fig:orbslam3
-width="\linewidth"}
+![ORB-SLAM3主要系统组件](../img/ch13/orbslam3.png)
+
+:width:`800px`
+
+:label:`orbslam3`
