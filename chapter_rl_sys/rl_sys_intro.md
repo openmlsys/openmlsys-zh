@@ -24,7 +24,7 @@ label="fig:vehicle_computing"}
 reference="fig:learning_decision_modulei"}是一个典型的感知、规划、控制的模块化设计的自动驾驶系统框架图，接下来，我们也将按照这个顺序依次介绍通用框架、感知系统、规划系统和控制系统。
 
 ![通过模仿学习进行自动驾驶框架图。
-绿线表示自主驾驶系统的模块化流程。橙色实线表示神经判别器的训练。而橙色虚线表示规划和控制模块是不可微的。但是决策策略可以通过判别器对控制行动的奖励，重新参数化技术进行训练，如蓝色虚线所示。](../img/ch13/idm.png.png)
+绿线表示自主驾驶系统的模块化流程。橙色实线表示神经判别器的训练。而橙色虚线表示规划和控制模块是不可微的。但是决策策略可以通过判别器对控制行动的奖励，重新参数化技术进行训练，如蓝色虚线所示。](../img/ch13/idm.png)
 
 [\[fig:learning\_decision\_modulei\]]{#fig:learning_decision_modulei
 label="fig:learning_decision_modulei"}
