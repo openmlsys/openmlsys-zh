@@ -19,3 +19,8 @@
 - Python和C之间的互操作性一般通过CType等技术实现。
 
 - 机器学习框架一般具有多种C和C++接口允许用户定义和注册C++实现的算子。这些算子使得用户可以开发高性能模型，数据处理函数，优化器等一系列框架拓展。
+
+## 扩展阅读
+
+- MindSpore编程指南：[MindSpore](https://www.mindspore.cn/docs/programming_guide/zh-CN/r1.6/index.html)
+- Python和C/C++混合编程：[Pybind11](https://pybind11.readthedocs.io/en/latest/basics.html#creating-bindings-for-a-simple-function)
