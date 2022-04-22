@@ -29,7 +29,7 @@
 可解释AI的概念在于：区别于现有的AI系统，可解释AI系统可以解决用户面对黑盒模型时遇到的问题，使得用户知其然并知其所以然。
 
 
-![可解释AI概念（图片来源于Broad Agency Announcement Explainable Artificial Intelligence (XAI) DARPA-BAA-16–53）](../img/ch11/xai_concept.png)
+![可解释AI概念（图片来源于Broad Agency Announcement Explainable Artificial Intelligence (XAI) DARPA-BAA-16–53）](../img/ch11/xai_concept.PNG)
 :width:`800px`
 :label:`xai_concept`
 
