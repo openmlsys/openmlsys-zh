@@ -68,3 +68,28 @@ Allreduce算法会把梯度的加和计算拆分成$M-1$个Reduce步骤和$M-1$�
 Allreduce算法已经被常见的分布式训练框架（包括Horovod, KungFu, TensorFlow
 distributed, PyTorch
 distributed）等支持。当用户选择使用数据并行模式的过程，其底层会默认触发。
+
+### Allreduce 算法与网络拓扑
+#### 树形结构
+#### 环形结构
+#### CollNet 算法
+
+### 带宽计算
+
+#### 算法带宽
+#### 总线带宽
+
+
+### 其他常见的集合通信的算子
+
+#### Broadcast
+#### Reduce
+#### AllGather
+#### ReduceScatter
+
+#### 使用方法
+
+### 集合通信与机器学习系统
+
+#### 集合通信的实现
+#### 支持集合通信的深度学习框架与调用方法
