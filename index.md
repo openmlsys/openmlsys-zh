@@ -24,6 +24,7 @@ chapter_recommender_system/index
 chapter_federated_learning/index
 chapter_reinforcement_learning/index
 chapter_explainable_AI/index
+chapter_rl_sys/index
 
 ```
 

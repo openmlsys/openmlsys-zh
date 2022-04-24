@@ -1,7 +1,7 @@
 ## 环境安装
 机器学习系统书籍部署在Github是依赖于d2lbook工具实现的。因此我们首先要安装d2lbook。
 ```bash
-git clone git@github.com:d2l-ai/d2l-book.git
+git clone https://github.com/openmlsys/d2l-book.git
 cd d2l-book
 python setup.py install
 ```
@@ -12,7 +12,7 @@ python setup.py install
 ## 编译HTML版本
 在编译前先下载[openmlsys-zh](https://github.com/openmlsys/openmlsys-zh) 所有的编译命令都在改文件目录内执行。
 ```bash
- git clone git@github.com:openmlsys/openmlsys-zh.git
+ git clone https://github.com/openmlsys/openmlsys-zh.git
  cd openmlsys-zh
 ```
 使用d2lbook工具编译HTML。
