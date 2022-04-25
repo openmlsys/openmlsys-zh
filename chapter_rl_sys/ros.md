@@ -1,12 +1,12 @@
 ## 通用机器人操作系统
 
-![ROS/ROS2架构概述](../img/ch13/ROS2_arch.png)
+![ROS/ROS2架构概述 :cite:`maruyama2016exploring`](../img/ch13/ROS2_arch.png)
 
 :width:`800px`
 
 :label:`ROS2\_arch`
 
-机器人操作系统(ROS)起源于斯坦福大学人工智能实验室的一个机器人项目。它是一个自由、开源的框架，提供接口、工具来构建先进的机器人。由于机器人领域的快速发展和复杂化，代码复用和模块化的需求日益强烈，ROS适用于机器人这种多节点多任务的复杂场景。目前也有一些机器人、无人机甚至无人车都开始采用ROS作为开发平台。在机器人学习方面，ROS/ROS2可以与深度学习结合，有开发人员为ROS/ROS2开发了的深度学习节点，并支持NVIDIA
+机器人操作系统(ROS) :cite:`quigley2009ros,maruyama2016exploring,koubaa2017robot`起源于斯坦福大学人工智能实验室的一个机器人项目。它是一个自由、开源的框架，提供接口、工具来构建先进的机器人。由于机器人领域的快速发展和复杂化，代码复用和模块化的需求日益强烈，ROS适用于机器人这种多节点多任务的复杂场景。目前也有一些机器人、无人机甚至无人车都开始采用ROS作为开发平台。在机器人学习方面，ROS/ROS2可以与深度学习结合，有开发人员为ROS/ROS2开发了的深度学习节点，并支持NVIDIA
 Jetson和TensorRT。NVIDIA
 Jetson是NVIDIA为自主机器开发的一个嵌入式系统，包括CPU、GPU、PMIC、DRAM
 和闪存的一个模组化系统，可以将自主机器软件运作系统运行速率提升。TensorRT
@@ -18,11 +18,11 @@ Server）、动作库（ActionLib）这四种。
 ROS提供了很多内置工具，比如三维可视化器rviz，用于可视化机器人、它们工作的环境和传感器数据。它是一个高度可配置的工具，具有许多不同类型的可视化和插件。catkin是ROS
 构建系统（类似于Linux下的CMake），Catkin
 Workspace是创建、修改、编译catkin软件包的目录。roslaunch可用于在本地和远程启动多个ROS
-节点以及在ROS参数服务器上设置参数的工具。此外还有机器人仿真工具Gazebo和移动操作软件和规划框架MoveIt!。ROS为机器人开发者提供了不同编程语言的接口，比如C++语言ROS接口roscpp，python语言的ROS接口rospy。ROS中提供了许多机器人的统一机器人描述格式URDF（Unified
+节点以及在ROS参数服务器上设置参数的工具。此外还有机器人仿真工具Gazebo和移动操作软件和规划框架MoveIt! :cite:`coleman2014reducing`。ROS为机器人开发者提供了不同编程语言的接口，比如C++语言ROS接口roscpp，python语言的ROS接口rospy。ROS中提供了许多机器人的统一机器人描述格式URDF（Unified
 Robot Description
 Format）文件，URDF使用XML格式描述机器人文件。ROS也有一些需要提高的地方，比如它的通信实时性能有限，与工业级要求的系统稳定性还有一定差距。
 
-ROS2项目在ROSCon 2014上被宣布，第一个ROS2发行版
+ROS2 :cite:`maruyama2016exploring`项目在ROSCon 2014上被宣布，第一个ROS2发行版
 Ardent Apalone
 是于2017年发布。ROS2增加了对多机器人系统的支持，提高了多机器人之间通信的网络性能，而且支持微控制器和跨系统平台，不仅可以运行在现有的X86和ARM系统上，还将支持MCU等嵌入式微控制器，不止能运行在Linux系统之上，还增加了对Windows、MacOS、RTOS等系统的支持。更重要的是，ROS
 2还加入了实时控制的支持，可以提高控制的时效性和整体机器人的性能。ROS
