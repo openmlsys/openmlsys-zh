@@ -112,16 +112,6 @@ $$\textbf{TCAV}_{Q_{C,k,l}}=\frac{\vert \{\mathbf{x}\in X_{k}:S_{C,k,l}(\mathbf{
 \label{eq:TCAV}$$
 结合$$t$$-分布假设方法，如果$$\textbf{TCAV}_{Q_{C,k,l}}$$大于0.5，则表明概念$$C$$对类$$k$$有重大影响。
 
-= \[rectangle, minimum height=2.5cm, text width=2.4cm, text centered,
-draw=black, font=\] = \[thick,-&gt;,&gt;=stealth\]
-
-(step1) \[startstop\] [收集一个概念的正负样本]{}; (step2) \[startstop,
-right of=step1\] [输入正负样模型获取中间层的激活]{}; (step3)
-\[startstop, right of=step2\] [通过线性回归获取 CAVs]{}; (step4)
-\[startstop, right of=step3\] [计算TCAV分值]{};
-
-(step1) – (step2); (step2) – (step3); (step3) – (step4);
-
 ![TCAV流程(图片来源于 :cite:`2020tkde_li`)](../img/ch11/xai_tcav.png)
 :width:`800px`
 :label:`xai_tcav`
