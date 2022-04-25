@@ -10,8 +10,8 @@
 
 引入中间表示后，中间表示既能面向多个前端，表达多种源程序语言，又能对接多个后端，连接不同目标机器，如 :numref:`intermediate_representation`所示。在此基础上，编译流程就可以在前后端直接增加更多的优化流程，这些优化流程以现有IR为输入，又以新生成的IR为输出，被称为优化器。优化器负责分析并改进中间表示，极大程度的提高了编译流程的可拓展性，也降低了优化流程对前端和后端的破坏。
 
-![中间表示](../img/ch04/中间表示-中间表示结构.svg)
-:width:`800px`
+![中间表示](../img/ch04/中间表示-中间表示结构.png)
+:width:`850px`
 :label:`intermediate_representation`
 
 随着编译器技术的不断演进，中间表示主要经历了三个发展阶段。在早期阶段，中间表示是封闭在编译器内部的，供编译器编写者使用。在中期阶段，随着编译器的开源，中间表示逐步开源公开，主要供编译器设计者、分析工具设计者使用。现阶段，中间表示朝着软件生态构建的方向发展，旨在构建统一的中间表示。
@@ -30,14 +30,14 @@
   : 中间表示的分类
 :::
 
-1\) 线性中间表示
+1\) 线性中间表示/Users/liangzhibo/Desktop/中间表示-中间表示结构.png
 
 线性中间表示类似抽象机的汇编代码，将被编译代码表示为操作的有序序列，对操作序列规定了一种清晰且实用的顺序。由于大多数处理器采用线性的汇编语言，线性中间表示广泛应用于编译器设计。
 
 常用线性中间表示有堆栈机代码(Stack-Machine Code)和三地址代码(Three
 Address Code) :cite:`2007Compilers` 。堆栈机代码是一种单地址代码，提供了简单紧凑的表示。堆栈机代码的指令通常只有一个操作码，其操作数存在一个栈中。大多数操作指令从栈获得操作数，并将其结果推入栈中。三地址代码，简称为3AC，模拟了现代RISC机器的指令格式。它通过一组四元组实现，每个四元组包括一个运算符和三个地址(两个操作数、一个目标)。对于表达式a-b\*5，堆栈机代码和三地址代码如 :numref:`linear_ir`所示。
 
-![堆栈机代码和三地址代码](../img/ch04/中间表示-线性中间表示.svg)
+![堆栈机代码和三地址代码](../img/ch04/中间表示-线性中间表示.png)
 :width:`800px`
 :label:`linear_ir`
 
@@ -50,7 +50,7 @@ Graph，DAG)、控制流图(Control-Flow Graph，CFG)等。
 AST抽象语法树采用树型中间表示的形式，是一种接近源代码层次的表示。对于表达式$a*5+a*5*b$，其AST表示如 :numref:`AST_DAG`所示。可以看到，AST形式包含$a*5$的两个不同副本，存在冗余。在AST的基础上，DAG提供了简化的表达形式，一个节点可以有多个父节点，相同子树可以重用。如果编译器能够证明$a$的值没有改变，则DAG可以重用子树，降低求值过程的代价。
 
 ![AST图和DAG图](../img/ch04/中间表示-ASTDAG.svg)
-:width:`600px`
+:width:`400px`
 :label:`AST_DAG`
 
 3、混合中间表示
@@ -61,8 +61,8 @@ IR使用线性中间表示表示基本块，使用图中间表示表示这些块
 Single Assignment， SSA) :cite:`Richard1995A`
 形式呈现，这些指令构成一个指令线性列表。SSA形式要求每个变量只赋值一次，并且每个变量在使用之前定义。控制流图中，每个节点为一个基本块，基本块之间通过边实现控制转移。
 
-![LLVM IR](../img/ch04/中间表示-LLVMIR.svg)
-:width:`600px`
+![LLVM IR](../img/ch04/中间表示-LLVMIR.png)
+:width:`800px`
 :label:`LLVM_IR`
 
 ### 机器学习框架的中间表示
@@ -99,12 +99,36 @@ IR作为PyTorch模型的中间表示，通过JIT即时编译的形式，将Pytho
 
 PyTorch框架采用命令式编程方式，其TorchScript
 IR以基于SSA的线性IR为基本组成形式，并通过JIT即时编译的Tracing和Scripting两种方法将Python代码转换成TorchScript
-IR。如 :numref:`TorchScript_IR`给出了Python示例代码及其TorchScript
-IR。
+IR。如下Python代码使用了Scripting方法并打印其对应的中间表示图：
+```python
+import torch
 
-![Python代码及输出的TorchScript IR](../img/ch04/中间表示-torchscript.png)
-:width:`800px`
-:label:`TorchScript_IR`
+@torch.jit.script
+def test_func(input):
+    rv = 10.0
+    for i in range(5):
+        rv = rv + input
+        rv = rv/2
+    return rv
+
+print(test_func.graph)
+```
+该中间表示图的结构为：
+```
+graph(%input.1 : Tensor):
+  %9 : int = prim::Constant[value=1]()
+  %5 : bool = prim::Constant[value=1]() # test.py:6:1
+  %rv.1 : float = prim::Constant[value=10.]() # test.py:5:6
+  %2 : int = prim::Constant[value=5]() # test.py:6:16
+  %14 : int = prim::Constant[value=2]() # test.py:8:10
+  %rv : float = prim::Loop(%2, %5, %rv.1) # test.py:6:1
+    block0(%i : int, %rv.9 : float):
+      %rv.3 : Tensor = aten::add(%input.1, %rv.9, %9) # <string>:5:9
+      %12 : float = aten::FloatImplicit(%rv.3) # test.py:7:2
+      %rv.6 : float = aten::div(%12, %14) # test.py:8:7
+      -> (%5, %rv.6)
+  return (%rv)
+```
 
 
 TorchScript是PyTorch的JIT实现，支持使用Python训练模型，然后通过JIT转换为语言无关的模块，从而提升模型部署能力，提高编译性能。同时，TorchScript
@@ -116,12 +140,38 @@ Jax机器学习框架同时支持静态图和动态图，其中间表示采用Ja
 Representation) IR。Jaxpr
 IR是一种强类型、纯函数的中间表示，其输入、输出都带有类型信息，函数输出只依赖输入，不依赖全局变量。
 
-![ANF文法与Jaxpr IR](../img/ch04/中间表示-Jaxpr.png)
-:width:`800px`
-:label:`Jaxpr`
 
 Jaxpr IR的表达采用ANF(A-norm
-Form)函数式表达形式，如 :numref:`Jaxpr`所示。ANF形式将表达式划分为两类：原子表达式(aexp)和复合表达式(cexp)。原子表达式用于表示常数、变量、原语、匿名函数，复合表达式由多个原子表达式组成，可看作一个匿名函数或原语函数调用，组合的第一个输入是调用的函数，其余输入是调用的参数。
+Form)函数式表达形式，ANF文法如下所示：
+
+```
+<aexp> ::=  NUMBER | STRING | VAR | BOOLEAN | PRIMOP
+           |  (lambda (VAR ...) <exp>)
+<cexp> ::=  (<aexp> <aexp> ...)
+           ｜ (if <aexp> <exp> <exp>)
+<exp> ::=  (let ([VAR <cexp>]) <exp>) | <cexp> | <aexp>
+```
+
+ANF形式将表达式划分为两类：原子表达式(aexp)和复合表达式(cexp)。原子表达式用于表示常数、变量、原语、匿名函数，复合表达式由多个原子表达式组成，可看作一个匿名函数或原语函数调用，组合的第一个输入是调用的函数，其余输入是调用的参数。如下代码打印了一个函数对应的JaxPr：
+```python
+from jax import make_jaxpr
+import jax.numpy as jnp
+
+def test_func(x, y):
+    ret = x + jnp.sin(y) * 3
+    return jnp.sum(ret)
+
+print(make_jaxpr(test_func)(jnp.zeros(8), jnp.ones(8)))
+```
+其对应的JaxPr为：
+```
+{ lambda ; a:f32[8] b:f32[8]. let
+    c:f32[8] = sin b
+    d:f32[8] = mul c 3.0
+    e:f32[8] = add a d
+    f:f32[] = reduce_sum[axes=(0,)] e
+  in (f,) }
+```
 
 Jax框架结合了Autograd 和 JIT，基于Jaxpr
 IR，支持循环、分支、递归、闭包函数求导以及三阶求导，并且支持自动微分的反向传播和前向传播。
@@ -130,10 +180,10 @@ IR，支持循环、分支、递归、闭包函数求导以及三阶求导，并
 
 TensorFlow框架同时支持静态图和动态图，是一个基于数据流编程的机器学习框架，使用数据流图作为数据结构进行各种数值计算。TensorFlow机器学习框架的静态图机制更为人所熟知。在静态图机制中，运行TensorFlow的程序会经历一系列的抽象以及分析，程序会逐步从高层的中间表示向底层的中间表示进行转换，我们把这种变换成为lowering。
 
-为了适配不同的硬件平台，基于静态计算图，TensorFlow采用了多种IR设计，其编译生态系统如:numref:`TFIR`所示。蓝色部分是基于图的中间表示，绿色部分是基于SSA的中间表示。在中间表示的转换过程中，各个层级的中间表示各自为政，无法互相有效地沟通信息，也不清楚其他层级的中间表示做了哪些优化，因此每个中间表示只能尽力将当前的优化做到最好，造成了很多优化在每个层级的中间表示中重复进行, 从而导致优化效率的低下。尤其是从图中间表示到SSA中间表示的变化过大，转换开销极大。此外，各个层级的相同优化的代码无法复用，也降低了开发效率。
+为了适配不同的硬件平台，基于静态计算图，TensorFlow采用了多种IR设计，其编译生态系统如 :numref:`TFIR`所示。蓝色部分是基于图的中间表示，绿色部分是基于SSA的中间表示。在中间表示的转换过程中，各个层级的中间表示各自为政，无法互相有效地沟通信息，也不清楚其他层级的中间表示做了哪些优化，因此每个中间表示只能尽力将当前的优化做到最好，造成了很多优化在每个层级的中间表示中重复进行, 从而导致优化效率的低下。尤其是从图中间表示到SSA中间表示的变化过大，转换开销极大。此外，各个层级的相同优化的代码无法复用，也降低了开发效率。
 
-![TensorFlow](../img/ch04/中间表示-MLIR.svg)
-:width:`600px`
+![TensorFlow](../img/ch04/中间表示-MLIR.png)
+:width:`1000px`
 :label:`TFIR`
 
 4、MLIR
@@ -178,17 +228,38 @@ typed）。每个节点需要有一个具体的类型，这个对于性能最大
 
 在结合MindSpore框架的自身特点后，MindIR的定义如 :numref:`MindIR`所示。
 
-![MindIR文法。MindIR中的ANode对应于ANF的原子表达式，ValueNode用于表示常数值，ParameterNode用于表示函数的形参，CNode则对应于ANF的复合表达式，表示函数调用](../img/ch04/中间表示-MindIR.svg)
-:width:`800px`
+![MindIR文法。MindIR中的ANode对应于ANF的原子表达式，ValueNode用于表示常数值，ParameterNode用于表示函数的形参，CNode则对应于ANF的复合表达式，表示函数调用](../img/ch04/中间表示-MindIR.png)
+:width:`1100px`
 :label:`MindIR`
 
-接下来我们通过 :numref:`MindIR_example`中的一段程序作为示例，来进一步分析MindIR。
+接下来我们通过如下的一段程序作为示例，来进一步分析MindIR。
 
-![MindIR的ANF表达](../img/ch04/中间表示-MindIR示例.png)
-:width:`600px`
-:label:`MindIR_example`
+```python
+def func(x, y):
+    return x / y
 
-在ANF中，每个表达式都用let表达式绑定为一个变量，通过对变量的引用来表示对表达式输出的依赖，而在MindIR中，每个表达式都绑定为一个节点，通过节点与节点之间的有向边表示依赖关系。其函数图表示如 :numref:`MindIR_graph`所示。
+@ms_function
+def test_f(x, y):
+    a = x - 1
+    b = a + y
+    c = b * func(a, b)
+    return c
+```
+
+该函数对应的ANF表达式为：
+```
+lambda (x, y)
+    let a = x - 1 in
+    let b = a + y in
+    let func = lambda (x, y)
+        let ret = x / y in
+        ret end in
+    let %1 = func(a, b) in
+    let c = b * %1 in
+    c end
+```
+
+在ANF中，每个表达式都用let表达式绑定为一个变量，通过对变量的引用来表示对表达式输出的依赖，而在MindIR中，每个表达式都绑定为一个节点，通过节点与节点之间的有向边表示依赖关系。该函数对应的MindIR的可视化表示如 :numref:`MindIR_graph`所示。
 
 ![MindIR的函数图表示](../img/ch04/中间表示-MindIR图.png)
 :width:`800px`

@@ -10,7 +10,7 @@
 
 这里我们可以根据前面对单智能体强化学习过程的马尔可夫决策过程描述，给出多智能体强化学习的马尔可夫决策过程，它可以用一个数组$(\mathcal{S}, N, \boldsymbol{\mathcal{A}}, \mathbf{R}, \mathcal{T}, \gamma)$来表示。$N$是智能体个数，$\mathcal{S}$和$\boldsymbol{\mathcal{A}}=(\mathcal{A}_1, \mathcal{A}_2, ..., \mathcal{A}_N)$分别是环境状态空间和多智能体动作空间，其中$A_i$是第$i$个智能体的动作空间，$\mathbf{R}=(R_1, R_2, ..., R_N)$是多智能体奖励函数，$\mathbf{R}(s,\mathbf{a})$: $\mathcal{S}\times \boldsymbol{\mathcal{A}}\rightarrow \mathbb{R}^N$为对于当前状态$s\in\mathcal{S}$和当前多智能体动作$\mathbf{a}\in\boldsymbol{\mathcal{A}}$的奖励向量值，其中$R_i$是对第$i$个智能体的奖励值。从当前状态和动作到下一个状态的状态转移概率定义为$\mathcal{T}(s^\prime|s,\mathbf{a})$: $\mathcal{S}\times\boldsymbol{\mathcal{A}}\times\mathcal{S}\rightarrow \mathbb{R}_+$。$\gamma\in(0,1)$是奖励折扣因子（假设多个智能体采用相同的奖励折扣因子）。不同于单智能体强化学习，多智能体强化学习的目标除了常见的最大化每个智能体各自的期望累计奖励值$\mathbb{E}[\sum_t \gamma^t r^i_t], i\in[N]$之外，还有许多其他可能的学习目标，如达到纳什均衡、最大化团队奖励等等。
 
-由上述介绍和定义可以发现，多智能体强化学习是一个比单智能体强化学习更加复杂的问题。而实际上，多个智能体的存在，对于每个智能体的决策而言，绝对不是简单的把每个单智能体决策累加的难度，实际情况要比单智能体决策问题复杂很多。多智能体系统的研究实际上是门古老的学科，它与博弈论（Game Theory）密切相关，在深度强化学习盛行以前早已有大量研究和许多理论上未解的难题。其中一个典型的问题是纳什均衡在双人非零和博弈下没有多项式时间内可解的方法（实际上，这是一个PPAD（Polynomial Parity Argument, Directed version）类的问题。见Settling the Complexity of Computing Two-Player Nash Equilibria. Xi Chen, et al.）。由于篇幅限制，我们这里无法对多智能体问题做深入探讨，我们可以用一个简单例子来介绍为什么多智能体强化学习问题无法简单地用单智能体强化学习算法来解。
+由上述介绍和定义可以发现，多智能体强化学习是一个比单智能体强化学习更加复杂的问题。而实际上，多个智能体的存在，对于每个智能体的决策而言，绝对不是简单的把每个单智能体决策累加的难度，实际情况要比单智能体决策问题复杂很多。多智能体系统的研究实际上是门古老的学科，它与博弈论（Game Theory）密切相关，在深度强化学习盛行以前早已有大量研究和许多理论上未解的难题。其中一个典型的问题是纳什均衡在双人非零和博弈下没有多项式时间内可解的方法（实际上，这是一个PPAD（Polynomial Parity Argument, Directed version）类的问题。（见论文Settling the Complexity of Computing Two-Player Nash Equilibria. Xi Chen, et al.）由于篇幅限制，我们这里无法对多智能体问题做深入探讨，我们可以用一个简单例子来介绍为什么多智能体强化学习问题无法简单地用单智能体强化学习算法来解。
 
 :剪刀石头布奖励值
 

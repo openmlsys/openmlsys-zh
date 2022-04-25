@@ -9,7 +9,7 @@ Binding）。在Pybind11出现以前，将C和C++函数进行Python绑定的手�
 
 - Python的C-API。这种方式要求在一个C++程序中包含Python.h，并使用Python的C-API对Python语言进行操作。使用这套API需要对Python的底层实现有一定了解，比如如何管理引用计数等，具有较高的使用门槛。
 
-- 简单包装界面产生器（Simplified Wrapper and Interface Generator，SWIG)。SWIG可以将C和C++代码暴露给Python。SWIG是TensorFlow早期使用的方式。这种方式需要用户便携一个复杂的SWIG接口声明文件，并使用SWIG自动生成使用Python
+- 简单包装界面产生器（Simplified Wrapper and Interface Generator，SWIG)。SWIG可以将C和C++代码暴露给Python。SWIG是TensorFlow早期使用的方式。这种方式需要用户编写一个复杂的SWIG接口声明文件，并使用SWIG自动生成使用Python
     C-API的C代码。自动生成的代码可读性很低，因此具有很大代码维护开销。
 
 -  Python的ctypes模块，提供了C语言中的类型，以及直接调用动态链接库的能力。缺点是依赖于C的原生的类型，对自定义类型支持不好。
@@ -40,7 +40,8 @@ Binding）。在Pybind11出现以前，将C和C++函数进行Python绑定的手�
 -   算子属性：构造函数\_\_init\_\_中初始化属性，因加法没有属性，因此\_\_init\_\_不需要额外输入。
 
 -   算子输入输出及合法性校验：infer_shape方法中约束两个输入维度必须相同，输出的维度和输入维度相同。infer_dtype方法中约束两个输入数据必须是float32类型，输出的数据类型和输入数据类型相同。
-    算子输出
+
+-   算子输出
 
 MindSpore中实现注册TensorAdd代码如下：
 ```python

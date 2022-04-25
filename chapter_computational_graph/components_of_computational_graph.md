@@ -7,7 +7,7 @@
 :label:`simpledag`
 ### 张量和算子
 
-在计算框架中，基础组件包含张量和算子，张量是基础数据结构，算子是基本运算单元。在数学中定义中张量是基于向量与矩阵的推广，涵盖标量、向量与矩阵的概念。可以将标量理解为零阶张量，向量为一阶张量，我们熟悉的RGB彩色图像即为三阶张量。在计算框架中张量不仅存储数据，还存储数据类型、数据形状、维度或秩以及梯度传递状态等多个属性，如表3.2.1所示，列举了主要的属性和功能。
+在计算框架中，基础组件包含张量和算子，张量是基础数据结构，算子是基本运算单元。在数学中定义张量是基于向量与矩阵的推广，涵盖标量、向量与矩阵的概念。可以将标量理解为零阶张量，向量为一阶张量，我们熟悉的RGB彩色图像即为三阶张量。在计算框架中张量不仅存储数据，还存储数据类型、数据形状、维度或秩以及梯度传递状态等多个属性，如:numref:`tensor_attr`所示，列举了主要的属性和功能。
 
 :张量属性
 
@@ -38,9 +38,9 @@ List， COO），可以高效存储稀疏数据，节省存储空间。
 -   **张量操作**：包括张量的结构操作和张量的数学运算。张量结构操作有：张量创建、索引切片、维度变换和合并分割等。张量的数学运算包含标量运算、向量运算和矩阵运算。标量运算符的特点是对张量实施逐元素运算。向量运算符只在一个特定轴上运算，将一个向量映射到一个标量或者另外一个向量。矩阵运算包括矩阵乘法、矩阵范数、矩阵行列式、矩阵求特征值、矩阵分解等运算。
 
 -   **神经网络操作**：包括特征提取、激活函数、损失函数、优化算法等。特征提取是机器学习中的常见操作，核心是提取比原输入更具代表性的张量，常见的卷积操作就是特征提取算子。激活函数(Activation
-    Function)负责将神经网络层的输入映射到输出端。引入激活函数是为了增加神经网络模型的非线性，没有激活函数的每层都相当于矩阵相乘。常见的激活函数包括S型生长曲线(Sigmoid)、线性矫正单元(Rectified Linear Unit, ReLU)等。损失函数(Loss Function)是用来估量你模型的预测值与真实值之间的不一致程度。优化算法基于梯度采用不同策略更新参数权值来最小化损失函数，常见的优化算法有随机梯度下降法(Stochastic Gradient Descent, SGD)、自适应矩估计(Adaptive Momen Estimation,Adam)等。
+    Function)负责将神经网络层的输入映射到输出端。引入激活函数是为了增加神经网络模型的非线性，没有激活函数的每层都相当于矩阵相乘。常见的激活函数包括S型生长曲线(Sigmoid)、线性矫正单元(Rectified Linear Unit, ReLU)等。损失函数(Loss Function)是用来估量模型的预测值与真实值之间的不一致程度。优化算法基于梯度采用不同策略更新参数权值来最小化损失函数，常见的优化算法有随机梯度下降法(Stochastic Gradient Descent, SGD)、自适应矩估计(Adaptive Moment Estimation, Adam)等。
 
--   **数据流操作**:包含数据的预处理与数据载入相关算子，数据预处理算子主要是是针对图像数据和文本数据的裁剪填充、归一化、数据增强等操作。数据载入通常会对数据集进行随机乱序(Shuffle)、分批次载入(Batch)以及预载入(Prefetch)等操作。数据流操作主要功能是对原始数据进行处理后，转换为计算框架本身支持的数据格式，并且按照迭代次数输入给网络进行训练或者推理，提升数据载入速度，减少内存占用空间，降低网络训练等待时间。
+-   **数据流操作**：包含数据的预处理与数据载入相关算子，数据预处理算子主要是针对图像数据和文本数据的裁剪填充、归一化、数据增强等操作。数据载入通常会对数据集进行随机乱序(Shuffle)、分批次载入(Batch)以及预载入(Prefetch)等操作。数据流操作主要功能是对原始数据进行处理后，转换为计算框架本身支持的数据格式，并且按照迭代次数输入给网络进行训练或者推理，提升数据载入速度，减少内存占用空间，降低网络训练等待时间。
 
 -   **控制流操作**：可以控制计算图中的数据流向，当表示灵活复杂的模型时需要控制流。使用频率比较高的控制流算子有条件运算符和循环运算符。控制流操作一般分为两类，计算框架本身提供的控制流操作符和前端语言控制流操作符。控制流操作不仅会影响神经网络模型前向运算的数据流向，也会影响反向梯度运算的数据流向。
 
@@ -58,7 +58,7 @@ List， COO），可以高效存储稀疏数据，节省存储空间。
 
 -   **间接依赖**：节点$\mathbf{Add}$间接依赖于节点$\mathbf{Matmul1}$，即节点$\mathbf{Matmul1}$的数据并未直接传输给节点$\mathbf{Add}$，而是经过了某个或者某些中间节点进行处理后再传输给节点$\mathbf{Add}$，而这些中间节点可能是节点$\mathbf{Add}$的直接依赖节点，也可能是间接依赖节点；
 
--   **相互独立**：在计算图中节点节点$\mathbf{Matmul1}$与节点$\mathbf{Matmul2}$之间并无数据输入输出依赖关系，所以这两个节点间相互独立。
+-   **相互独立**：在计算图中节点$\mathbf{Matmul1}$与节点$\mathbf{Matmul2}$之间并无数据输入输出依赖关系，所以这两个节点间相互独立。
 
 掌握依赖关系后，分析 :numref:`recurrent`可以得出节点$\mathbf{Add}$间接依赖于节点$\mathbf{Matmul}$，而节点$\mathbf{Matmul}$直接依赖于节点$\mathbf{Add}$，此时两个节点互相等待对方计算完成输出数据，将无法执行计算任务。若我们手动同时给两个节点赋予输入，计算将持续不间断进行，模型训练将无法停止造成死循环。循环依赖产生正反馈数据流，被传递的数值可能在正方向上无限放大，导致数值上溢，或者负方向上放大导致数值下溢，也可能导致数值无限逼近于0，这些情况都会致使模型训练无法得到预期结果。在构建深度学习模型时，应避免算子间产生循环依赖。
 
@@ -80,7 +80,7 @@ List， COO），可以高效存储稀疏数据，节省存储空间。
 
 -   **计算框架控制原语**：计算框架在内部设计了低级别细粒度的控制原语运算符，通过原语运算符的结合使用来实现控制流，这种实现方式也被称为图内方法（In-graph approach）。此类方法的代表就是TensorFlow中的Switch、Merge、Enter、Exit、NextIteration五个原语。TensorFlow通过组合五个原语提供*tf.cond()*和*tf.while_loop()*来实现条件控制和循环控制。
 
--   **前端语言控制流**：通过高级语言python、C++的控制流语句来进行计算图中的控制决策，这类实现方式也被称为图外方法（Out-of-graph approach）。计算框架PyTorch、MindSpore中就直接使用python的控制流，将控制流和数据流之间保持了严格的分离。
+-   **前端语言控制流**：通过高级语言Python、C++的控制流语句来进行计算图中的控制决策，这类实现方式也被称为图外方法（Out-of-graph approach）。计算框架PyTorch、MindSpore中就直接使用Python的控制流，将控制流和数据流之间保持了严格的分离。
 
 图内方法控制流采用框架原语实现，在进行模型编译、优化与运行时都具备优势，并且可以准确的判定机器学习模型中计算梯度时需要缓存的变量，提高运行效率，同时由于不依赖外部语言便于部署到不同环境中去。但由于控制原语缺乏进一步的抽象，对于用户不友好，需要掌握控制原语的使用方法，结合前端语言使用才能描述复杂模型结构。
 
@@ -103,15 +103,15 @@ def control(A, B, C, conditional = True):
 
  :numref:`if`描述上述代码的前向计算图和反向计算图。对于具有if-条件的模型，梯度计算需要知道采用了条件的哪个分支，然后将梯度逻辑应用于该分支。在前向计算图中张量${C}$经过条件控制不参与计算，在反向计算时同样遵守控制流决策，不会计算关于张量$C$的梯度。
 
-当模型中有循环控制时，循环中的操作可以执行零次或者多次。此时采用展开机制，对每一次操作都赋予独特的运算标识符，以此来区分相同运算操作的多次调用。每一次循环都直接依赖于前一次循环的计算结果，所以在循环控制中需要维护一个张量列表，将循环迭代的中间结果缓存起来，这些中间结果将参与前向计算和梯度计算。下面这段代码描述了简单的循环控制，将其展开得到等价代码后，可以清楚的理解需要维护张量$\boldsymbol{Y_i}$和$\boldsymbol{W_i}$的列表。
+当模型中有循环控制时，循环中的操作可以执行零次或者多次。此时采用展开机制，对每一次操作都赋予独特的运算标识符，以此来区分相同运算操作的多次调用。每一次循环都直接依赖于前一次循环的计算结果，所以在循环控制中需要维护一个张量列表，将循环迭代的中间结果缓存起来，这些中间结果将参与前向计算和梯度计算。下面这段代码描述了简单的循环控制，将其展开得到等价代码后，可以清楚的理解需要维护张量$\boldsymbol{X_i}$和$\boldsymbol{W_i}$的列表。
 ```python
-def recurrent_control(X, W, cur_num = 3):
+def recurrent_control(X : Tensor, W : Sequence[Tensor], cur_num = 3):
     for i in range(cur_num):    
-        Y = matmul(X, W) 
-    return Y
+        X = matmul(X, W[i]) 
+    return X
 #利用展开机制将上述代码展开，可得到等价表示
-def recurrent_control(X, W, cur_num = 3):
-    X1 = matmul(X, W)
+def recurrent_control(X : Tensor, W : Sequence[Tensor]):
+    X1 = matmul(X, W)   #为便于表示与后续说明，此处W = W[0], W1 = W[1], W2 = W[2]
     X2 = matmul(X1, W1)
     Y = matmul(X2, W2) 
     return Y
@@ -145,7 +145,7 @@ $$
 
 其中$\nabla_{\boldsymbol{X}}\boldsymbol{z}$表示$\boldsymbol{z}$关于$\boldsymbol{X}$的梯度矩阵。
 
-上一小节中简单的循环控制模型前向传播可以表示为$\boldsymbol{Y}=\boldsymbol{W_2}(\boldsymbol{W_1}(\boldsymbol{W}(\boldsymbol{X})))$。在反向传播的过程中可以将前向计算等价为$\boldsymbol{Y}=\boldsymbol{W_2}\boldsymbol{X_2}$，首先得到参数$\boldsymbol{W_2}$的梯度表示。再接着根据$\boldsymbol{X_2}=\boldsymbol{W_1}\boldsymbol{X_1}$得到$\boldsymbol{W_1}$的梯度表示，按照层级即可推导得出$\boldsymbol{W}$的梯度表示。
+上一小节中简单的循环控制模型前向传播可以表示为$\boldsymbol{Y}=\boldsymbol{W_2}(\boldsymbol{W_1}(\boldsymbol{W}(\boldsymbol{X})))$。在反向传播的过程中可以将前向计算等价为$\boldsymbol{Y}=\boldsymbol{W_2}\boldsymbol{X_2}$，首先得到参数$\boldsymbol{W_2}$的梯度表示。再接着根据$\boldsymbol{X_2}=\boldsymbol{W_1}\boldsymbol{X_1}$得到$\boldsymbol{W_1}$的梯度表示，按照层级即可推导得出$\boldsymbol{W}$的梯度表示：
 
 $$
 \begin{aligned}
@@ -153,7 +153,7 @@ $$
 \nabla\boldsymbol{W_2} &= \boldsymbol{X_2}^\top\nabla\boldsymbol{Y}   \\
 \nabla\boldsymbol{X_1} &= \nabla\boldsymbol{X_2}\boldsymbol{W_1}^\top = (\nabla\boldsymbol{Y}\boldsymbol{W_2}^\top)\boldsymbol{W_1}^\top   \\
 \nabla\boldsymbol{W_1} &= \boldsymbol{X_1}^\top\nabla\boldsymbol{X_2} = \boldsymbol{X_1}^\top(\nabla\boldsymbol{Y}\boldsymbol{W_2}^\top)  \\
-\nabla\boldsymbol{Y} &= \nabla\boldsymbol{X_1}\boldsymbol{W}^\top = ((\nabla\boldsymbol{Y}\boldsymbol{W_2}^\top)\boldsymbol{W_1}^\top)\boldsymbol{W}^\top   \\
+\nabla\boldsymbol{X} &= \nabla\boldsymbol{X_1}\boldsymbol{W}^\top = ((\nabla\boldsymbol{Y}\boldsymbol{W_2}^\top)\boldsymbol{W_1}^\top)\boldsymbol{W}^\top   \\
 \nabla\boldsymbol{W} &= \boldsymbol{X}^\top\nabla\boldsymbol{X_1} = \boldsymbol{X}^\top((\nabla\boldsymbol{Y}\boldsymbol{W_2}^\top)\boldsymbol{W_1}^\top)
 \end{aligned}
 $$
@@ -162,12 +162,12 @@ $$
 
 根据上述公式我们可以得出循环控制的反向梯度计算过程如下，在下面代码中伪变量的前缀*grad*代表变量梯度变量，*transpose*代表矩阵转置算子。
 ```python
-grad_Y2 = matmul(grad_Y3, transpose(W2))
-grad_W2 = matmul(transpose(Y2), grad_Y3)
-grad_Y1 = matmul(grad_Y2, transpose(W1))
-grad_W1 = matmul(transpose(Y1), grad_Y2)
-grad_Y = matmul(grad_Y1, transpose(W))
-grad_W = matmul(transpose(Y), grad_Y1)
+grad_X2 = matmul(grad_Y, transpose(W2))
+grad_W2 = matmul(transpose(X2), grad_Y)
+grad_X1 = matmul(grad_X2, transpose(W1))
+grad_W1 = matmul(transpose(X1), grad_X2)
+grad_X = matmul(grad_X1, transpose(W))
+grad_W = matmul(transpose(X), grad_X1)
 ```
 结合公式、代码以及 :numref:`chain`我们可以看出，在反向传播过程中使用到前向传播的中间变量。因此保存网络中间层输出状态和中间变量，尽管占用了部分内存但能够复用计算结果，达到了提高反向传播计算效率的目的。
 
