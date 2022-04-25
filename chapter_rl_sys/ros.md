@@ -102,5 +102,7 @@ rqt是ROS的一个软件框架，以插件的形式实现了各种 GUI 工具。
 
 :label:`ros2\_actions`
 
+:bibliography:`../mlsys.bib`
+
 
 [^1]: https://docs.ros.org/en/foxy/Tutorials/Understanding-ROS2-Nodes.html
