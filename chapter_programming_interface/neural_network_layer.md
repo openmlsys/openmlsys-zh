@@ -45,7 +45,7 @@
 :label:`pooling`
 
 有了卷积、池化、全连接组件就可以构建一个非常简单的卷积神经网络了， :numref:`nn_network`展示了一个卷积神经网络的模型结构。
-给定输入$3 \times 64 \times 64$的彩色图片，使用16个$3 \times 3$大小的卷积核做卷积，得到大小为$16 \times 64 \times 64$；
+给定输入$3 \times 64 \times 64$的彩色图片，使用16个$3 \times 3 \times 3$大小的卷积核做卷积，得到大小为$16 \times 64 \times 64$的特征图；
 再进行池化操作降维，得到大小为$16 \times 32 \times 32$的特征图；
 对特征图再卷积得到大小为$32 \times 32 \times 32$特征图，再进行池化操作得到$32 \times 16 \times 16$大小的特征图；
 我们需要对特征图做全连接，此时需要把特征图平铺成一维向量这步操作称为Flatten，压平后输入特征大小为$32\times 16 \times 16 = 8192$；
@@ -80,7 +80,7 @@ output = convolution(input, conv1_filters, stride=1, padding='same')
 output = pooling(output, kernel_size=3, stride=2, padding='same', mode='max')
 output = convolution(output, conv2_filters, stride=1, padding='same')
 output = pooling(output, kernel_size=3, stride=2, padding='same', mode='max')
-output=flatten(output)
+output = flatten(output)
 output = fully_connected(output, fc1_weights)
 output = fully_connected(output, fc2_weights)
 output = fully_connected(output, fc3_weights)
@@ -107,7 +107,7 @@ PyTorch提供的torch.nn.Module、torch.nn.Conv2d、torch.utils.data.Dataset。
 Cell和Module是模型抽象方法也是所有网络的基类。
 现有模型抽象方案有两种。
 一种是抽象出两个方法分别为Layer（负责单个神经网络层的参数构建和前向计算），Model（负责对神经网络层进行连接组合和神经网络层参数管理）；
-另一种是将Layer和Modle抽象成一个方法，该方法既能表示单层神经网络层也能表示包含多个神经网络层堆叠的模型，Cell和Module就是这样实现的。
+另一种是将Layer和Model抽象成一个方法，该方法既能表示单层神经网络层也能表示包含多个神经网络层堆叠的模型，Cell和Module就是这样实现的。
 
 ![神经网络模型构建细节](../img/ch02/model_build.svg)
 :width:`800px`
@@ -127,7 +127,7 @@ Cell和Module是模型抽象方法也是所有网络的基类。
 
 ```python
 # 接口定义：
-全连接层接口：convolution(input, filters, stride, padding)
+卷积层的接口：convolution(input, filters, stride, padding)
 变量：Variable(value, trainable=True)
 高斯分布初始化方法：random_normal(shape)
 神经网络模型抽象方法：Cell
@@ -189,5 +189,5 @@ class CNN(Cell):
         return z
 net = CNN()
 ```
-    
+
 上述卷积模型进行实例化，其执行将从\_\_init\_\_开始，第一个是Conv2D，Conv2D也是Cell的子类，会进入到Conv2D的\_\_init\_\_，此时会将第一个Conv2D的卷积参数收集到self.\_params，之后回到Conv2D，将第一个Conv2D收集到self.\_cells；第二个的组件是MaxPool2D，因为其没有训练参数，因此将MaxPool2D收集到self.\_cells；依次类推，分别收集第二个卷积参数和卷积层，三个全连接层的参数和全连接层。实例化之后可以调用net.parameters_and_names来返回训练参数；调用net.cells_and_names查看神经网络层列表。
