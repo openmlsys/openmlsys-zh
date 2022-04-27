@@ -35,7 +35,7 @@ val count = ones.reduce(_+_)
 主流机器学习系统中的数据模块同样也采用了类似的编程抽象，如TensorFlow的数据模块tf.data :cite:`murray2021tf`,
 以及MindSpore的数据模块MindData等。接下来我们以MindData的接口设计为例子来介绍如何面向机器学习这个场景设计好的编程抽象来帮助用户方便的构建模型训练中多种多样的数据处理流水线。
 
-MindData是机器学习系统MindSpore的数据模块，主要负责完成机器学习模型训练中的数据预处理任务，MindData的向用户提供的核心编程抽象为基于Dataset（数据集）的变换处理。这里的Dataset是一个数据帧的概念(Data
+MindData是机器学习系统MindSpore的数据模块，主要负责完成机器学习模型训练中的数据预处理任务，MindData向用户提供的核心编程抽象为基于Dataset（数据集）的变换处理。这里的Dataset是一个数据帧的概念(Data
 Frame)，即一个Dataset为一个多行多列，且每一列都有列名的关系数据表。
 
 ![MindSpore
@@ -56,8 +56,8 @@ Dataset示例](../img/ch07/7.2/dataset_table.png)
 | prefetch             | 从存储介质中预取数据集                                   |
 | project              | 从Dataset数据表中选择一些列用于接下来的处理              |
 | zip                  | 将多个数据集合并为一个数据集                             |
-| repeat               | 多轮次训练中，重复整个数据流水多次。                     |
-| create_dict_iterator | 对数据集创建一个返回字典类型数据的迭代器。               |
+| repeat               | 多轮次训练中，重复整个数据流水多次                       |
+| create_dict_iterator | 对数据集创建一个返回字典类型数据的迭代器                 |
 | ...                  | ...                                                      |
 
 上述描述了数据集的接口抽象，而对数据集的具体操作实际上是由具体的数据算子函数定义。为了方便用户使用，MindData对机器学习领域常见的数据类型及其常见数据处理需求都内置实现了丰富的数据算子库。针对视觉领域，MindData提供了常见的如Decode(解码)、Resize（缩放）、RandomRotation（随机旋转）、Normalize(正规化)以及HWC2CHW（通道转置）等算子；针对文本领域，MindData提供了Ngram、NormalizeUTF8、BertTokenizer等算子；针对语音领域，MindData提供了TimeMasking（时域掩盖）、LowpassBiquad（双二阶滤波器）、ComplexNorm（归一化）等算子；这些常用算子能覆盖用户的绝大部分需求。
@@ -102,7 +102,7 @@ dataset = dataset.map(input_columns="label", operations=onehot_op)
 
 有了基于数据集变换的编程抽象、以及针对机器学习各种数据类型的丰富变换算子支持，我们可以覆盖用户绝大部分的数据处理需求。然而由于机器学习领域本身进展快速，新的数据处理需求不断涌现，可能会有用户想要使用的数据变换算子没有被数据模块覆盖支持到的情况发生。为此我们需要设计良好的用户自定义算子注册机制，使得用户可以方便在构建数据处理流水线时使用自定义的算子。
 
-机器学习场景中，用户的开发编程语言以Python为主，所以我们可以认为用户的自定义算子更多情况下实际上是一个Python函数或者Python类。数据模块支持自定义算子的难度主要由数据模块对计算的调度实现方式有关系，比如Pytorch的dataloader的计算调度主要在Python层面实现，得益于Python语言的灵活性，在dataloader的数据流水中插入自定义的算子相对来说比较容易；而像TensorFlow的tf.data以及MindSpore的MindData的计算调度主要在C++层面实现，这使得数据模块想要灵活的在数据流中插入用户定义的Python算子变得较为有挑战性。接下来我们以MindData中的算子自定义算子注册使用实现为例子展开讨论这部分内容。
+机器学习场景中，用户的开发编程语言以Python为主，所以我们可以认为用户的自定义算子更多情况下实际上是一个Python函数或者Python类。数据模块支持自定义算子的难度主要与数据模块对计算的调度实现方式有关系，比如Pytorch的dataloader的计算调度主要在Python层面实现，得益于Python语言的灵活性，在dataloader的数据流水中插入自定义的算子相对来说比较容易；而像TensorFlow的tf.data以及MindSpore的MindData的计算调度主要在C++层面实现，这使得数据模块想要灵活的在数据流中插入用户定义的Python算子变得较为有挑战性。接下来我们以MindData中的自定义算子注册使用实现为例子展开讨论这部分内容。
 
 ![MindData的C层算子和Python层算子](../img/ch07/7.2/operation.png)
 

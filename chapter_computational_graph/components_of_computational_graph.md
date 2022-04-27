@@ -1,13 +1,13 @@
 ## 计算图的基本构成
 
-计算图是用来表示深度学习网络模型在训练与推理过程中计算逻辑与状态的工具。计算框架在后端会将前端语言构建的神经网络模型前向计算与反向梯度计算以计算图的形式来进行表示。计算图由基本数据结构张量(Tensor)和基本运算单元算子(Operator)构成。在计算图中通常使用节点来表示算子，节点间的有向线段来表示张量状态，同时也描述了计算间的依赖关系。如 :numref:`simpledag`所示，将$\boldsymbol{Z}=relu(\boldsymbol{X}*\boldsymbol{Y})$转化为计算图表示，数据流将根据图中流向与算子进行前向计算和反向梯度计算来更新图中张量状态，以此达到训练模型的目的。
+计算图是用来表示深度学习网络模型在训练与推理过程中计算逻辑与状态的工具。计算框架在后端会将前端语言构建的神经网络模型前向计算与反向梯度计算以计算图的形式来进行表示。计算图由基本数据结构：张量(Tensor)和基本运算单元：算子(Operator)构成。在计算图中通常使用节点来表示算子，节点间的有向线段来表示张量状态，同时也描述了计算间的依赖关系。如 :numref:`simpledag`所示，将$\boldsymbol{Z}=relu(\boldsymbol{X}*\boldsymbol{Y})$转化为计算图表示，数据流将根据图中流向与算子进行前向计算和反向梯度计算来更新图中张量状态，以此达到训练模型的目的。
 
 ![简单计算图](../img/ch03/simpledag.svg)
 :width:`300px`
 :label:`simpledag`
 ### 张量和算子
 
-在计算框架中，基础组件包含张量和算子，张量是基础数据结构，算子是基本运算单元。在数学中定义张量是基于向量与矩阵的推广，涵盖标量、向量与矩阵的概念。可以将标量理解为零阶张量，向量为一阶张量，我们熟悉的RGB彩色图像即为三阶张量。在计算框架中张量不仅存储数据，还存储数据类型、数据形状、维度或秩以及梯度传递状态等多个属性，如表3.2.1所示，列举了主要的属性和功能。
+在计算框架中，基础组件包含张量和算子，张量是基础数据结构，算子是基本运算单元。在数学中定义张量是基于向量与矩阵的推广，涵盖标量、向量与矩阵的概念。可以将标量理解为零阶张量，向量为一阶张量，我们熟悉的RGB彩色图像即为三阶张量。在计算框架中张量不仅存储数据，还存储数据类型、数据形状、维度或秩以及梯度传递状态等多个属性，如:numref:`tensor_attr`所示，列举了主要的属性和功能。
 
 :张量属性
 
@@ -145,7 +145,7 @@ $$
 
 其中$\nabla_{\boldsymbol{X}}\boldsymbol{z}$表示$\boldsymbol{z}$关于$\boldsymbol{X}$的梯度矩阵。
 
-上一小节中简单的循环控制模型前向传播可以表示为$\boldsymbol{Y}=\boldsymbol{W_2}(\boldsymbol{W_1}(\boldsymbol{W}(\boldsymbol{X})))$。在反向传播的过程中可以将前向计算等价为$\boldsymbol{Y}=\boldsymbol{W_2}\boldsymbol{X_2}$，首先得到参数$\boldsymbol{W_2}$的梯度表示。再接着根据$\boldsymbol{X_2}=\boldsymbol{W_1}\boldsymbol{X_1}$得到$\boldsymbol{W_1}$的梯度表示，按照层级即可推导得出$\boldsymbol{W}$的梯度表示。
+上一小节中简单的循环控制模型前向传播可以表示为$\boldsymbol{Y}=\boldsymbol{W_2}(\boldsymbol{W_1}(\boldsymbol{W}(\boldsymbol{X})))$。在反向传播的过程中可以将前向计算等价为$\boldsymbol{Y}=\boldsymbol{W_2}\boldsymbol{X_2}$，首先得到参数$\boldsymbol{W_2}$的梯度表示。再接着根据$\boldsymbol{X_2}=\boldsymbol{W_1}\boldsymbol{X_1}$得到$\boldsymbol{W_1}$的梯度表示，按照层级即可推导得出$\boldsymbol{W}$的梯度表示：
 
 $$
 \begin{aligned}

@@ -5,7 +5,7 @@
 ### 推荐模型
 基于深度学习的推荐模型在过去几年受到了学术界和工业界的高度关注，得到了快速发展。目前主流的推荐模型 :cite:`10.1145/2988450.2988454,10.1145/3124749.3124754,ijcai2017-239,naumov2019deep`的基本结构可以总结如图 :numref:`ch10-recommendation-models`。
 
-![推荐模型的基本结构](../img/ch10/ch10-recommendation-models.svg)
+![推荐模型的基本结构](../img/ch10/ch10-recommendation-models.png)
 :width:`800px`
 :label:`ch10-recommendation-models`
 
@@ -25,7 +25,7 @@ Wide & Deep模型对输入数据进行两部分处理：Wide部分和Deep部分�
 
 在实际的生产环境中，除了推荐模型本身，推荐系统通常包括：数据收集、数据处理、数据存储、模型训练、模型存储、模型评估、推理服务等多个子系统。如图 :numref:`ch10-abstract-recommendation-systems`所示，这些子系统之间分工协作、紧密配合，构成一个从用户反馈、到模型更新、再到新推荐结果生成的闭环。下一小节中将以英伟达（NVIDIA）公司的Merlin开源框架 :cite:`Merlin`为例，概括介绍推荐系统流水线上的组件，并重点介绍模型训练、推理子系统的结构。
 
-![推荐系统的基本组件](../img/ch10/ch10-abstract-recommendation-systems.svg)
+![推荐系统的基本组件](../img/ch10/ch10-abstract-recommendation-systems.png)
 :width:`800px`
 :label:`ch10-abstract-recommendation-systems`
 
