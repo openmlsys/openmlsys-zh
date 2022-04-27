@@ -44,7 +44,7 @@
 
   联邦学习客户端（FL-Client）负责本地数据训练，并在和FL-Server进行通信时，对上传权重进行安全加密。
 
-![联邦学习系统架构图](../img/ch10/ch10-federated-learning-architecture.png)
+![联邦学习系统架构图](../img/ch10/ch10-federated-learning-architecture.svg)
 
 :label:`ch10-federated-learning-architecture`
 
