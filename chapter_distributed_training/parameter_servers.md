@@ -13,7 +13,7 @@ Perception），训练这种神经网络只需要几个GPU即可。而另一方�
 feature）和产品特征（Item
 feature）构成。这些特征往往是大型向量（Vector）。现代推荐系统需要服务数亿的用户，推荐数以千万的商品。假设用户的特征是1MB，而系统需要服务10亿的用户，那么用户的嵌入表就会有1PB的大小。而这个大小远远超过了一个深度学习服务器所具有的内存。假如我们部署大量的昂贵的深度学习服务器来存储海量嵌入表，那么这些服务器上的加速卡的使用率将会极低，无法实现对于硬件的高效利用。
 
-![参数服务器](../img/ch09/ch10-parameter-servers.svg)
+![参数服务器](../img/ch09/ch10-parameter-servers.png)
 :width:`800px`
 :label:`ch10-parameter-servers`
 

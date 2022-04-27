@@ -6,7 +6,7 @@ Centers），以及如何在数据中心中高效实现集合通讯，从而让�
 
 ### 在数据中心的梯度计算
 
-![数据中心](../img/ch09/ch10-datacentre.svg)
+![数据中心](../img/ch09/ch10-datacentre.png)
 :width:`800px`
 :label:`ch10-datacentre`
 
@@ -31,7 +31,7 @@ GPU），而在一个服务器内的多个设备可以通过高速机内网络�
 为了在数据中心中高效完成梯度平均的操作，我们往往会实现
 Allreduce算法。这个算法诞生的背景是：传统计算平均梯度的方法往往是在集群中找出一个设备来收集本地梯度，计算平均梯度，然后再将平均梯度广播到全部的设备。这种做法易于实现，但是其引入了两个问题。首先，多设备共同给这个聚合设备发送数据的时候，在聚合设备上往往会产生严重的带宽不足和网络拥塞。其次，单设备需要负担大量的梯度平均的计算，而受限于单设备上的有限算力，这种平均计算会受限于算力瓶颈。
 
-![Allreduce初始状态和终止状态](../img/ch09/ch10-allreduce-state.svg)
+![Allreduce初始状态和终止状态](../img/ch09/ch10-allreduce-state.png)
 :width:`800px`
 :label:`ch10-allreduce-state`
 
@@ -41,7 +41,7 @@ Allreduce算法。这个算法诞生的背景是：传统计算平均梯度的�
 = 1 + 2 +
 4）。为了计算平均梯度，每个设备只需要在最后将梯度之和除以设备数量即可（分区1的最终结果为7除以3）。
 
-![Allreduce算法的过程](../img/ch09/ch10-allreduce-process.svg)
+![Allreduce算法的过程](../img/ch09/ch10-allreduce-process.png)
 :width:`800px`
 :label:`ch10-allreduce-process`
 

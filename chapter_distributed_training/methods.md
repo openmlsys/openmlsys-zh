@@ -4,7 +4,7 @@
 
 ### 概述
 
-![单节点训练系统](../img/ch09/ch10-single-node.svg)
+![单节点训练系统](../img/ch09/ch10-single-node.png)
 :width:`800px`
 :label:`ch10-single-node`
 
@@ -38,7 +38,7 @@ Parallelism）。
 
 ### 数据并行
 
-![数据并行训练系统](../img/ch09/ch10-data-parallel.svg)
+![数据并行训练系统](../img/ch09/ch10-data-parallel.png)
 :width:`800px`
 :label:`ch10-data-parallel`
 
@@ -65,7 +65,7 @@ Parallelism）。
 另一种内存不足的场景是：模型的总内存需求超过了单设备的内存容量。在这种场景下，假如我们总共有$N$个算子和$M$个设备，我们可以将算子平摊给这$M$个设备，让每个设备仅需负责$N/M$个算子的前向和反向计算，降低设备的内存开销。这种并行方式是模型并行的另一种应用，被称为**算子间并行**（Inter-operator
 Parallelism）。
 
-![模型并行系统：算子间并行](../img/ch09/ch10-model-parallel-inter-op.svg)
+![模型并行系统：算子间并行](../img/ch09/ch10-model-parallel-inter-op.png)
 :width:`800px`
 :label:`ch10-model-parallel-inter-op`
 
@@ -73,7 +73,7 @@ Parallelism）。
 
 ### 混合并行
 
-![混合并行系统](../img/ch09/ch10-hybrid-parallel.svg)
+![混合并行系统](../img/ch09/ch10-hybrid-parallel.png)
 :width:`800px`
 :label:`ch10-hybrid-parallel`
 

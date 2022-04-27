@@ -5,7 +5,7 @@
 然而，当这类系统的运行中，计算图中的下游设备需要长期持续处于空闲状态，等待上游设备的计算完成，才可以开始计算，这极大降低了设备的平均使用率。这种现象被称为模型并行空洞（Model
 Parallelism Bubble）。
 
-![流水线并行系统。注意！图的F和B任务的编号需要更新！](../img/ch09/ch10-pipeline-parallel.svg)
+![流水线并行系统。注意！图的F和B任务的编号需要更新！](../img/ch09/ch10-pipeline-parallel.png)
 :width:`800px`
 :label:`ch10-pipeline-parallel`
 
