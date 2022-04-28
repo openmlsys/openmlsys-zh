@@ -122,16 +122,16 @@ $$\textbf{TCAV}_{Q_{C,k,l}}=\frac{\vert \{\mathbf{x}\in X_{k}:S_{C,k,l}(\mathbf{
 :width:`800px`
 :label:`tb_net`
 
-TB-Net的框架如图 :numref:`tb_net`所示：其中，Step代表步骤，historical代表历史的记录在图谱中的节点。Path extraction代表路径抽取，embedding propagation代表图嵌入向量传导技术，R代表关系矩阵，e代表图谱中的实体节点，pair block代表物品配对块，user response代表用户兴趣反馈向量，update代表更新词向量，concat代表拼接计算。步骤1，TB-Net得到目标项$\tau$，用户$u$和该用户的子图。子图是通过历史点击项集合$I_u$（蓝色部分）来构建生成；步骤2，连接$\tau$和$I_u$之间的路径，提取路径作为双向嵌入传播网络TB-Net的输入。词向量的计算从路径的左侧和右侧传播到中间节点（图中的绿色节点）；步骤3，计算左右两个流向的词向量汇集到同一中间实体的概率。概率用于表示用户对中间实体的喜好程度，并作为解释的依据；步骤4，TB-Net同时输出推荐结果和具有语义级别的解释。
+TB-Net的框架如图 :numref:`tb_net`所示：其中，$i_c$代表待推荐物品，$h_n$代表历史记录中用户交互的物品，$r$和$e$代表图谱中的关系（relation）和实体（entity），它们的向量化表达拼接在一起形成关系矩阵和实体矩阵。首先，TB-Net通过$i_c$和$h_n$的相同特征值来构建用户$u$的子图谱，每一对$i_c$和$h_n$都由关系和实体所组成的路径来连接。然后，TB-Net的路径双向传导方法将物品、实体和关系向量的计算从路径的左侧和右侧分别传播到中间节点，即计算左右两个流向的向量汇集到同一中间实体的概率。该概率用于表示用户对中间实体的喜好程度，并作为解释的依据。最后，TB-Net识别子图谱中关键路径（即关键实体和关系），输出推荐结果和具有语义级别的解释。
 
-以游戏推荐为场景，随机对一个用户推荐新的游戏，如图 :numref:`xai_kg_recommendataion`所示，其中Half-Life, DOTA 2, Team Fortress 2等为游戏名称。关系属性中，game.year 代表游戏发行年份，game.genres代表游戏属性，game.developer代表游戏的开发商，game.categories代表游戏分类。属性节点中，MOBA代表多人在线战术竞技游戏，valve代表威尔乌游戏公司，action代表动作类，Multi-player代表多人游戏，Valve Anti-Cheat enabled代表威尔乌防作弊类，Free代表免费，Cross-Platform代表跨平台。左边的游戏是从训练数据中选取的评分项。而测试数据中正确推荐的游戏是“Team Fortress 2”。
+以游戏推荐为场景，随机对一个用户推荐新的游戏，如图 :numref:`xai_kg_recommendation`所示，其中Half-Life, DOTA 2, Team Fortress 2等为游戏名称。关系属性中，game.year 代表游戏发行年份，game.genres代表游戏属性，game.developer代表游戏的开发商，game.categories代表游戏分类。属性节点中，MOBA代表多人在线战术竞技游戏，Valve代表威尔乌游戏公司，Action代表动作类，Multi-player代表多人游戏，Valve Anti-Cheat enabled代表威尔乌防作弊类，Free代表免费，Cross-Platform代表跨平台。右边的游戏是用户历史记录中玩过的游戏。而测试数据中正确推荐的游戏是“Team Fortress 2”。
 
 ![Steam游戏推荐可解释示例 （用户玩过的游戏: Half-Life, DOAT 2. 推荐命中的游戏: “Team Fortress 2”。具有属性信息的节点如，game.geners: Action, free-to-play; game.developer: Valve; game.categories:
-Multiplayer, MOBA.）](../img/ch11/xai_kg_recommendataion.png)
+Multiplayer, MOBA.）](../img/ch11/xai_kg_recommendation.png)
 :width:`800px`
-:label:`xai_kg_recommendataion`
+:label:`xai_kg_recommendation`
 
-在图 :numref:`xai_kg_recommendataion`中，有两个突出显示的相关概率（38.6%, 21.1%），它们是在推荐过程中模型计算的路径被激活的概率。实线箭头突出显示从“Team Fortress 2”到历史项目“Half-Life”之间的路径。它表明TB-Net能够通过各种关系连接向用户推荐物品，并输出关键因素作为解释。因此，将“Team Fortress 2”推荐给用户的解释可以翻译成固定话术：“Team Fortress 2”是游戏公司“Valve”开发的一款动作类、多人在线、射击类“action”电子游戏。这与用户历史玩过的游戏“Half-Life”有高度关联。
+在图 :numref:`xai_kg_recommendation`中，有两个突出显示的相关概率（38.6%, 21.1%），它们是在推荐过程中模型计算的关键路径被激活的概率。红色箭头突出显示从“Team Fortress 2”到历史项目“Half-Life”之间的关键路径。它表明TB-Net能够通过各种关系连接向用户推荐物品，并找出关键路径作为解释。因此，将“Team Fortress 2”推荐给用户的解释可以翻译成固定话术：“Team Fortress 2”是游戏公司“Valve”开发的一款动作类、多人在线、射击类电子游戏。这与用户历史玩过的游戏“Half-Life”有高度关联。
 
 
 ## 未来可解释AI
