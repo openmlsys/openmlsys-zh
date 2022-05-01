@@ -4,8 +4,9 @@
 
 ### 常见算子
 
-主流的并行计算库一般会针对
+在分布式内存模型（Distributed Memory Model）中，一些常见的进程间数据交互模式由硬件支持和并行算法的内在性质而涌现。因此，主流的并行计算架构标准（例如MPI）和机器学习系统的底层集合通讯库（例如gloo，NCCL）通常会支持数个经典的算子并针对其做优化，一般包括Broadcast，Reduce，AllGather，ReduceScatter 和 Allreduce。在一个基于 :cite:`Sanders2019-cq` 的简化理论模型下，可以对这些算子的特性进行简单的介绍并探讨具体的实现方法和计算开销。
 
+#### 基本定义
 #### Broadcast
 #### Reduce
 #### AllGather
@@ -59,11 +60,6 @@ Allreduce算子会把梯度的计算拆分成$M-1$个Reduce算子和$M-1$个Broa
 
 接下来，Allreduce算法将进入Broadcast阶段。这一阶段的过程和Reduce算子类似，核心区别是节点进行配对后，他们不再进行数据相加，而是将Reduce的计算结果进行广播。在 :numref:`ch10-allreduce-process`  中的第一个Broadcast算子中，设备1会将分区2的结果14直接写入设备3的分区2中。设备2会讲分区3的结果21直接写入设备1中。设备3会将分区1的结果直接写入设备2中。在一个3个节点的Allreduce集群中，我们会重复2次Broadcast算子来将每个分区的Reduce结果告知全部的节点。
 
-
-:cite:`nvidia-nccl`
-
-:cite:`10.1007/978-3-030-50743-5_3`
-
 ### Allreduce 与网络拓扑
 
 从上文中可知，Allreduce算子在计算中需要一种方法把不同的节点进行配对。在网络拓扑结构（Network Topology）不同的情况下，配对方法的选择会对实际计算效率产生较大的影响。在大型深度学习系统中，基于英伟达GPU的集合通信库NCCL (:cite:`nvidia-nccl`) 针对多变的网络拓扑设定了三种Allreduce的算法变种，分别为树形（Tree), 环形（Ring）以及CollNet。在实际运行该库时，系统会默认对当前环境进行校准，并选择在测试样例上速度最快的算法变种。
@@ -71,6 +67,7 @@ Allreduce算子会把梯度的计算拆分成$M-1$个Reduce算子和$M-1$个Broa
 #### 树形结构
 #### 环形结构
 #### CollNet 算法
+:cite:`10.1007/978-3-030-50743-5_3`
 
 ### 带宽计算
 
@@ -81,9 +78,14 @@ Allreduce算子会把梯度的计算拆分成$M-1$个Reduce算子和$M-1$个Broa
 
 ### 使用方法
 
+针对不同的集群性质，现代机器学习系统往往会灵活应用不同集合通讯算子的组合来最大化通信效率。这里，我们提供了两个具体的案例分析，分别为英伟达的Megatron-LM 以及 OpenAI 的 DALL—E
 
+#### Megatron-LM
+#### DALL-E
 
 ### 集合通信与机器学习系统
+
+最后，集合通信已经被深度集成到了整个机器学习系统
 
 不同的集合通信算子已经被常见的分布式训练框架（包括Horovod, KungFu, TensorFlow distributed, PyTorch distributed）等支持。当用户选择使用数据并行模式的过程，其底层会默认触发。
 
