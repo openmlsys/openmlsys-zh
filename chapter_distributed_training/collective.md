@@ -89,6 +89,6 @@ Allreduce算子会把梯度的计算拆分成$M-1$个Reduce算子和$M-1$个Broa
 
 不同的集合通信算子已经被常见的分布式训练框架（包括Horovod, KungFu, TensorFlow distributed, PyTorch distributed）等支持。当用户选择使用数据并行模式的过程，其底层会默认触发。
 
-#### 集合通信的实现
+#### 集合通信的抽象
 #### 支持集合通信的深度学习框架与调用方法
 
