@@ -69,6 +69,10 @@ Allreduce算法已经被常见的分布式训练框架（包括Horovod, KungFu, 
 distributed, PyTorch
 distributed）等支持。当用户选择使用数据并行模式的过程，其底层会默认触发。
 
+:cite:`nvidia-nccl`
+
+:cite:`10.1007/978-3-030-50743-5_3`
+
 ### Allreduce 算法与网络拓扑
 #### 树形结构
 #### 环形结构

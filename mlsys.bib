@@ -836,3 +836,41 @@ series = {PPoPP '21}
     pages = "113--120",
     abstract = "Transformer and its variants have achieved great success in natural language processing. Since Transformer models are huge in size, serving these models is a challenge for real industrial applications. In this paper, we propose , a highly efficient inference library for models in the Transformer family. includes a series of GPU optimization techniques to both streamline the computation of Transformer layers and reduce memory footprint. supports models trained using PyTorch and Tensorflow. Experimental results on standard machine translation benchmarks show that achieves up to 14x speedup compared with TensorFlow and 1.4x speedup compared with , a concurrent CUDA implementation. The code will be released publicly after the review.",
 }
+
+@misc{nvidia-nccl,
+    title={Nvidia Collective Communications Library (NCCL)},
+    url={https://developer.nvidia.com/nccl},
+    author={NVIDIA},
+    year={2022}, month={Feb}
+} 
+
+@inproceedings{10.1007/978-3-030-50743-5_3,
+    author="Graham, Richard L.
+    and Levi, Lion
+    and Burredy, Devendar
+    and Bloch, Gil
+    and Shainer, Gilad
+    and Cho, David
+    and Elias, George
+    and Klein, Daniel
+    and Ladd, Joshua
+    and Maor, Ophir
+    and Marelli, Ami
+    and Petrov, Valentin
+    and Romlet, Evyatar
+    and Qin, Yong
+    and Zemah, Ido",
+    editor="Sadayappan, Ponnuswamy
+    and Chamberlain, Bradford L.
+    and Juckeland, Guido
+    and Ltaief, Hatem",
+    title="Scalable Hierarchical Aggregation and Reduction Protocol (SHARP)TM Streaming-Aggregation Hardware Design and Evaluation",
+    booktitle="High Performance Computing",
+    year="2020",
+    publisher="Springer International Publishing",
+    address="Cham",
+    pages="41--59",
+    abstract="This paper describes the new hardware-based streaming-aggregation capability added to Mellanox's Scalable Hierarchical Aggregation and Reduction Protocol in its HDR InfiniBand switches. For large messages, this capability is designed to achieve reduction bandwidths similar to those of point-to-point messages of the same size, and complements the latency-optimized low-latency aggregation reduction capabilities, aimed at small data reductions. MPI{\_}Allreduce() bandwidth measured on an HDR InfiniBand based system achieves about 95{\%} of network bandwidth. For medium and large data reduction this also improves the reduction bandwidth by a factor of 2--5 relative to host-based (e.g., software-based) reduction algorithms. Using this capability also increased DL-Poly and PyTorch application performance by as much as 4{\%} and 18{\%}, respectively. This paper describes SHARP Streaming-Aggregation hardware architecture and a set of synthetic and application benchmarks used to study this new reduction capability, and the range of data sizes for which Streaming-Aggregation performs better than the low-latency aggregation algorithm.",
+    isbn="978-3-030-50743-5"
+}
+
