@@ -29,17 +29,17 @@
 
 对于NCHW的数据是先取W轴方向数据，再取H轴方向数据，再取C轴方向，最后取N轴方向。其中物理存储与逻辑存储的之间的映射关系为
 $$offsetnchw(n,c,h,w) = n*CHW + c*HW + h*W +w$$
-如 :numref:`nchw`所示，这种格式中，是按照最低维度W轴方向进行展开，W轴相邻的元素在内存排布中同样是相邻的。如果需要取下一个图片上的相同位置的元素，就必须跳过整个图像的尺寸（$C*H*W$）。比如我有8张32\*32的RGB图像，此时$N=8,C=3,H=32,W=32$。在内存中存储们需要先按照W轴方向进行展开，然后按照H轴排列，这样之后便完成了一个通道的处理，之后按照同样的方式处理下一个通道。处理完全部通道后，处理下一张图片。PyTorch和MindSpore框架默认使用NCHW格式。
+如 :numref:`nchw`所示，这种格式中，是按照最低维度W轴方向进行展开，W轴相邻的元素在内存排布中同样是相邻的。如果需要取下一个图片上的相同位置的元素，就必须跳过整个图像的尺寸（$C*H*W$）。比如我有8张32\*32的RGB图像，此时$N=8,C=3,H=32,W=32$。在内存中存储它们需要先按照W轴方向进行展开，然后按照H轴排列，这样之后便完成了一个通道的处理，之后按照同样的方式处理下一个通道。处理完全部通道后，处理下一张图片。PyTorch和MindSpore框架默认使用NCHW格式。
 
 ![RGB图片下的NHWC数据格式](../img/ch05/nchw.png)
 :width:`800px`
 :label:`nchw`
 
 类似的NHWC数据格式是先取C方向数据，再取W方向，然后是H方向，最后取N方向。NHWC是Tensorflow默认的数据格式。这种格式在PyTorch中称为Chanel-Last。
-$$offsetnchw(n,c,h,w) = n*HWC + h*HW + w*C +c$$
+$$offsetnhwc(n,h,w,c) = n*HWC + h*WC + w*C +c$$
  :numref:`nchwandnhwc`展示了不同数据格式下逻辑排布到内存物理侧数据排布的映射。\[x:1\]代表从最内侧维度到最下一维度的索引变换。比如\[a:1\]表示当前行W轴结束后，下一个H轴排布。\[b:1\]表示最内侧C轴排布完成后进行按照W轴进行排列。
 
-![NHWC与NHWC数据存储格式](../img/ch05/nchwandnhwc.png)
+![NCHW与NHWC数据存储格式](../img/ch05/nchwandnhwc.png)
 :width:`800px`
 :label:`nchwandnhwc`
 
@@ -56,7 +56,7 @@ Precision）浮点表示。这种数据类型占用32位内存。还有一种精
 :width:`800px`
 :label:`floatdtype`
 
-如 :numref:`floatdtype`其中sign代表符号位，占1位，表示了机器数的正负，exponent表示指数位，Mantissa为尾数位。其数据计算采用二进制的科学计数法转换为十进制的计算方式如下：
+如 :numref:`floatdtype`其中sign代表符号位，占1位，表示了机器数的正负，exponent表示指数位，Mantissa为尾数位。其中float16类型的数据采用二进制的科学计数法转换为十进制的计算方式如下：
 $$(-1)^{sign}\times 2^{exponent-15}\times (\frac{mantissa}{1024}+1)$$
 其中如果指数位全为0时，且尾数位全为0时表示数字0。
 如果指数位全为0，尾数位不全为0则表示一个非常小的数值。

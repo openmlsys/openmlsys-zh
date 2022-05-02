@@ -36,7 +36,9 @@
 
 第13章 - 可解释性AI系统：[@HaoyangLee](https://github.com/HaoyangLee)
 
-附录：机器学习介绍：[@zsdonghao](https://github.com/zsdonghao)
+第14章 - 机器人学习系统：[@Jack](https://github.com/Jiankai-Sun)
+
+附录：机器学习介绍：[@Hao](https://github.com/zsdonghao)
 
 ## 加入我们
 

@@ -76,7 +76,7 @@ outputs = pipe.run()
 :width:`800px`
 :label:`distributed_data_preprocess_based_on_3rd_party_software`
 
-该方案虽然再业内被广泛使用，却面临着三个问题：
+该方案虽然在业内被广泛使用，却面临着三个问题：
 
 -   由于数据处理和数据训练采用不同的框架，使得用户为此常常需要在两个不同的框架中编写不同语言的程序，增加了用户的使用负担。
 
