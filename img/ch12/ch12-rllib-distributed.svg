@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="272.17957mm"
+   height="140.78094mm"
+   viewBox="0 0 272.17956 140.78095"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.1 (1:1.1+202109281949+c3084ef5ed)"
+   sodipodi:docname="rllib_dist1.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="0.45291836"
+     inkscape:cx="442.68464"
+     inkscape:cy="325.66576"
+     inkscape:window-width="1848"
+     inkscape:window-height="1136"
+     inkscape:window-x="72"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1-2" />
+  <defs
+     id="defs2">
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path17874" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Lend"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path17850" />
+    </marker>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-2.8301877,53.170878)">
+    <g
+       inkscape:label="Layer 1"
+       id="layer1-2"
+       transform="translate(27.267558,-90.996319)">
+      <rect
+         style="fill:#ff0000;fill-opacity:0;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+         id="rect2439"
+         width="117.86252"
+         height="67.372093"
+         x="-23.93737"
+         y="79.646179"
+         ry="7.9062257" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="-17.67737"
+         y="117.43518"
+         id="text3785"><tspan
+           sodipodi:role="line"
+           id="tspan3783"
+           style="stroke-width:0.264583"
+           x="-17.67737"
+           y="117.43518">训练器</tspan></text>
+      <rect
+         style="fill:#ff0000;fill-opacity:0;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+         id="rect2439-8"
+         width="54.641663"
+         height="25.560568"
+         x="30.502342"
+         y="82.889626"
+         ry="2.9995747" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="46.489758"
+         y="98.735794"
+         id="text3785-5"><tspan
+           sodipodi:role="line"
+           id="tspan3783-0"
+           style="stroke-width:0.264583"
+           x="46.489758"
+           y="98.735794">拼接</tspan></text>
+      <rect
+         style="fill:#ff0000;fill-opacity:0;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+         id="rect2439-8-9"
+         width="54.641663"
+         height="25.560568"
+         x="30.239189"
+         y="117.45507"
+         ry="2.9995747" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="41.634937"
+         y="133.92754"
+         id="text3785-5-6"><tspan
+           sodipodi:role="line"
+           id="tspan3783-0-3"
+           style="stroke-width:0.264583"
+           x="41.634937"
+           y="133.92754">学习器</tspan></text>
+      <rect
+         style="fill:#ff0000;fill-opacity:0;stroke:#000000;stroke-width:1;stroke-linejoin:round"
+         id="rect2439-9-8"
+         width="89.30571"
+         height="38.476437"
+         x="146.70959"
+         y="72.034241"
+         ry="4.5152731" />
+      <rect
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linejoin:round"
+         id="rect2439-9-0"
+         width="89.30571"
+         height="38.476437"
+         x="152.25026"
+         y="78.543053"
+         ry="4.5152731" />
+      <rect
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linejoin:round"
+         id="rect2439-9"
+         width="89.30571"
+         height="38.476437"
+         x="157.93648"
+         y="85.490364"
+         ry="4.5152731" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="175.90797"
+         y="108.62353"
+         id="text3785-3"><tspan
+           sodipodi:role="line"
+           id="tspan3783-9"
+           style="stroke-width:0.264583"
+           x="175.90797"
+           y="108.62353">采样工作者</tspan></text>
+      <path
+         style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Mend)"
+         d="m 59.266346,143.17388 -0.137708,18.93118 146.731042,1.06734 0.17197,-37.75235"
+         id="path17845"
+         sodipodi:nodetypes="cccc" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 59.75092,108.92605 0.03189,8.81987"
+         id="path18293" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Mend)"
+         d="M 205.96492,71.048464 206.19379,39.397006 58.50728,38.32907 58.51278,81.318156"
+         id="path18295"
+         sodipodi:nodetypes="cccc" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="19.942596"
+         y="69.28083"
+         id="text19014"><tspan
+           sodipodi:role="line"
+           id="tspan19012"
+           style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Italic';stroke-width:0.264583"
+           x="19.942596"
+           y="69.28083">批样本</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="158.9675"
+         y="140.5659"
+         id="text19014-1"><tspan
+           sodipodi:role="line"
+           id="tspan19012-1"
+           style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Italic';stroke-width:0.264583"
+           x="158.9675"
+           y="140.5659">新的权重</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="109.50063"
+         y="157.80412"
+         id="text19014-1-5"><tspan
+           sodipodi:role="line"
+           id="tspan19012-1-9"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:sans-serif;fill:#008000;stroke-width:0.264583"
+           x="109.50063"
+           y="157.80412">同步广播</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="109.03542"
+         y="51.166973"
+         id="text19014-1-5-8"><tspan
+           sodipodi:role="line"
+           id="tspan19012-1-9-4"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:sans-serif;fill:#008000;stroke-width:0.264583"
+           x="109.03542"
+           y="51.166973">同步采样</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="63.407452"
+         y="177.3765"
+         id="text19014-8"><tspan
+           sodipodi:role="line"
+           id="tspan19012-5"
+           style="stroke-width:0.264583"
+           x="63.407452"
+           y="177.3765">同步采样（如A2C, PG, PPO）</tspan></text>
+    </g>
+  </g>
+</svg>
