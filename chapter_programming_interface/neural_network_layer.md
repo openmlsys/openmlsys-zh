@@ -45,11 +45,11 @@
 :label:`pooling`
 
 有了卷积、池化、全连接组件就可以构建一个非常简单的卷积神经网络了， :numref:`nn_network`展示了一个卷积神经网络的模型结构。
-给定输入$3 \times 64 \times 64$的彩色图片，使用16个$3 \times 3$大小的卷积核做卷积，得到大小为$16 \times 64 \times 64$；
+给定输入$3 \times 64 \times 64$的彩色图片，使用16个$3 \times 3 \times 3$大小的卷积核做卷积，得到大小为$16 \times 64 \times 64$的特征图；
 再进行池化操作降维，得到大小为$16 \times 32 \times 32$的特征图；
-对特征图再卷积得到大小为$32 \times 32 \times 32$特征图，再进行池化操作得到$3 \times 16 \times 16$大小的特征图；
-我们需要对特征图做全连接，此时需要把特征图平铺成一维向量这部操作称为Flatten，压平后输入特征大小为$3\times 16 \times 16 = 768$；
-之后做一次全连接对大小为768特征变换到大小为128的特征，再依次做两次全连接分别得到64，10。
+对特征图再卷积得到大小为$32 \times 32 \times 32$特征图，再进行池化操作得到$32 \times 16 \times 16$大小的特征图；
+我们需要对特征图做全连接，此时需要把特征图平铺成一维向量这步操作称为Flatten，压平后输入特征大小为$32\times 16 \times 16 = 8192$；
+之后做一次全连接对大小为8192特征变换到大小为128的特征，再依次做两次全连接分别得到64，10。
 这里最后的输出结果是依据自己的实际问题而定，假设我们的输入是包含$0 \sim 9$的数字图片，做分类那输出对应是10个概率值，分别对应$0 \sim 9$的概率大小。
 
 ![卷积神经网络模型](../img/ch02/nn_network.svg)
@@ -69,18 +69,18 @@ input:(3,64,64)大小的图片
 # 创建卷积模型的训练变量,使用随机数初始化变量值
 conv1_filters = variable(random(size=(3, 3, 3, 16)))
 conv2_filters = variable(random(size=(3, 3, 16, 32)))
-fc1_weights = variable(random(size=(768, 128)))
+fc1_weights = variable(random(size=(8192, 128)))
 fc2_weights = variable(random(size=(128, 64)))
 fc3_weights = variable(random(size=(64, 10)))
 # 将所有需要训练的参数收集起来
 all_weights = [conv1_filters, conv2_filters, fc1_weights, fc2_weights, fc3_weights]
 
 # 构建卷积模型的连接过程
-output = convolution(input, conv1_filters, stride=1, padding=0)
-output = pooling(output, kernel_size=3, stride=1, padding=0, mode='max')
-output = convolution(output, conv2_filters, stride=1, padding=0)
-output = pooling(output, kernel_size=3, stride=1, padding=0, mode='max')
-output=flatten(output)
+output = convolution(input, conv1_filters, stride=1, padding='same')
+output = pooling(output, kernel_size=3, stride=2, padding='same', mode='max')
+output = convolution(output, conv2_filters, stride=1, padding='same')
+output = pooling(output, kernel_size=3, stride=2, padding='same', mode='max')
+output = flatten(output)
 output = fully_connected(output, fc1_weights)
 output = fully_connected(output, fc2_weights)
 output = fully_connected(output, fc3_weights)
@@ -89,7 +89,7 @@ output = fully_connected(output, fc3_weights)
 随着深度神经网络应用领域的扩大，诞生出了丰富的模型构建组件。在卷积神经网络的计算过程中，前后的输入是没有联系的，然而在很多任务中往往需要处理序列信息，如语句、语音、视频等，为了解决此类问题诞生出循环神经网络（Recurrent Neural Network，RNN）；
 循环神经网络很好的解决了序列数据的问题，但是随着序列的增加，长序列又导致了训练过程中梯度消失和梯度爆炸的问题，因此有了长短期记忆（Long Short-term Memory，LSTM）；
 在语言任务中还有Seq2Seq它将RNN当成编解码（Encoder-Decoder）结构的编码器（Encoder）和解码器（Decode）；
-在解码器中又常常使用注意力机制（Attention）;基于编解码器和注意力机制又有Transformer；
+在解码器中又常常使用注意力机制（Attention）；基于编解码器和注意力机制又有Transformer；
 Transformer又是BERT模型架构的重要组成。随着深度神经网络的发展，未来也会诞生各类模型架构，架构的创新可以通过各类神经网络基本组件的组合来实现。
 
 ### 神经网络层的实现原理
@@ -107,7 +107,7 @@ PyTorch提供的torch.nn.Module、torch.nn.Conv2d、torch.utils.data.Dataset。
 Cell和Module是模型抽象方法也是所有网络的基类。
 现有模型抽象方案有两种。
 一种是抽象出两个方法分别为Layer（负责单个神经网络层的参数构建和前向计算），Model（负责对神经网络层进行连接组合和神经网络层参数管理）；
-另一种是将Layer和Modle抽象成一个方法，该方法既能表示单层神经网络层也能表示包含多个神经网络层堆叠的模型，Cell和Module就是这样实现的。
+另一种是将Layer和Model抽象成一个方法，该方法既能表示单层神经网络层也能表示包含多个神经网络层堆叠的模型，Cell和Module就是这样实现的。
 
 ![神经网络模型构建细节](../img/ch02/model_build.svg)
 :width:`800px`
@@ -119,7 +119,7 @@ Cell和Module是模型抽象方法也是所有网络的基类。
 :width:`800px`
 :label:`cell_abs`
 
-神经网络接口层基类实现，仅做了简化的描述，在实际实现时，执行计算的\_\_call\_\_方法并不会让用户直接重载，它往往在\_\_call\_\_之外定义一个执行操作的方法（对于神经网络模型该方法是实现网络结构的连接，对于神经网络层则是实现计算过程）后然后在\_\_call\_\_调用；如MindSpore的Cell因为动态图和静态图的执行是不一样的，因此在\_\_call\_\_里定义动态图和计算图的计算执行，在construct方法里定义层或者模型的操作过程。
+神经网络接口层基类实现，仅做了简化的描述，在实际实现时，执行计算的\_\_call\_\_方法并不会让用户直接重载，它往往在\_\_call\_\_之外定义一个执行操作的方法（对于神经网络模型该方法是实现网络结构的连接，对于神经网络层则是实现计算过程）后再\_\_call\_\_调用；如MindSpore的Cell因为动态图和静态图的执行是不一样的，因此在\_\_call\_\_里定义动态图和计算图的计算执行，在construct方法里定义层或者模型的操作过程。
 
 ### 自定义神经网络层
 
@@ -127,7 +127,7 @@ Cell和Module是模型抽象方法也是所有网络的基类。
 
 ```python
 # 接口定义：
-全连接层接口：convolution(input, filters, stride, padding)
+卷积层的接口：convolution(input, filters, stride, padding)
 变量：Variable(value, trainable=True)
 高斯分布初始化方法：random_normal(shape)
 神经网络模型抽象方法：Cell
@@ -146,7 +146,8 @@ class Conv2D(Cell):
 ```
 
 有了上述定义在使用卷积层时，就不需要创建训练变量了。
-如我们需要对$30 \times 30$大小10个通道的输入使用$3 \times 3$的卷积核做卷积，卷积后输出通道为20调用方式如下：
+如我们需要对$30 \times 30$大小10个通道的输入使用$3 \times 3$的卷积核做卷积，卷积后输出通道为20。
+调用方式如下：
 ```python
 conv = Conv2D(in_channel=10, out_channel=20, filter_size=3, stride=2, padding=0)
 output = conv(input)
@@ -189,5 +190,5 @@ class CNN(Cell):
         return z
 net = CNN()
 ```
-    
+
 上述卷积模型进行实例化，其执行将从\_\_init\_\_开始，第一个是Conv2D，Conv2D也是Cell的子类，会进入到Conv2D的\_\_init\_\_，此时会将第一个Conv2D的卷积参数收集到self.\_params，之后回到Conv2D，将第一个Conv2D收集到self.\_cells；第二个的组件是MaxPool2D，因为其没有训练参数，因此将MaxPool2D收集到self.\_cells；依次类推，分别收集第二个卷积参数和卷积层，三个全连接层的参数和全连接层。实例化之后可以调用net.parameters_and_names来返回训练参数；调用net.cells_and_names查看神经网络层列表。

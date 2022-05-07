@@ -5,6 +5,7 @@
 :maxdepth: 2
 :numbered:
 
+chapter_preface/index
 chapter_introduction/index
 chapter_programming_interface/index
 chapter_computational_graph/index
@@ -24,6 +25,7 @@ chapter_recommender_system/index
 chapter_federated_learning/index
 chapter_reinforcement_learning/index
 chapter_explainable_AI/index
+chapter_rl_sys/index
 
 ```
 

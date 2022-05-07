@@ -439,6 +439,15 @@ series = {ADKDD'14}
   note = {\url{http://www.nvidia.com/object/volta-architecture-whitepaper.html}}
 }
 
+@inproceedings{2021Ascend,
+  title={Ascend: a Scalable and Unified Architecture for Ubiquitous Deep Neural Network Computing : Industry Track Paper},
+  author={Liao, Heng and Tu, Jiajin and Xia, Jing and Liu, Hu and Zhou, Xiping and Yuan, Honghui and Hu, Yuxing},
+  booktitle={2021 IEEE International Symposium on High-Performance Computer Architecture (HPCA)},
+  year={2021},
+  pages = {789–801},
+  doi = {10.1109/HPCA51647.2021.00071},
+}
+
 @article{2018Modeling,
   title={Modeling Deep Learning Accelerator Enabled GPUs},
   author={Raihan, M. A. and Goli, N. and Aamodt, T.},
@@ -739,6 +748,89 @@ location = {Halifax, NS, Canada},
 series = {ADKDD'17}
 }
 
+@inproceedings{fedavg,
+  author    = {Brendan McMahan and
+               Eider Moore and
+               Daniel Ramage and
+               Seth Hampson and
+               Blaise Ag{\"{u}}era y Arcas},
+  title     = {Communication-Efficient Learning of Deep Networks from Decentralized
+               Data},
+  booktitle = {Proceedings of the 20th International Conference on Artificial Intelligence
+               and Statistics, {AISTATS} 2017, 20-22 April 2017, Fort Lauderdale,
+               FL, {USA}},
+  series    = {Proceedings of Machine Learning Research},
+  volume    = {54},
+  pages     = {1273--1282},
+  publisher = {{PMLR}},
+  year      = {2017},
+  url       = {http://proceedings.mlr.press/v54/mcmahan17a.html},
+}
+
+@inproceedings{scaffold,
+  title={Scaffold: Stochastic controlled averaging for federated learning},
+  author={Karimireddy, Sai Praneeth and Kale, Satyen and Mohri, Mehryar and Reddi, Sashank and Stich, Sebastian and Suresh, Ananda Theertha},
+  booktitle={International Conference on Machine Learning},
+  pages={5132--5143},
+  year={2020},
+  organization={PMLR}
+}
+
+@article{FedDF,
+  title={Ensemble distillation for robust model fusion in federated learning},
+  author={Lin, Tao and Kong, Lingjing and Stich, Sebastian U and Jaggi, Martin},
+  journal={Advances in Neural Information Processing Systems},
+  volume={33},
+  pages={2351--2363},
+  year={2020}
+}
+
+@inproceedings{PATE,
+  author    = {Nicolas Papernot and
+               Mart{\'{\i}}n Abadi and
+               {\'{U}}lfar Erlingsson and
+               Ian J. Goodfellow and
+               Kunal Talwar},
+  title     = {Semi-supervised Knowledge Transfer for Deep Learning from Private
+               Training Data},
+  booktitle = {5th International Conference on Learning Representations, {ICLR} 2017,
+               Toulon, France, April 24-26, 2017, Conference Track Proceedings},
+  publisher = {OpenReview.net},
+  year      = {2017},
+}
+
+@inproceedings{FedProx,
+  title={Federated optimization in heterogeneous networks},
+  author={Li, Tian and Sahu, Anit Kumar and Zaheer, Manzil and Sanjabi, Maziar and Talwalkar, Ameet and Smith, Virginia},
+  booktitle={Proceedings of Machine Learning and Systems},
+  volume={2},
+  pages={429--450},
+  year={2020}
+}
+
+@inproceedings{FedBE,
+  author    = {Hong{-}You Chen and
+               Wei{-}Lun Chao},
+  title     = {FedBE: Making Bayesian Model Ensemble Applicable to Federated Learning},
+  booktitle = {9th International Conference on Learning Representations, {ICLR} 2021,
+               Virtual Event, Austria, May 3-7, 2021},
+  year      = {2021},
+}
+
+@article{FedAvg_Momentum,
+  author    = {Tzu{-}Ming Harry Hsu and
+               Hang Qi and
+               Matthew Brown},
+  title     = {Measuring the Effects of Non-Identical Data Distribution for Federated
+               Visual Classification},
+  journal   = {CoRR},
+  volume    = {abs/1909.06335},
+  year      = {2019},
+  url       = {http://arxiv.org/abs/1909.06335},
+  eprinttype = {arXiv},
+  eprint    = {1909.06335},
+}
+
 @inproceedings{ijcai2017-239,
   author    = {Huifeng Guo and Ruiming TANG and Yunming Ye and Zhenguo Li and Xiuqiang He},
   title     = {DeepFM: A Factorization-Machine based Neural Network for CTR Prediction},
@@ -755,4 +847,643 @@ series = {ADKDD'17}
   author={Naumov, Maxim and Mudigere, Dheevatsa and Shi, Hao-Jun Michael and Huang, Jianyu and Sundaraman, Narayanan and Park, Jongsoo and Wang, Xiaodong and Gupta, Udit and Wu, Carole-Jean and Azzolini, Alisson G and others},
   journal={arXiv preprint arXiv:1906.00091},
   year={2019}
+}
+
+@inproceedings{NIPS2015_86df7dcf,
+ author = {Sculley, D. and Holt, Gary and Golovin, Daniel and Davydov, Eugene and Phillips, Todd and Ebner, Dietmar and Chaudhary, Vinay and Young, Michael and Crespo, Jean-Fran\c{c}ois and Dennison, Dan},
+ booktitle = {Advances in Neural Information Processing Systems},
+ editor = {C. Cortes and N. Lawrence and D. Lee and M. Sugiyama and R. Garnett},
+ pages = {},
+ publisher = {Curran Associates, Inc.},
+ title = {Hidden Technical Debt in Machine Learning Systems},
+ url = {https://proceedings.neurips.cc/paper/2015/file/86df7dcfd896fcaf2674f757a2463eba-Paper.pdf},
+ volume = {28},
+ year = {2015}
+}
+
+@misc{Merlin,
+    note={Accessed on 2022-03-24},
+    author = {NVIDIA},
+    year = {2022},
+    title = {{{NVIDIA Merlin}}},
+    howpublished = {\url{https://github.com/NVIDIA-Merlin/Merlin}},
+}
+
+@misc{NVTabular,
+    note={Accessed on 2022-03-24},
+    author = {NVIDIA},
+    year = {2022},
+    title = {{{NVIDIA NVTabular}}},
+    howpublished = {\url{https://github.com/NVIDIA-Merlin/NVTabular}},
+}
+
+@misc{HugeCTR,
+    note={Accessed on 2022-03-24},
+    author = {NVIDIA},
+    year = {2022},
+    title = {{{NVIDIA HugeCTR}}},
+    howpublished = {\url{https://github.com/NVIDIA-Merlin/HugeCTR}},
+}
+
+@misc{Triton,
+    note={Accessed on 2022-03-24},
+    author = {NVIDIA},
+    year = {2022},
+    title = {{{NVIDIA Triton}}},
+    howpublished = {\url{https://github.com/triton-inference-server/server}},
+}
+
+@inproceedings{10.1145/3437801.3441578,
+author = {Fang, Jiarui and Yu, Yang and Zhao, Chengduo and Zhou, Jie},
+title = {TurboTransformers: An Efficient GPU Serving System for Transformer Models},
+year = {2021},
+isbn = {9781450382946},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3437801.3441578},
+doi = {10.1145/3437801.3441578},
+abstract = {The transformer is the most critical algorithm innovation of the Nature Language Processing (NLP) field in recent years. Unlike the Recurrent Neural Network (RNN) models, transformers are able to process on dimensions of sequence lengths in parallel, therefore leads to better accuracy on long sequences. However, efficient deployments of them for online services in data centers equipped with GPUs are not easy. First, more computation introduced by transformer structures makes it more challenging to meet the latency and throughput constraints of serving. Second, NLP tasks take in sentences of variable length. The variability of input dimensions brings a severe problem to efficient memory management and serving optimization.To solve the above challenges, this paper designed a transformer serving system called TurboTransformers, which consists of a computing runtime and a serving framework. Three innovative features make it stand out from other similar works. An efficient parallel algorithm is proposed for GPU-based batch reduction operations, like Softmax and LayerNorm, which are major hot spots besides BLAS routines. A memory allocation algorithm, which better balances the memory footprint and allocation/free efficiency, is designed for variable-length input situations. A serving framework equipped with a new batch scheduler using dynamic programming achieves the optimal throughput on variable-length requests. The system can achieve the state-of-the-art transformer model serving performance on GPU platforms and can be seamlessly integrated into your PyTorch code with a few lines of code.},
+booktitle = {Proceedings of the 26th ACM SIGPLAN Symposium on Principles and Practice of Parallel Programming},
+pages = {389–402},
+numpages = {14},
+keywords = {serving system, deep learning runtime, GPU, transformers},
+location = {Virtual Event, Republic of Korea},
+series = {PPoPP '21}
+}
+
+@inproceedings{wang-etal-2021-lightseq,
+    title = "{L}ight{S}eq: A High Performance Inference Library for Transformers",
+    author = "Wang, Xiaohui  and
+      Xiong, Ying  and
+      Wei, Yang  and
+      Wang, Mingxuan  and
+      Li, Lei",
+    booktitle = "Proceedings of the 2021 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies: Industry Papers",
+    month = jun,
+    year = "2021",
+    address = "Online",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2021.naacl-industry.15",
+    doi = "10.18653/v1/2021.naacl-industry.15",
+    pages = "113--120",
+    abstract = "Transformer and its variants have achieved great success in natural language processing. Since Transformer models are huge in size, serving these models is a challenge for real industrial applications. In this paper, we propose , a highly efficient inference library for models in the Transformer family. includes a series of GPU optimization techniques to both streamline the computation of Transformer layers and reduce memory footprint. supports models trained using PyTorch and Tensorflow. Experimental results on standard machine translation benchmarks show that achieves up to 14x speedup compared with TensorFlow and 1.4x speedup compared with , a concurrent CUDA implementation. The code will be released publicly after the review.",
+}
+
+@article{jiang2022signds,
+  title={SignDS-FL: Local Differentially Private Federated Learning with Sign-based Dimension Selection},
+  author={Jiang, Xue and Zhou, Xuebing and Grossklags, Jens},
+  journal={ACM Transactions on Intelligent Systems and Technology (TIST)},
+  year={2022},
+  publisher = {Association for Computing Machinery},
+  address = {New York, USA}
+}
+
+@article{dwork2014algorithmic,
+  title={The algorithmic foundations of differential privacy},
+  author={Dwork, Cynthia and Roth, Aaron},
+  journal={Foundations and Trends in Theoretical Computer Science},
+  volume={9},
+  number={3--4},
+  pages={211--407},
+  year={2014},
+}
+
+@inproceedings{mcsherry2007mechanism,
+  title={Mechanism design via differential privacy},
+  author={McSherry, Frank and Talwar, Kunal},
+  booktitle={IEEE Symposium on Foundations of Computer Science},
+  pages={94--103},
+  year={2007},
+}
+
+@inproceedings{quigley2009ros,
+  title={ROS: an open-source Robot Operating System},
+  author={Quigley, Morgan and Conley, Ken and Gerkey, Brian and Faust, Josh and Foote, Tully and Leibs, Jeremy and Wheeler, Rob and Ng, Andrew Y and others},
+  booktitle={ICRA workshop on open source software},
+  volume={3},
+  number={3.2},
+  pages={5},
+  year={2009},
+  organization={Kobe, Japan}
+}
+
+@inproceedings{maruyama2016exploring,
+  title={Exploring the performance of ROS2},
+  author={Maruyama, Yuya and Kato, Shinpei and Azumi, Takuya},
+  booktitle={Proceedings of the 13th ACM SIGBED International Conference on Embedded Software (EMSOFT)},
+  pages={1--10},
+  year={2016}
+}
+
+@inproceedings{ding2019camnet,
+  title={CamNet: Coarse-to-fine retrieval for camera re-localization},
+  author={Ding, Mingyu and Wang, Zhe and Sun, Jiankai and Shi, Jianping and Luo, Ping},
+  booktitle={Proceedings of the IEEE/CVF International Conference on Computer Vision},
+  pages={2871--2880},
+  year={2019}
+}
+
+@inproceedings{yi2020segvoxelnet,
+  title={Segvoxelnet: Exploring semantic context and depth-aware features for 3d vehicle detection from point cloud},
+  author={Yi, Hongwei and Shi, Shaoshuai and Ding, Mingyu and Sun, Jiankai and Xu, Kui and Zhou, Hui and Wang, Zhe and Li, Sheng and Wang, Guoping},
+  booktitle={2020 IEEE International Conference on Robotics and Automation (ICRA)},
+  pages={2274--2280},
+  year={2020},
+  organization={IEEE}
+}
+
+@ARTICLE{9712373,  author={Sun, Jiankai and Huang, De-An and Lu, Bo and Liu, Yun-Hui and Zhou, Bolei and Garg, Animesh},  journal={IEEE Robotics and Automation Letters},   title={PlaTe: Visually-Grounded Planning With Transformers in Procedural Tasks},   year={2022},  volume={7},  number={2},  pages={4924-4930},  doi={10.1109/LRA.2022.3150855}}
+
+@inproceedings{li2018undeepvo,
+  title={Undeepvo: Monocular visual odometry through unsupervised deep learning},
+  author={Li, Ruihao and Wang, Sen and Long, Zhiqiang and Gu, Dongbing},
+  booktitle={2018 IEEE international conference on robotics and automation (ICRA)},
+  pages={7286--7291},
+  year={2018},
+  organization={IEEE}
+}
+
+@inproceedings{quintero2021motion,
+  title={Motion planning via bayesian learning in the dark},
+  author={Quintero-Pena, Carlos and Chamzas, Constantinos and Unhelkar, Vaibhav and Kavraki, Lydia E},
+  booktitle={ICRA: Workshop on Machine Learning for Motion Planning},
+  year={2021}
+}
+
+@MISC{ML4KP,
+author =   {Edgar Granados and Aravind Sivaramakrishnan and Troy McMahon and Zakary Littlefield and Kostas E. Bekris},
+title =    {Machine Learning for Kinodynamic Planning (ML4KP)},
+howpublished = {\url{https://github.com/PRX-Kinodynamic/ML4KP}},
+year = {2021--2021}
+}
+
+
+
+@article{aradi2020survey,
+  title={Survey of deep reinforcement learning for motion planning of autonomous vehicles},
+  author={Aradi, Szil{\'a}rd},
+  journal={IEEE Transactions on Intelligent Transportation Systems},
+  year={2020},
+  publisher={IEEE}
+}
+
+@article{vianna2021neural,
+  title={Neural Network Based Model Predictive Control for an Autonomous Vehicle},
+  author={Vianna, Maria Luiza Costa and Goubault, Eric and Putot, Sylvie},
+  journal={arXiv preprint arXiv:2107.14573},
+  year={2021}
+}
+
+@article{qiu2021egocentric,
+  title={Egocentric Human Trajectory Forecasting with a Wearable Camera and Multi-Modal Fusion},
+  author={Qiu, Jianing and Chen, Lipeng and Gu, Xiao and Lo, Frank P-W and Tsai, Ya-Yen and Sun, Jiankai and Liu, Jiaqi and Lo, Benny},
+  journal={arXiv preprint arXiv:2111.00993},
+  year={2021}
+}
+
+@InProceedings{pmlr-v155-huang21a,
+  title = 	 {Learning a Decision Module by Imitating Driver’s Control Behaviors},
+  author =       {Huang, Junning and Xie, Sirui and Sun, Jiankai and Ma, Qiurui and Liu, Chunxiao and Lin, Dahua and Zhou, Bolei},
+  booktitle = 	 {Proceedings of the 2020 Conference on Robot Learning},
+  pages = 	 {1--10},
+  year = 	 {2021},
+  editor = 	 {Kober, Jens and Ramos, Fabio and Tomlin, Claire},
+  volume = 	 {155},
+  series = 	 {Proceedings of Machine Learning Research},
+  month = 	 {16--18 Nov},
+  publisher =    {PMLR},
+  pdf = 	 {https://proceedings.mlr.press/v155/huang21a/huang21a.pdf},
+  url = 	 {https://proceedings.mlr.press/v155/huang21a.html},
+  abstract = 	 {Autonomous driving systems have a pipeline of perception, decision, planning, and control. The decision module processes information from the perception module and directs the execution of downstream planning and control modules. On the other hand, the recent success of deep learning suggests that this pipeline could be replaced by end-to-end neural control policies, however, safety cannot be well guaranteed for the data-driven neural networks. In this work, we propose a hybrid framework to learn neural decisions in the classical modular pipeline through end-to-end imitation learning.  This hybrid framework can preserve the merits of the classical pipeline such as the strict enforcement of physical and logical constraints while learning complex driving decisions from data. To circumvent the ambiguous annotation of human driving decisions, our method learns high-level driving decisions by imitating low-level control behaviors. We show in the simulation experiments that our modular driving agent can generalize its driving decision and control to various complex scenarios where the rule-based programs fail. It can also generate smoother and safer driving trajectories than end-to-end neural policies. Demo and code are available at https://decisionforce.github.io/modulardecision/.}
+}
+
+
+@InProceedings{pmlr-v155-sun21a,
+  title = 	 {Neuro-Symbolic Program Search for Autonomous Driving Decision Module Design},
+  author =       {Sun, Jiankai and Sun, Hao and Han, Tian and Zhou, Bolei},
+  booktitle = 	 {Proceedings of the 2020 Conference on Robot Learning},
+  pages = 	 {21--30},
+  year = 	 {2021},
+  editor = 	 {Kober, Jens and Ramos, Fabio and Tomlin, Claire},
+  volume = 	 {155},
+  series = 	 {Proceedings of Machine Learning Research},
+  month = 	 {16--18 Nov},
+  publisher =    {PMLR},
+  pdf = 	 {https://proceedings.mlr.press/v155/sun21a/sun21a.pdf},
+  url = 	 {https://proceedings.mlr.press/v155/sun21a.html},
+  abstract = 	 {As a promising topic in cognitive robotics, neuro-symbolic modeling integrates symbolic reasoning and neural representation altogether. However, previous neuro-symbolic models usually wire their structures and the connections manually, making the underlying parameters sub-optimal. In this work, we propose the Neuro-Symbolic Program Search (NSPS) to improve the autonomous driving system design. NSPS is a novel automated search method that synthesizes the Neuro-Symbolic Programs. It can produce robust and expressive Neuro-Symbolic Programs and automatically tune the hyper-parameters. We validate NSPS in the CARLA driving simulation environment. The resulting Neuro-Symbolic Decision Programs successfully handle multiple traffic scenarios. Compared with previous neural-network-based driving and rule-based methods, our neuro-symbolic driving pipeline achieves more stable and safer behaviors in complex driving scenarios while maintaining an interpretable symbolic decision-making process.}
+}
+
+@ARTICLE{9491826,  author={Lu, Sidi and Shi, Weisong},  journal={IEEE Internet Computing},   title={The Emergence of Vehicle Computing},   year={2021},  volume={25},  number={3},  pages={18-22},  doi={10.1109/MIC.2021.3066076}}
+
+@article{benekohal1988carsim,
+  title={CARSIM: Car-following model for simulation of traffic in normal and stop-and-go conditions},
+  author={Benekohal, Rahim F and Treiterer, Joseph},
+  journal={Transportation research record},
+  volume={1194},
+  pages={99--111},
+  year={1988},
+  publisher={SAGE Publishing}
+}
+
+@book{buehler2009darpa,
+  title={The DARPA urban challenge: autonomous vehicles in city traffic},
+  author={Buehler, Martin and Iagnemma, Karl and Singh, Sanjiv},
+  volume={56},
+  year={2009},
+  publisher={springer}
+}
+
+
+@InProceedings{pmlr-v100-bansal20a,
+  title = 	 {Combining Optimal Control and Learning for Visual Navigation in Novel Environments},
+  author =       {Bansal, Somil and Tolani, Varun and Gupta, Saurabh and Malik, Jitendra and Tomlin, Claire},
+  booktitle = 	 {Proceedings of the Conference on Robot Learning},
+  pages = 	 {420--429},
+  year = 	 {2020},
+  editor = 	 {Kaelbling, Leslie Pack and Kragic, Danica and Sugiura, Komei},
+  volume = 	 {100},
+  series = 	 {Proceedings of Machine Learning Research},
+  month = 	 {30 Oct--01 Nov},
+  publisher =    {PMLR},
+  pdf = 	 {http://proceedings.mlr.press/v100/bansal20a/bansal20a.pdf},
+  url = 	 {https://proceedings.mlr.press/v100/bansal20a.html},
+  abstract = 	 {Model-based control is a popular paradigm for robot navigation because it can leverage a known dynamics model to efficiently plan robust robot trajectories. However, it is challenging to use model-based methods in settings where the environment is a priori unknown and can only be observed partially through onboard sensors on the robot. In this work, we address this short-coming by coupling model-based control with learning-based perception. The learning-based perception module produces a series of waypoints that guide the robot to the goal via a collision-free path. These waypoints are used by a model-based planner to generate a smooth and dynamically feasible trajectory that is executed on the physical system using feedback control. Our experiments in simulated real-world cluttered environments and on an actual ground vehicle demonstrate that the proposed approach can reach goal locations more reliably and efficiently in novel environments as compared to purely geometric mapping-based or end-to-end learning-based alternatives. Our approach does not rely on detailed explicit 3D maps of the environment, works well with low frame rates, and generalizes well from simulation to the real world. Videos describing our approach and experiments are available on the project website4.}
+}
+
+@article{levine2018learning,
+  title={Learning hand-eye coordination for robotic grasping with deep learning and large-scale data collection},
+  author={Levine, Sergey and Pastor, Peter and Krizhevsky, Alex and Ibarz, Julian and Quillen, Deirdre},
+  journal={The International journal of robotics research},
+  volume={37},
+  number={4-5},
+  pages={421--436},
+  year={2018},
+  publisher={SAGE Publications Sage UK: London, England}
+}
+
+@incollection{peters2016robot,
+  title={Robot learning},
+  author={Peters, Jan and Lee, Daniel D and Kober, Jens and Nguyen-Tuong, Duy and Bagnell, J Andrew and Schaal, Stefan},
+  booktitle={Springer Handbook of Robotics},
+  pages={357--398},
+  year={2016},
+  publisher={Springer}
+}
+
+@article{saxena2014robobrain,
+  title={Robobrain: Large-scale knowledge engine for robots},
+  author={Saxena, Ashutosh and Jain, Ashesh and Sener, Ozan and Jami, Aditya and Misra, Dipendra K and Koppula, Hema S},
+  journal={arXiv preprint arXiv:1412.0691},
+  year={2014}
+}
+
+@inproceedings{zhu2017target,
+  title={Target-driven visual navigation in indoor scenes using deep reinforcement learning},
+  author={Zhu, Yuke and Mottaghi, Roozbeh and Kolve, Eric and Lim, Joseph J and Gupta, Abhinav and Fei-Fei, Li and Farhadi, Ali},
+  booktitle={2017 IEEE international conference on robotics and automation (ICRA)},
+  pages={3357--3364},
+  year={2017},
+  organization={IEEE}
+}
+
+@ARTICLE{9123682,  author={Pan, Bowen and Sun, Jiankai and Leung, Ho Yin Tiga and Andonian, Alex and Zhou, Bolei},  journal={IEEE Robotics and Automation Letters},   title={Cross-View Semantic Segmentation for Sensing Surroundings},   year={2020},  volume={5},  number={3},  pages={4867-4873},  doi={10.1109/LRA.2020.3004325}}
+
+@article{tang2018ba,
+  title={Ba-net: Dense bundle adjustment network},
+  author={Tang, Chengzhou and Tan, Ping},
+  journal={arXiv preprint arXiv:1806.04807},
+  year={2018}
+}
+
+@inproceedings{tanaka2021learning,
+  title={Learning To Bundle-Adjust: A Graph Network Approach to Faster Optimization of Bundle Adjustment for Vehicular SLAM},
+  author={Tanaka, Tetsuya and Sasagawa, Yukihiro and Okatani, Takayuki},
+  booktitle={Proceedings of the IEEE/CVF International Conference on Computer Vision},
+  pages={6250--6259},
+  year={2021}
+}
+
+@inproceedings{tobin2017domain,
+  title={Domain randomization for transferring deep neural networks from simulation to the real world},
+  author={Tobin, Josh and Fong, Rachel and Ray, Alex and Schneider, Jonas and Zaremba, Wojciech and Abbeel, Pieter},
+  booktitle={2017 IEEE/RSJ international conference on intelligent robots and systems (IROS)},
+  pages={23--30},
+  year={2017},
+  organization={IEEE}
+}
+
+@inproceedings{finn2017deep,
+  title={Deep visual foresight for planning robot motion},
+  author={Finn, Chelsea and Levine, Sergey},
+  booktitle={2017 IEEE International Conference on Robotics and Automation (ICRA)},
+  pages={2786--2793},
+  year={2017},
+  organization={IEEE}
+}
+
+@article{duan2017one,
+  title={One-shot imitation learning},
+  author={Duan, Yan and Andrychowicz, Marcin and Stadie, Bradly and Jonathan Ho, OpenAI and Schneider, Jonas and Sutskever, Ilya and Abbeel, Pieter and Zaremba, Wojciech},
+  journal={Advances in neural information processing systems},
+  volume={30},
+  year={2017}
+}
+
+@book{koubaa2017robot,
+  title={Robot Operating System (ROS).},
+  author={Koub{\^a}a, Anis and others},
+  volume={1},
+  year={2017},
+  publisher={Springer}
+}
+
+@article{coleman2014reducing,
+  title={Reducing the barrier to entry of complex robotic software: a moveit! case study},
+  author={Coleman, David and Sucan, Ioan and Chitta, Sachin and Correll, Nikolaus},
+  journal={arXiv preprint arXiv:1404.3785},
+  year={2014}
+}
+
+@inproceedings{salzmann2020trajectron++,
+  title={Trajectron++: Dynamically-feasible trajectory forecasting with heterogeneous data},
+  author={Salzmann, Tim and Ivanovic, Boris and Chakravarty, Punarjay and Pavone, Marco},
+  booktitle={European Conference on Computer Vision},
+  pages={683--700},
+  year={2020},
+  organization={Springer}
+}
+
+@inproceedings{gog2021pylot,
+  title={Pylot: A modular platform for exploring latency-accuracy tradeoffs in autonomous vehicles},
+  author={Gog, Ionel and Kalra, Sukrit and Schafhalter, Peter and Wright, Matthew A and Gonzalez, Joseph E and Stoica, Ion},
+  booktitle={2021 IEEE International Conference on Robotics and Automation (ICRA)},
+  pages={8806--8813},
+  year={2021},
+  organization={IEEE}
+}
+
+@inproceedings{Dosovitskiy17,
+  title = { {CARLA}: {An} Open Urban Driving Simulator},
+  author = {Alexey Dosovitskiy and German Ros and Felipe Codevilla and Antonio Lopez and Vladlen Koltun},
+  booktitle = {Proceedings of the 1st Annual Conference on Robot Learning},
+  pages = {1--16},
+  year = {2017}
+}
+
+@inproceedings{10.1145/3492321.3519576,
+author = {Gog, Ionel and Kalra, Sukrit and Schafhalter, Peter and Gonzalez, Joseph E. and Stoica, Ion},
+title = {D3: A Dynamic Deadline-Driven Approach for Building Autonomous Vehicles},
+year = {2022},
+isbn = {9781450391627},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3492321.3519576},
+doi = {10.1145/3492321.3519576},
+abstract = {Autonomous vehicles (AVs) must drive across a variety of challenging environments that impose continuously-varying deadlines and runtime-accuracy tradeoffs on their software pipelines. A deadline-driven execution of such AV pipelines requires a new class of systems that enable the computation to maximize accuracy under dynamically-varying deadlines. Designing these systems presents interesting challenges that arise from combining ease-of-development of AV pipelines with deadline specification and enforcement mechanisms.Our work addresses these challenges through D3 (Dynamic Deadline-Driven), a novel execution model that centralizes the deadline management, and allows applications to adjust their computation by modeling missed deadlines as exceptions. Further, we design and implement ERDOS, an open-source realization of D3 for AV pipelines that exposes finegrained execution events to applications, and provides mechanisms to speculatively execute computation and enforce deadlines between an arbitrary set of events. Finally, we address the crucial lack of AV benchmarks through our state-of-the-art open-source AV pipeline, Pylot, that works seamlessly across simulators and real AVs. We evaluate the efficacy of D3 and ERDOS by driving Pylot across challenging driving scenarios spanning 50km, and observe a 68% reduction in collisions as compared to prior execution models.},
+booktitle = {Proceedings of the Seventeenth European Conference on Computer Systems},
+pages = {453–471},
+numpages = {19},
+location = {Rennes, France},
+series = {EuroSys '22}
+}
+
+@article{li2021metadrive,
+ author = {Li, Quanyi and Peng, Zhenghao and Xue, Zhenghai and Zhang, Qihang and Zhou, Bolei},
+ journal = {ArXiv preprint},
+ title = {Metadrive: Composing diverse driving scenarios for generalizable reinforcement learning},
+ url = {https://arxiv.org/abs/2109.12674},
+ volume = {abs/2109.12674},
+ year = {2021}
+}
+
+@article{peng2021learning,
+ author = {Peng, Zhenghao and Li, Quanyi and Hui, Ka Ming and Liu, Chunxiao and Zhou, Bolei},
+ journal = {Advances in Neural Information Processing Systems},
+ title = {Learning to Simulate Self-Driven Particles System with Coordinated Policy Optimization},
+ volume = {34},
+ year = {2021}
+}
+
+
+@inproceedings{peng2021safe,
+ author = {Peng, Zhenghao and Li, Quanyi and Liu, Chunxiao and Zhou, Bolei},
+ booktitle = {5th Annual Conference on Robot Learning},
+ title = {Safe Driving via Expert Guided Policy Optimization},
+ year = {2021}
+}
+
+@ARTICLE{8421746,  author={Qin, Tong and Li, Peiliang and Shen, Shaojie},  journal={IEEE Transactions on Robotics},   title={VINS-Mono: A Robust and Versatile Monocular Visual-Inertial State Estimator},   year={2018},  volume={34},  number={4},  pages={1004-1020},  doi={10.1109/TRO.2018.2853729}}
+
+@article{campos2021orb,
+  title={Orb-slam3: An accurate open-source library for visual, visual--inertial, and multimap slam},
+  author={Campos, Carlos and Elvira, Richard and Rodr{\'\i}guez, Juan J G{\'o}mez and Montiel, Jos{\'e} MM and Tard{\'o}s, Juan D},
+  journal={IEEE Transactions on Robotics},
+  volume={37},
+  number={6},
+  pages={1874--1890},
+  year={2021},
+  publisher={IEEE}
+}
+
+@inproceedings{li2021efficient,
+ author = {Li, Quanyi and Peng, Zhenghao and Zhou, Bolei},
+ booktitle = {International Conference on Learning Representations},
+ title = {Efficient Learning of Safe Driving Policy via Human-AI Copilot Optimization},
+ year = {2021}
+}
+
+@article{chaplot2020learning,
+  title={Learning to explore using active neural slam},
+  author={Chaplot, Devendra Singh and Gandhi, Dhiraj and Gupta, Saurabh and Gupta, Abhinav and Salakhutdinov, Ruslan},
+  journal={arXiv preprint arXiv:2004.05155},
+  year={2020}
+}
+
+@article{teed2021droid,
+  title={Droid-slam: Deep visual slam for monocular, stereo, and rgb-d cameras},
+  author={Teed, Zachary and Deng, Jia},
+  journal={Advances in Neural Information Processing Systems},
+  volume={34},
+  year={2021}
+}
+
+@article{brunke2021safe,
+  title={Safe learning in robotics: From learning-based control to safe reinforcement learning},
+  author={Brunke, Lukas and Greeff, Melissa and Hall, Adam W and Yuan, Zhaocong and Zhou, Siqi and Panerati, Jacopo and Schoellig, Angela P},
+  journal={Annual Review of Control, Robotics, and Autonomous Systems},
+  volume={5},
+  year={2021},
+  publisher={Annual Reviews}
+}
+
+
+@InProceedings{pmlr-v144-gama21a,
+  title = 	 {Graph Neural Networks for Distributed Linear-Quadratic Control},
+  author =       {Gama, Fernando and Sojoudi, Somayeh},
+  booktitle = 	 {Proceedings of the 3rd Conference on Learning for Dynamics and Control},
+  pages = 	 {111--124},
+  year = 	 {2021},
+  editor = 	 {Jadbabaie, Ali and Lygeros, John and Pappas, George J. and A.&nbsp;Parrilo, Pablo and Recht, Benjamin and Tomlin, Claire J. and Zeilinger, Melanie N.},
+  volume = 	 {144},
+  series = 	 {Proceedings of Machine Learning Research},
+  month = 	 {07 -- 08 June},
+  publisher =    {PMLR},
+  pdf = 	 {http://proceedings.mlr.press/v144/gama21a/gama21a.pdf},
+  url = 	 {https://proceedings.mlr.press/v144/gama21a.html},
+  abstract = 	 {The linear-quadratic controller is one of the fundamental problems in control theory. The optimal solution is a linear controller that requires access to the state of the entire system at any given time. When considering a network system, this renders the optimal controller a centralized one. The interconnected nature of a network system often demands a distributed controller, where different components of the system are controlled based only on local information. Unlike the classical centralized case, obtaining the optimal distributed controller is usually an intractable problem. Thus, we adopt a graph neural network (GNN) as a parametrization of distributed controllers. GNNs are naturally local and have distributed architectures, making them well suited for learning nonlinear distributed controllers. By casting the linear-quadratic problem as a self-supervised learning problem, we are able to find the best GNN-based distributed controller. We also derive sufficient conditions for the resulting closed-loop system to be stable. We run extensive simulations to study the performance of GNN-based distributed controllers and showcase that they are a computationally efficient parametrization with scalability and transferability capabilities.}
+}
+
+
+@InProceedings{pmlr-v144-mehrjou21a,
+  title = 	 {Neural Lyapunov Redesign},
+  author =       {Mehrjou, Arash and Ghavamzadeh, Mohammad and Sch\"olkopf, Bernhard},
+  booktitle = 	 {Proceedings of the 3rd Conference on Learning for Dynamics and Control},
+  pages = 	 {459--470},
+  year = 	 {2021},
+  editor = 	 {Jadbabaie, Ali and Lygeros, John and Pappas, George J. and A.&nbsp;Parrilo, Pablo and Recht, Benjamin and Tomlin, Claire J. and Zeilinger, Melanie N.},
+  volume = 	 {144},
+  series = 	 {Proceedings of Machine Learning Research},
+  month = 	 {07 -- 08 June},
+  publisher =    {PMLR},
+  pdf = 	 {http://proceedings.mlr.press/v144/mehrjou21a/mehrjou21a.pdf},
+  url = 	 {https://proceedings.mlr.press/v144/mehrjou21a.html},
+  abstract = 	 {Learning controllers merely based on a performance metric has been proven effective in many physical and non-physical tasks in both control theory and reinforcement learning. However, in practice, the controller must guarantee some notion of safety to ensure that it does not harm either the agent or the environment. Stability is a crucial notion of safety, whose violation can certainly cause unsafe behaviors. Lyapunov functions are effective tools to assess stability in nonlinear dynamical systems. In this paper, we combine an improving Lyapunov function with automatic controller synthesis in an iterative fashion to obtain control policies with large safe regions. We propose a two-player collaborative algorithm that alternates between estimating a Lyapunov function and deriving a controller that gradually enlarges the stability region of the closed-loop system. We provide theoretical results on the class of systems that can be treated with the proposed algorithm and empirically evaluate the effectiveness of our method using an exemplary dynamical system.}
+}
+
+
+@InProceedings{pmlr-v144-zhang21b,
+  title = 	 {{LEOC}: A Principled Method in Integrating Reinforcement Learning and Classical Control Theory},
+  author =       {Zhang, Naifu and Capel, Nicholas},
+  booktitle = 	 {Proceedings of the 3rd Conference on Learning for Dynamics and Control},
+  pages = 	 {689--701},
+  year = 	 {2021},
+  editor = 	 {Jadbabaie, Ali and Lygeros, John and Pappas, George J. and A.&nbsp;Parrilo, Pablo and Recht, Benjamin and Tomlin, Claire J. and Zeilinger, Melanie N.},
+  volume = 	 {144},
+  series = 	 {Proceedings of Machine Learning Research},
+  month = 	 {07 -- 08 June},
+  publisher =    {PMLR},
+  pdf = 	 {http://proceedings.mlr.press/v144/zhang21b/zhang21b.pdf},
+  url = 	 {https://proceedings.mlr.press/v144/zhang21b.html},
+  abstract = 	 {There have been attempts in reinforcement learning to exploit a priori knowledge about the structure of the system. This paper proposes a hybrid reinforcement learning controller which dynamically interpolates a model-based linear controller and an arbitrary differentiable policy. The linear controller is designed based on local linearised model knowledge, and stabilises the system in a neighbourhood about an operating point. The coefficients of interpolation between the two controllers are determined by a scaled distance function measuring the distance between the current state and the operating point. The overall hybrid controller is proven to maintain the stability guarantee around the neighborhood of the operating point and still possess the universal function approximation property of the arbitrary non-linear policy. Learning has been done on both model-based (PILCO) and model-free (DDPG) frameworks. Simulation experiments performed in OpenAI gym demonstrate stability and robustness of the proposed hybrid controller. This paper thus introduces a principled method allowing for the direct importing of control methodology into reinforcement learning.}
+}
+
+
+@InProceedings{pmlr-v144-rafailov21a,
+  title = 	 {Offline Reinforcement Learning from Images with Latent Space Models},
+  author =       {Rafailov, Rafael and Yu, Tianhe and Rajeswaran, Aravind and Finn, Chelsea},
+  booktitle = 	 {Proceedings of the 3rd Conference on Learning for Dynamics and Control},
+  pages = 	 {1154--1168},
+  year = 	 {2021},
+  editor = 	 {Jadbabaie, Ali and Lygeros, John and Pappas, George J. and A.&nbsp;Parrilo, Pablo and Recht, Benjamin and Tomlin, Claire J. and Zeilinger, Melanie N.},
+  volume = 	 {144},
+  series = 	 {Proceedings of Machine Learning Research},
+  month = 	 {07 -- 08 June},
+  publisher =    {PMLR},
+  pdf = 	 {http://proceedings.mlr.press/v144/rafailov21a/rafailov21a.pdf},
+  url = 	 {https://proceedings.mlr.press/v144/rafailov21a.html},
+  abstract = 	 {Offline reinforcement learning (RL) refers to the task of learning policies from a static dataset of environment interactions. Offline RL enables extensive utilization and re-use of historical datasets, while also alleviating safety concerns associated with online exploration, thereby expanding the real-world applicability of RL. Most prior work in offline RL has focused on tasks with compact state representations. However, the ability to learn directly from rich observation spaces like images is critical for real-world applications like robotics. In this work, we build on recent advances in model-based algorithms for offline RL, and extend them to high-dimensional visual observation spaces. Model-based offline RL algorithms have achieved state of the art results in state based tasks and are minimax optimal. However, they rely crucially on the ability to quantify uncertainty in the model predictions. This is particularly challenging with image observations. To overcome this challenge, we propose to learn a latent-state dynamics model, and represent the uncertainty in the latent space. Our approach is both tractable in practice and corresponds to maximizing a lower bound of the ELBO in the unknown POMDP. Through experiments on a range of challenging image-based locomotion and robotic manipulation tasks, we find that our algorithm significantly outperforms previous offline model-free RL methods as well as state-of-the-art online visual model-based RL methods. Moreover, we also find that our approach excels on an image-based drawer closing task on a real robot using a pre-existing dataset. All results including videos can be found online at \url{https://sites.google.com/view/lompo/}.}
+}
+
+@inproceedings{chen2020transferable,
+  title={Transferable active grasping and real embodied dataset},
+  author={Chen, Xiangyu and Ye, Zelin and Sun, Jiankai and Fan, Yuda and Hu, Fang and Wang, Chenxi and Lu, Cewu},
+  booktitle={2020 IEEE International Conference on Robotics and Automation (ICRA)},
+  pages={3611--3618},
+  year={2020},
+  organization={IEEE}
+}
+
+@article{sun2021adversarial,
+  title={Adversarial inverse reinforcement learning with self-attention dynamics model},
+  author={Sun, Jiankai and Yu, Lantao and Dong, Pinqian and Lu, Bo and Zhou, Bolei},
+  journal={IEEE Robotics and Automation Letters},
+  volume={6},
+  number={2},
+  pages={1880--1886},
+  year={2021},
+  publisher={IEEE}
+}
+
+@article{huang2018navigationnet,
+  title={NavigationNet: A large-scale interactive indoor navigation dataset},
+  author={Huang, He and Shen, Yujing and Sun, Jiankai and Lu, Cewu},
+  journal={arXiv preprint arXiv:1808.08374},
+  year={2018}
+}
+
+@inproceedings{xu2019depth,
+  title={Depth completion from sparse lidar data with depth-normal constraints},
+  author={Xu, Yan and Zhu, Xinge and Shi, Jianping and Zhang, Guofeng and Bao, Hujun and Li, Hongsheng},
+  booktitle={Proceedings of the IEEE/CVF International Conference on Computer Vision},
+  pages={2811--2820},
+  year={2019}
+}
+
+@inproceedings{zhu2020ssn,
+  title={Ssn: Shape signature networks for multi-class object detection from point clouds},
+  author={Zhu, Xinge and Ma, Yuexin and Wang, Tai and Xu, Yan and Shi, Jianping and Lin, Dahua},
+  booktitle={European Conference on Computer Vision},
+  pages={581--597},
+  year={2020},
+  organization={Springer}
+}
+
+@inproceedings{huang2019prior,
+  title={Prior guided dropout for robust visual localization in dynamic environments},
+  author={Huang, Zhaoyang and Xu, Yan and Shi, Jianping and Zhou, Xiaowei and Bao, Hujun and Zhang, Guofeng},
+  booktitle={Proceedings of the IEEE/CVF International Conference on Computer Vision},
+  pages={2791--2800},
+  year={2019}
+}
+
+@article{xu2020selfvoxelo,
+  title={Selfvoxelo: Self-supervised lidar odometry with voxel-based deep neural networks},
+  author={Xu, Yan and Huang, Zhaoyang and Lin, Kwan-Yee and Zhu, Xinge and Shi, Jianping and Bao, Hujun and Zhang, Guofeng and Li, Hongsheng},
+  journal={arXiv preprint arXiv:2010.09343},
+  year={2020}
+}
+
+@article{huang2021life,
+  title={LIFE: Lighting Invariant Flow Estimation},
+  author={Huang, Zhaoyang and Pan, Xiaokun and Xu, Runsen and Xu, Yan and Zhang, Guofeng and Li, Hongsheng and others},
+  journal={arXiv preprint arXiv:2104.03097},
+  year={2021}
+}
+
+@inproceedings{huang2021vs,
+  title={VS-Net: Voting with Segmentation for Visual Localization},
+  author={Huang, Zhaoyang and Zhou, Han and Li, Yijin and Yang, Bangbang and Xu, Yan and Zhou, Xiaowei and Bao, Hujun and Zhang, Guofeng and Li, Hongsheng},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={6101--6111},
+  year={2021}
+}
+
+@article{yang2021pdnet,
+  title={PDNet: Towards Better One-stage Object Detection with Prediction Decoupling},
+  author={Yang, Li and Xu, Yan and Wang, Shaoru and Yuan, Chunfeng and Zhang, Ziqi and Li, Bing and Hu, Weiming},
+  journal={arXiv preprint arXiv:2104.13876},
+  year={2021}
+}
+
+@article{xu2022robust,
+  title={Robust Self-supervised LiDAR Odometry via Representative Structure Discovery and 3D Inherent Error Modeling},
+  author={Xu, Yan and Lin, Junyi and Shi, Jianping and Zhang, Guofeng and Wang, Xiaogang and Li, Hongsheng},
+  journal={IEEE Robotics and Automation Letters},
+  year={2022},
+  publisher={IEEE}
+}
+
+@article{xu2022rnnpose,
+  title={RNNPose: Recurrent 6-DoF Object Pose Refinement with Robust Correspondence Field Estimation and Pose Optimization},
+  author={Xu, Yan and Lin, Junyi and Zhang, Guofeng and Wang, Xiaogang and Li, Hongsheng},
+  journal={arXiv preprint arXiv:2203.12870},
+  year={2022}
+}
+
+@article{Sun2022SelfSupervisedTA,
+  title={Self-Supervised Traffic Advisors: Distributed, Multi-view Traffic Prediction for Smart Cities},
+  author={Jiankai Sun and Shreyas Kousik and David Fridovich-Keil and Mac Schwager},
+  journal={arXiv preprint},
+  year={2022}
 }

@@ -4,7 +4,7 @@
 
 前面我们提到过，不同的训练框架（Tensorflow、PyTorch、MindSpore、MXNet、CNTK等）都定义了自己的模型的数据结构，推理系统需要将它们转换到统一的一种数据结构上。Open Neural Network Exchange(ONNX）正是为此目的而设计的。ONNX支持广泛的机器学习运算符集合，并提供了不同训练框架的转换器，例如TensorFlow模型到ONNX模型的转换器、PyTorch模型到ONNX模型的转换器等。
 模型转换本质上是将模型这种结构化的数据，从一种数据结构转换为另一种数据结构的过程。进行模型转换首先要分析两种数据结构的异同点，然后针对结构相同的数据做搬运；对于结构相似的数据做一一映射；对于结构差异较大的数据则需要根据其语义做合理的数据转换；更进一步如果两种数据结构上存在不兼容，则模型转换无法进行。ONNX的一个优势就在于其强大的表达能力，从而大多数业界框架的模型都能够转换到ONNX的模型上来而不存在不兼容的情况.
-模型可以抽象为是一种图，从而模型的数据结构可以解构为以下两个要点：
+模型可以抽象为一种图，从而模型的数据结构可以解构为以下两个要点：
 
 - 模型拓扑表达：从图的角度来说，就是图的边；从模型的角度来说，就是模型中的数据流和控制流等，模型数据流和控制流的定义又可以引申出子图的表达形式、模型输入输出的表达形式、控制流结构的表达形式等。比如Tensorflow1.x中的控制流表达为一种有环图，通过Enter、Exit、Switch、LoopCond、NextIteration等算子来解决成环，而ONNX通过Loop，If等算子来表达控制流，从而避免引入了有环，所以在将Tensorflow1.x的控制流模型转化为ONNX模型时，需要将Tensorflow模型中的控制流图结构融合成ONNX的While或者If算子。
 
@@ -35,7 +35,7 @@ $$\pmb{Y_{conv}}=\pmb{W_{conv}}*\pmb{X_{conv}}+\pmb{B_{conv}}$$
 
 这里我们不需要理解公式 :eqref:`ch08-equ-conv_equation`中每个变量的含义，只需要注意到一点，该公式是$\pmb{Y_{conv}}$关于$\pmb{X_{conv}}$的，其他符号均表示常量。
 
-Batchnorm算子的计算过程如公式 :eqref:`equ:bn-equation`所示。
+Batchnorm算子的计算过程如公式 :eqref:`ch08-equ-bn_equation`所示。
 
 $$\pmb{Y_{bn}}=\gamma\frac{\pmb{X_{bn}}-\mu_{\mathcal{B}}}{\sqrt{{\sigma_{\mathcal{B}}}^{2}+\epsilon}}+\beta$$
 :eqlabel:`ch08-equ-bn_equation`
@@ -71,7 +71,7 @@ $$\pmb{Y_{bn}}=\pmb{A}*\pmb{X_{conv}}+\pmb{B}$$
 :width:`500px`
 :label:`ch08-fig-bn_replace`
 
-如 :numref:`ch08-fig-bn_replace`，我们以Batchnorm算子替换成Scale算子为例，阐述算子替换的原理。我们直接将Batchnorm的计算公式 :eqref:`ch08-equ-replace_scale`进行分解，并将常量合并简化，Batchnorm的计算公式可以写成：
+如 :numref:`ch08-fig-bn_replace`，我们以Batchnorm算子替换成Scale算子为例，阐述算子替换的原理。我们直接将Batchnorm的计算公式 :eqref:`ch08-equ-bn_equation`进行分解，并将常量合并简化，Batchnorm的计算公式可以写成：
 
 $$\pmb{Y_{bn}}=scale*\pmb{X_{bn}}+offset$$
 :eqlabel:`ch08-equ-replace_scale`
@@ -88,6 +88,6 @@ $$\pmb{Y_{bn}}=scale*\pmb{X_{bn}}+offset$$
 :width:`500px`
 :label:`ch08-fig-crop_reorder`
 
-如 :numref:`ch08-fig-crop_reorder`，Crop算子是从输入的feature map中裁取一部分作为输出，经过Crop算子后，feature map的size就降低了。如果我们将这个裁切的过程前移，提前对feature map进行裁切，那么后续算子的计算量也会相应地减少，从而提高模型部署时的推理性能。Crop算子前移带来的性能提升跟Crop算子的参数有关。但是Crop算子一般只能沿着的element wise类算子前移。
+如 :numref:`ch08-fig-crop_reorder`，Crop算子是从输入的feature map中裁取一部分作为输出，经过Crop算子后，feature map的size就降低了。如果我们将这个裁切的过程前移，提前对feature map进行裁切，那么后续算子的计算量也会相应地减少，从而提高模型部署时的推理性能。Crop算子前移带来的性能提升跟Crop算子的参数有关。但是Crop算子一般只能沿着element wise类算子前移。
 
 通过前面的实验数据我们可以看到，通过推理前的模型优化，可以为推理的时延、功耗、内存占用带来极大的收益。
