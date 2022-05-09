@@ -11,6 +11,11 @@
 
 ## 扩展阅读
 
--  CUDA编程指导 [CUDA](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html)
--  昇腾社区 [Ascend](https://gitee.com/ascend)
--  MLIR应用进展 [MLIR](https://mlir.llvm.org/talks)
+- CUDA编程指导 [CUDA](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html)
+- 昇腾社区 [Ascend](https://gitee.com/ascend)
+- MLIR应用进展 [MLIR](https://mlir.llvm.org/talks)
+
+
+## 参考文献
+
+:bibliography:`../references/accelerator.bib`
