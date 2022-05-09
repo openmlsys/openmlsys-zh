@@ -92,7 +92,7 @@
     :eqlabel:`linear`
     公式引用使用 :eqref:`linear`
    ```
-  * 参考文献引用方式，参考文献放在mlsys.bib，如需新增，只需在该文件中添加即可。参考文献使用 :cite:`文献`
+  * 参考文献引用方式，参考文献放在references/xxx.bib，如需新增，只需在该文件中添加即可。参考文献使用 :cite:`文献`
     需要注意的是bib里的参考文献不能有重复的。
   ```python
   下面参考文献的引用：
@@ -101,7 +101,7 @@
   2. 多篇参考文献可以用逗号分开
   这篇文章参考了论文 :cite:`cnn2015,rnn2015`
   
-  此时在mlsys.bib中应该有如下参考文献
+  此时在对应bib中应该有如下参考文献
   @inproceedings{cnn2015,
 	title = {CNN},
 	author = {xxx},
