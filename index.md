@@ -5,6 +5,7 @@
 :maxdepth: 2
 :numbered:
 
+chapter_preface/index
 chapter_introduction/index
 chapter_programming_interface/index
 chapter_computational_graph/index
