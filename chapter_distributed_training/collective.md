@@ -37,8 +37,9 @@ Gather算子尝试将每个处理单元上的信息全部聚合到编号为i的�
 
 #### Scatter
 Scatter算子可以被视作Gather的逆运算：把一个存在于编号为i的处理单元上，长度为p（信息长度为pl）的链式数据结构L中的值分散到每个处理单元上，使得编号为i的处理单元会得到L[i]。我们可以通过模仿Gather算法来设计一个简易的Scatter实现：每一步的运算中，与其是聚集一半处理单元的结果，我们把现在的子链继续对半切分，并把前半段和后半段作为子问题进行递归。这时候，在算法的每一阶段t，我们传输的信息长度为l 2^(m-t)，其中m是算法总共运行的步骤，不会超过log p （见Broadcast）。最终，Scatter算子的检疫实现和Gather一样都有a log p + (p-1) bl 时间复杂度。在机器学习系统中，相比于链式数据结构，Scatter经常同时被用于可切分的数据结构，例如张量（tensor）在一个维度上的p等分等。
+
 #### ReduceScatter
-ReduceScatter算子可以视为Reduce 和 Scatter算子的组合体，即对于每个处理单元上分别拥有的一个链式/可切分数据结构，在通过f 概述后再重新分散到各个单元中。虽然我们已经知道了Reduce 和Scatter 各自的时间复杂度，但是在对ReduceScatter做时间复杂度分析是需要注意两部之间信息长度的变化：假设每个处理单元上的数据结构所需通信长度为pl，第一阶段的Reduce算法需要(a+plb)log p 时间复杂度。参照Scatter的分析，第二阶段的算子则需要 a log p + (p-1) bl 时间复杂度。综合下来，ReduceScatter 需要 a log p + p log p lb 的时间复杂度，和AllGather相同。同时，运行ReduceScatter 和 AllGather的效果和 Allreduce相同。
+ReduceScatter算子可以视为Reduce 和 Scatter算子的组合体，即对于每个处理单元上分别拥有的一个链式/可切分数据结构，在通过f 概述后再重新分散到各个单元中。虽然我们已经知道了Reduce 和Scatter 各自的时间复杂度，但是在对ReduceScatter做时间复杂度分析是需要注意两部之间信息长度的变化：假设每个处理单元上的数据结构所需通信长度为pl，第一阶段的Reduce算法需要(a+plb)log p 时间复杂度。参照Scatter的分析，第二阶段的算子则需要 a log p + (p-1) bl 时间复杂度。综合下来，ReduceScatter 需要 a log p + p log p lb 的时间复杂度，和AllGather相同。同时，运行ReduceScatter 和 AllGather的效果等同于运行一次Allreduce。
 
 在SPMD中，通常还有一些额外的集合通信算子，如Prefix Sum，Barrier，All-to-all等，但由于篇幅限制以及与机器学习系统的有限联系，便不再赘述。最后，由于该模型下通信网络的拓扑结构较为简单，上文中呈现二叉树形的递归树也可以达到很好的实际运行速度。所有关于时间复杂度的分析也是基于这些相对简化的假设情况。后文中，我们将会用Allreduce举例介绍如何在更复杂的拓扑结构下设计不同的集合通信算子变种，并在时间复杂度之外去关注实际的通信量和运算时间。
 
@@ -94,7 +95,9 @@ Allreduce算子会把梯度的计算拆分成$M-1$个Reduce算子和$M-1$个Broa
 由上可知，Allreduce算子在计算中需要一种方法把不同的节点进行配对。在网络拓扑结构（Network Topology）不同的情况下，配对方法的选择会对实际计算效率产生较大的影响。在大型深度学习系统中，基于英伟达GPU的集合通信库NCCL (:cite:`nvidia-nccl`) 针对多变的网络拓扑设定了三种Allreduce的算法变种，分别为树形（Tree), 环形（Ring）以及CollNet。在实际运行该库时，系统会默认对当前环境进行校准，并选择在测试样例上速度最快的算法变种。这里的分析相较于时间复杂度，更关注实际算法运行时产生的通信量。
 
 #### 树形结构
+
 #### 环形结构
+
 #### CollNet 算法
 :cite:`10.1007/978-3-030-50743-5_3`
 
@@ -103,6 +106,7 @@ Allreduce算子会把梯度的计算拆分成$M-1$个Reduce算子和$M-1$个Broa
 在讨论集合通讯算子的性能时，人们经常会使用一些数值化指标去量化不同的算法实现，其中一个重要概念为带宽（Bandwidth）。在文献中，通常有两种主流的对带宽的计算方法，分别为算法带宽（Algorithm Bandwidth）与总线带宽（Bus Bandwidth）。
 
 #### 算法带宽
+
 #### 总线带宽
 
 ### 使用方法
