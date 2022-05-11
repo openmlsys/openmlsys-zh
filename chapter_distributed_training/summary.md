@@ -36,3 +36,13 @@
 - 在大规模数据并行下的实践：[Accurate, Large Minibatch SGD: Training ImageNet in 1 Hour](https://arxiv.org/abs/1706.02677)
 
 - 模型并行在超大模型上的实践：[ZeRO](https://arxiv.org/abs/1910.02054)
+
+- 最后，在讨论集合通信时，经常可以看到一些关于底层通信接口的专业术语，例如以太网，Infiniband 等。这里给出一些常见术语的具体定义：
+
+  * [以太网（Ethernet)](https://web.archive.org/web/20181222184046/http://www.mef.net/Assets/White_Papers/Metro-Ethernet-Services.pdf)
+  * [NVLink](https://devblogs.nvidia.com/parallelforall/how-nvlink-will-enable-faster-easier-multi-gpu-computing/)
+  * [AWS Elastic Fabric Adapter (EFA)](https://aws.amazon.com/cn/hpc/efa/)
+  * [Infiniband](https://www.infinibandta.org/about-infiniband/)
+  * [RDMA](http://reports.ias.ac.in/report/12829/understanding-the-concepts-and-mechanisms-of-rdma)
+  * [RoCE](https://www.roceinitiative.org/about-overview/)
+  * [IPoIB](https://www.ibm.com/docs/en/aix/7.2?topic=protocol-internet-over-infiniband-ipoib)
