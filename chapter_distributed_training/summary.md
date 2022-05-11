@@ -29,6 +29,8 @@
 
 - 利用集合通讯支持并行训练的实践：[Horovod](https://arxiv.org/abs/1802.05799)
 
+- AllReduce的工程实现细节：[树形结构](https://developer.nvidia.com/blog/massively-scale-deep-learning-training-nccl-2-4/)，[环形结构](https://github.com/baidu-research/baidu-allreduce)，[二维环面结构](https://arxiv.org/abs/1811.05233)，以及[CollNet算法](https://github.com/NVIDIA/nccl/issues/320)
+
 - 流水线并行的实践：[gPipe](https://arxiv.org/abs/1811.06965)
 
 - 在大规模数据并行下的实践：[Accurate, Large Minibatch SGD: Training ImageNet in 1 Hour](https://arxiv.org/abs/1706.02677)
