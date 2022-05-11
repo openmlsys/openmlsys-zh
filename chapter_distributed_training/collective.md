@@ -117,13 +117,13 @@ Allreduce算子会把梯度的计算拆分成$M-1$个Reduce算子和$M-1$个Broa
 * AllGather：(p-1)/p
 * ReduceScatter：(p-1)/p
 
-由于Gather和Scatter具体的带宽计算于实际使用的数据结构更相关，故不给出特定的校正系数。
+由于Gather和Scatter的带宽计算与实际聚合/分散时的数据结构相关性更高，故不给出特定的校正系数。
 ### 使用方法
 
-针对不同的集群性质，现代机器学习系统往往会灵活应用不同集合通讯算子的组合来最大化通信效率。这里，我们提供了两个具体的案例分析，分别为英伟达的Megatron-LM 以及 OpenAI 的 DALL—E。
+针对不同的集群性质，现代机器学习系统往往会灵活应用不同集合通讯算子的组合来最大化通信效率。这里，我们提供了两个具体的案例分析，分别为微软的ZeRO 以及 OpenAI 的 DALL—E。
 
-#### Megatron-LM
-:cite:`shoeybi2019megatron`
+#### ZeRO
+:cite:`rajbhandari2020zero`
 #### DALL-E
 :cite:`ramesh2021zero`
 
