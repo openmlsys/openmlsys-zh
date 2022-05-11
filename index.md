@@ -5,6 +5,7 @@
 :maxdepth: 2
 :numbered:
 
+chapter_preface/index
 chapter_introduction/index
 chapter_programming_interface/index
 chapter_computational_graph/index
@@ -32,5 +33,4 @@ chapter_rl_sys/index
 :maxdepth: 1
 
 appendix_machine_learning_introduction/index
-chapter_references/index
 ```
