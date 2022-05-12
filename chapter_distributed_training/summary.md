@@ -27,7 +27,7 @@
 
 - 分布式机器学习系统：[综述](https://dl.acm.org/doi/abs/10.1145/3377454)
 
-- 利用集合通讯支持并行训练的实践：[Horovod](https://arxiv.org/abs/1802.05799)
+- 利用集合通信支持并行训练的实践：[Horovod](https://arxiv.org/abs/1802.05799)
 
 - AllReduce的工程实现细节：[树形结构](https://developer.nvidia.com/blog/massively-scale-deep-learning-training-nccl-2-4/)，[环形结构](https://github.com/baidu-research/baidu-allreduce)，[二维环面结构](https://arxiv.org/abs/1811.05233)，以及[CollNet算法](https://github.com/NVIDIA/nccl/issues/320)
 
