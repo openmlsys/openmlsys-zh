@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="415.78836mm"
+   height="227.97214mm"
+   viewBox="0 0 415.78836 227.97214"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.1 (1:1.1+202109281949+c3084ef5ed)"
+   sodipodi:docname="rllib1.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="0.45291836"
+     inkscape:cx="606.06949"
+     inkscape:cy="780.49386"
+     inkscape:window-width="1848"
+     inkscape:window-height="1136"
+     inkscape:window-x="72"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1-2" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(74.471364,125.55213)">
+    <g
+       inkscape:label="Layer 1"
+       id="layer1-2"
+       transform="translate(-56.466556,-170.91559)">
+      <rect
+         style="fill:#ff0000;fill-opacity:0;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+         id="rect2439"
+         width="196.35287"
+         height="51.963364"
+         x="-16.031324"
+         y="46.388351"
+         ry="7.2835722" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="82.013535"
+         y="66.777641"
+         id="text3865"><tspan
+           sodipodi:role="line"
+           style="text-align:center;text-anchor:middle;stroke-width:0.264583"
+           x="82.013535"
+           y="66.777641"
+           id="tspan3867">内置环境适配器</tspan><tspan
+           sodipodi:role="line"
+           style="text-align:center;text-anchor:middle;stroke-width:0.264583"
+           x="82.013542"
+           y="81.279243"
+           id="tspan3869">(如gym.Env, OpenSpiel, Unity3D)</tspan></text>
+      <rect
+         style="fill:#ff0000;fill-opacity:0;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+         id="rect2439-4"
+         width="411.53979"
+         height="45.594776"
+         x="-16.918701"
+         y="181.33687"
+         ry="6.3909035" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="176.1823"
+         y="200.71672"
+         id="text3865-4"><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle;stroke-width:0.264583"
+           x="176.1823"
+           y="200.71672"
+           id="tspan3869-3">RLlib内核抽象</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-align:center;text-anchor:middle;stroke-width:0.264583"
+           x="176.1823"
+           y="215.21832"
+           id="tspan86060">环境，工作者，输入阅读器，训练器，策略</tspan></text>
+      <rect
+         style="fill:#ff0000;fill-opacity:0;stroke:#000000;stroke-width:0.826335;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+         id="rect2439-4-5"
+         width="411.71347"
+         height="31.120325"
+         x="-17.59164"
+         y="241.80211"
+         ry="4.3620567" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="175.59619"
+         y="261.2688"
+         id="text3865-4-9"><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle;stroke-width:0.264583"
+           x="175.59619"
+           y="261.2688"
+           id="tspan3869-3-6">@ray.remote: <tspan
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:sans-serif"
+   id="tspan71205">任务和行动者</tspan></tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-align:center;text-anchor:middle;stroke-width:0.264583"
+           x="175.59619"
+           y="274.49792"
+           id="tspan86060-2" /></text>
+      <rect
+         style="fill:#ff0000;fill-opacity:0;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+         id="rect2439-9"
+         width="196.35287"
+         height="51.963364"
+         x="200.93066"
+         y="45.863461"
+         ry="7.2835722" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="300.61472"
+         y="67.605286"
+         id="text3865-3"><tspan
+           sodipodi:role="line"
+           id="tspan3863-9"
+           style="text-align:center;text-anchor:middle;stroke-width:0.264583"
+           x="300.61472"
+           y="67.605286">内置算法</tspan><tspan
+           sodipodi:role="line"
+           style="text-align:center;text-anchor:middle;stroke-width:0.264583"
+           x="300.61472"
+           y="82.106888"
+           id="tspan3869-8">(如PPOTrainer)</tspan></text>
+      <rect
+         style="fill:#ff0000;fill-opacity:0;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+         id="rect2439-8"
+         width="144.96021"
+         height="52.102989"
+         x="-16.117212"
+         y="111.84494"
+         ry="7.303143" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="56.822338"
+         y="127.51099"
+         id="text3865-5"><tspan
+           sodipodi:role="line"
+           style="text-align:center;text-anchor:middle;stroke-width:0.264583"
+           x="56.822338"
+           y="127.51099"
+           id="tspan3867-9">内置客户端/服务器支持</tspan><tspan
+           sodipodi:role="line"
+           style="text-align:center;text-anchor:middle;stroke-width:0.264583"
+           x="56.822342"
+           y="142.01259"
+           id="tspan3869-6">(用于外部模拟器)</tspan></text>
+      <rect
+         style="fill:#ff0000;fill-opacity:0;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+         id="rect2439-8-1"
+         width="144.96021"
+         height="52.102989"
+         x="249.19214"
+         y="112.4102"
+         ry="7.303143" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="322.29852"
+         y="131.36505"
+         id="text3865-5-5"><tspan
+           sodipodi:role="line"
+           style="text-align:center;text-anchor:middle;stroke-width:0.264583"
+           x="322.29852"
+           y="131.36505"
+           id="tspan3867-9-8">内置默认模型</tspan><tspan
+           sodipodi:role="line"
+           style="text-align:center;text-anchor:middle;stroke-width:0.264583"
+           x="322.29852"
+           y="145.86665"
+           id="tspan3869-6-4">(包括LSTM+注意力机制)</tspan></text>
+      <rect
+         style="fill:#ff0000;fill-opacity:0;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+         id="rect2439-8-3"
+         width="91.98288"
+         height="52.304867"
+         x="141.09564"
+         y="112.26492"
+         ry="7.33144" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="189.86104"
+         y="129.81113"
+         id="text3865-5-8"><tspan
+           sodipodi:role="line"
+           style="text-align:center;text-anchor:middle;stroke-width:0.264583"
+           x="189.86104"
+           y="129.81113"
+           id="tspan55122">内置策略和</tspan><tspan
+           sodipodi:role="line"
+           style="text-align:center;text-anchor:middle;stroke-width:0.264583"
+           x="189.86104"
+           y="144.31273"
+           id="tspan33591">损失函数</tspan></text>
+    </g>
+  </g>
+</svg>
