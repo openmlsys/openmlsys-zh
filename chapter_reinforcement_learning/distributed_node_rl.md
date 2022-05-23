@@ -28,7 +28,7 @@
 
 Ray :cite:`moritz2018ray`是由伯克利大学几名研究人员发起的一个分布式计算框架，基于Ray之上构建了一个专门针对强化学习的系统RLlib :cite:`liang2017ray`。RLlib是一个面向工业级应用的开源强化学习框架，同时包含了强化学习的算法库，它对非强化学习专家使用也很方便。
 
-![RLlib分布式训练](../img/ch12/ch12-rllib-distributed.png)
+![RLlib分布式训练](../img/ch12/ch12-rllib-distributed.svg)
 
 :width:`600px`
 
