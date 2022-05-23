@@ -46,3 +46,7 @@
   * [RDMA](http://reports.ias.ac.in/report/12829/understanding-the-concepts-and-mechanisms-of-rdma)
   * [RoCE](https://www.roceinitiative.org/about-overview/)
   * [IPoIB](https://www.ibm.com/docs/en/aix/7.2?topic=protocol-internet-over-infiniband-ipoib)
+
+## 参考文献
+
+:bibliography:`../references/distributed.bib`

@@ -100,7 +100,7 @@ AllReduce算子会把梯度的计算拆分成$M-1$个Reduce算子和$M-1$个Broa
 #### 总线带宽
 虽然算法带宽的计算方法既简单又高效，但很难将其拓展至对于集合通信算子的带宽计算。这是因为，取决于具体算子和算法实现的不同，一个集合通信算子在执行过程中测得的算法带宽往往会远小于硬件本身的最高带宽。在实际运行相应的测试中，经常能观测到随着处理单元增加，算法带宽呈下降趋势。为了解决这一问题，NCCL提出了总线带宽这一概念，通过对于每个集合通信算子的分析来对测得的算法带宽乘以一个校正系数（correction factor），来减轻处理单元数量对于测量带宽的影响并给出一个更贴近实际硬件表现的带宽值。下面列出了一些常见算子的校正系数，以及背后的简略推导。
 
-* AllReduce：$2(p-1)/p$ 对于在处理单元$n_1, n_2 \cdots n_p$ 上的值 $v_1, v_2 \cdots v_p$ 计算 $v_1 op v_2 \cdots op v_p $（其中$op$为符合结合律的算子），再存回每个处理单元中。在不考虑实际实现算法和网络拓扑的情况下，这个操作理论上只需要 $2(p-1)$ 次数据传输，其中包含在每个处理单元上分开进行的 $n-1$ 次 op的运算，以及最后 $n$ 次最终数据值的广播，再减去第一个处理单元的运算和最后一个处理单元的广播的影响。假设每个处理单元对于外界所有信息处理的带宽为$B$，我们可以得出对于S个在不同处理单元上的数据运行AllReduce是能得到的最优情况下的运行时间：$t = (2S(p-1)) / (pB)$，进行简化后可得 $B = (S/t)(2(p-1)/p) = b (2(p-1)/p)$。这里的 $2(p-1)/p$便是我们的校正系数。
+* AllReduce：$2(p-1)/p$ 对于在处理单元$n_1, n_2 \cdots n_p$ 上的值 $v_1, v_2 \cdots v_p$ 计算 $v_1 (op) v_2 \cdots (op) v_p$（其中$op$为符合结合律的算子），再存回每个处理单元中。在不考虑实际实现算法和网络拓扑的情况下，这个操作理论上只需要 $2(p-1)$ 次数据传输，其中包含在每个处理单元上分开进行的 $n-1$ 次 op的运算，以及最后 $n$ 次最终数据值的广播，再减去第一个处理单元的运算和最后一个处理单元的广播的影响。假设每个处理单元对于外界所有信息处理的带宽为$B$，我们可以得出对于S个在不同处理单元上的数据运行AllReduce是能得到的最优情况下的运行时间：$t = (2S(p-1)) / (pB)$，进行简化后可得 $B = (S/t)(2(p-1)/p) = b (2(p-1)/p)$。这里的 $2(p-1)/p$便是我们的校正系数。
 * ReduceScatter：$(p-1)/p$ 对于每个处理单元来说，可以把ReduceScatter理解为只执行AllReduce中的聚合部分。对此，我们只需要考虑上文分析中的$n-1$次$op$的运算，整理后可得$B = (S/t)((p-1)/p) = b ((p-1)/p)$。
 * AllGather：$(p-1)/p$ 同理，对于每个处理单元来说，可以把AllGather理解为只执行AllReduce中的广播部分。我们同理可得$B = (S/t)((p-1)/p) = b ((p-1)/p)$。
 * Broadcast：$1$ 与AllReduce不同的是，Broadcast中所有数据需要从算子本身的发送者发出。即使在上文的分治情况下，我们也需要等待所有子问题运行结束才能确保Broadcast算子本身的正确性。因此，在计算带宽时瓶颈仍为发送者对于外界所有信息处理的带宽，所以 $B = S/t$，即校正系数为$1$。
@@ -159,8 +159,8 @@ class ToyModel(nn.Module):
 def demo_basic(rank, world_size):
     setup(rank, world_size)
 
-    # create model and move it to GPU with id rank
     model = ToyModel().to(rank)
+    # 通过调用DDP将模型在每个处理器上完成初始化
     ddp_model = DDP(model, device_ids=[rank])
 
     loss_fn = nn.MSELoss()
@@ -169,6 +169,8 @@ def demo_basic(rank, world_size):
     optimizer.zero_grad()
     outputs = ddp_model(torch.randn(20, 10))
     labels = torch.randn(20, 5).to(rank)
+    
+    # 在反向传播时，框架内部会执行AllReduce算法
     loss_fn(outputs, labels).backward()
     optimizer.step()
 
@@ -193,13 +195,7 @@ import multiprocessing
 
 @ray.remote(num_cpus=1)
 def test_allreduce(rank, world_size, fileStore_path):
-    '''
-    rank  # Rank of this process within list of participating processes
-    world_size  # Number of participating processes
-    fileStore_path # The path to create filestore
-    '''
     context = pygloo.rendezvous.Context(rank, world_size)
-    # Prepare device and store for rendezvous
     attr = pygloo.transport.tcp.attr("localhost")
     dev = pygloo.transport.tcp.CreateDevice(attr)
     fileStore = pygloo.rendezvous.FileStore(fileStore_path)
@@ -212,6 +208,7 @@ def test_allreduce(rank, world_size, fileStore_path):
     sendptr = sendbuf.ctypes.data
     recvptr = recvbuf.ctypes.data
 
+    # 标明发送者和者并直接调用AllReduce
     pygloo.allreduce(context, sendptr, recvptr,
                     sendbuf.size, pygloo.glooDataType_t.glooFloat32,
                     pygloo.ReduceOp.SUM, pygloo.allreduceAlgorithm.RING)
@@ -225,7 +222,3 @@ if __name__ == "__main__":
 ```
 
 可以注意到，前者并没有显式的调用集合通信算子，而是通过DistributedDataParallel将分布式训练和正常训练之间的不同隐藏了起来。如果我们需要在不同集群上运行这段代码，只需要在setup 函数内相对的更改PyTorch使用的底层集合通信库即可。在backward函数被调用时，才会真正的使用AllReduce算法。相比下来，如果想要直接使用gloo，不仅需要使用一步一步的创建通信所需要的数据结构，同时也很难和现有的模型训练框架无缝连接。
-
-## 参考文献
-
-:bibliography:`../references/distributed.bib`
