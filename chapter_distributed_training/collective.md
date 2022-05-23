@@ -225,3 +225,7 @@ if __name__ == "__main__":
 ```
 
 可以注意到，前者并没有显式的调用集合通信算子，而是通过DistributedDataParallel将分布式训练和正常训练之间的不同隐藏了起来。如果我们需要在不同集群上运行这段代码，只需要在setup 函数内相对的更改PyTorch使用的底层集合通信库即可。在backward函数被调用时，才会真正的使用AllReduce算法。相比下来，如果想要直接使用gloo，不仅需要使用一步一步的创建通信所需要的数据结构，同时也很难和现有的模型训练框架无缝连接。
+
+## 参考文献
+
+:bibliography:`../references/collective.bib`
