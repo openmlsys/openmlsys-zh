@@ -143,8 +143,7 @@ from torch.nn.parallel import DistributedDataParallel as DDP
 def setup(rank, world_size):
     os.environ['MASTER_ADDR'] = 'localhost'
     os.environ['MASTER_PORT'] = '12355'
-
-    dist.init_process_group("gloo")
+    dist.init_process_group("gloo", rank=rank, world_size=world_size)
 
 class ToyModel(nn.Module):
     def __init__(self):
@@ -169,7 +168,7 @@ def demo_basic(rank, world_size):
     optimizer.zero_grad()
     outputs = ddp_model(torch.randn(20, 10))
     labels = torch.randn(20, 5).to(rank)
-    
+
     # 在反向传播时，框架内部会执行AllReduce算法
     loss_fn(outputs, labels).backward()
     optimizer.step()
