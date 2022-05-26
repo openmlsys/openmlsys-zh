@@ -13,3 +13,7 @@
 - 利用多级缓存支持超大规模深度学习推荐系统训练：[Distributed Hierarchical GPU Parameter Server for Massive Scale Deep Learning Ads Systems](https://arxiv.org/abs/2003.05622)
 
 - 工业界机器学习系统的实践：[Hidden Technical Debt in Machine Learning Systems](https://papers.nips.cc/paper/2015/hash/86df7dcfd896fcaf2674f757a2463eba-Abstract.html)
+
+## 参考文献
+
+:bibliography:`../references/recommender.bib`
