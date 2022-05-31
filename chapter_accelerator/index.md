@@ -20,5 +20,6 @@
 accelerator_introduction
 accelerator_architecture
 accelerator_programming
+accelerator_practise
 summary
 ```
