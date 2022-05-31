@@ -30,7 +30,7 @@ Ray :cite:`moritz2018ray`是由伯克利大学几名研究人员发起的一个�
 
 ![RLlib分布式训练](../img/ch12/ch12-rllib-distributed.svg)
 
-:width:`800px`
+:width:`600px`
 
 :label:`ch12/ch12-rllib_dist`
 

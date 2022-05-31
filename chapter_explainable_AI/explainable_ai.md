@@ -110,17 +110,7 @@ TCAV就可以通过计算类$k$的具有正$S_{C,k,l}$’s的样本的比率来�
 
 $$\textbf{TCAV}_{Q_{C,k,l}}=\frac{\vert \{\mathbf{x}\in X_{k}:S_{C,k,l}(\mathbf{x})>0\}\vert}{\vert X_{k}\vert}
 \label{eq:TCAV}$$
-结合$t$-分布假设方法，如果$\textbf{TCAV}_{Q_{C,k,l}}$大于0.5，则表明概念$C$对类$k$有重大影响。
-
-= \[rectangle, minimum height=2.5cm, text width=2.4cm, text centered,
-draw=black, font=\] = \[thick,-&gt;,&gt;=stealth\]
-
-(step1) \[startstop\] [收集一个概念的正负样本]{}; (step2) \[startstop,
-right of=step1\] [输入正负样模型获取中间层的激活]{}; (step3)
-\[startstop, right of=step2\] [通过线性回归获取 CAVs]{}; (step4)
-\[startstop, right of=step3\] [计算TCAV分值]{};
-
-(step1) – (step2); (step2) – (step3); (step3) – (step4);
+结合$$t$$-分布假设方法，如果$$\textbf{TCAV}_{Q_{C,k,l}}$$大于0.5，则表明概念$$C$$对类$$k$$有重大影响。
 
 ![TCAV流程(图片来源于 :cite:`2020tkde_li`)](../img/ch11/xai_tcav.png)
 :width:`800px`
@@ -132,16 +122,113 @@ right of=step1\] [输入正负样模型获取中间层的激活]{}; (step3)
 :width:`800px`
 :label:`tb_net`
 
-TB-Net的框架如图 :numref:`tb_net`所示：其中，Step代表步骤，historical代表历史的记录在图谱中的节点。Path extraction代表路径抽取，embedding propagation代表图嵌入向量传导技术，R代表关系矩阵，e代表图谱中的实体节点，pair block代表物品配对块，user response代表用户兴趣反馈向量，update代表更新词向量，concat代表拼接计算。步骤1，TB-Net得到目标项$\tau$，用户$u$和该用户的子图。子图是通过历史点击项集合$I_u$（蓝色部分）来构建生成；步骤2，连接$\tau$和$I_u$之间的路径，提取路径作为双向嵌入传播网络TB-Net的输入。词向量的计算从路径的左侧和右侧传播到中间节点（图中的绿色节点）；步骤3，计算左右两个流向的词向量汇集到同一中间实体的概率。概率用于表示用户对中间实体的喜好程度，并作为解释的依据；步骤4，TB-Net同时输出推荐结果和具有语义级别的解释。
+TB-Net的框架如图 :numref:`tb_net`所示：其中，$i_c$代表待推荐物品，$h_n$代表历史记录中用户交互的物品，$r$和$e$代表图谱中的关系（relation）和实体（entity），它们的向量化表达拼接在一起形成关系矩阵和实体矩阵。首先，TB-Net通过$i_c$和$h_n$的相同特征值来构建用户$u$的子图谱，每一对$i_c$和$h_n$都由关系和实体所组成的路径来连接。然后，TB-Net的路径双向传导方法将物品、实体和关系向量的计算从路径的左侧和右侧分别传播到中间节点，即计算左右两个流向的向量汇集到同一中间实体的概率。该概率用于表示用户对中间实体的喜好程度，并作为解释的依据。最后，TB-Net识别子图谱中关键路径（即关键实体和关系），输出推荐结果和具有语义级别的解释。
 
-以游戏推荐为场景，随机对一个用户推荐新的游戏，如图 :numref:`xai_kg_recommendataion`所示，其中Half-Life, DOTA 2, Team Fortress 2等为游戏名称。关系属性中，game.year 代表游戏发行年份，game.genres代表游戏属性，game.developer代表游戏的开发商，game.categories代表游戏分类。属性节点中，MOBA代表多人在线战术竞技游戏，valve代表威尔乌游戏公司，action代表动作类，Multi-player代表多人游戏，Valve Anti-Cheat enabled代表威尔乌防作弊类，Free代表免费，Cross-Platform代表跨平台。左边的游戏是从训练数据中选取的评分项。而测试数据中正确推荐的游戏是“Team Fortress 2”。
+以游戏推荐为场景，随机对一个用户推荐新的游戏，如图 :numref:`xai_kg_recommendation`所示，其中Half-Life, DOTA 2, Team Fortress 2等为游戏名称。关系属性中，game.year 代表游戏发行年份，game.genres代表游戏属性，game.developer代表游戏的开发商，game.categories代表游戏分类。属性节点中，MOBA代表多人在线战术竞技游戏，Valve代表威尔乌游戏公司，Action代表动作类，Multi-player代表多人游戏，Valve Anti-Cheat enabled代表威尔乌防作弊类，Free代表免费，Cross-Platform代表跨平台。右边的游戏是用户历史记录中玩过的游戏。而测试数据中正确推荐的游戏是“Team Fortress 2”。
 
 ![Steam游戏推荐可解释示例 （用户玩过的游戏: Half-Life, DOAT 2. 推荐命中的游戏: “Team Fortress 2”。具有属性信息的节点如，game.geners: Action, free-to-play; game.developer: Valve; game.categories:
-Multiplayer, MOBA.）](../img/ch11/xai_kg_recommendataion.png)
+Multiplayer, MOBA.）](../img/ch11/xai_kg_recommendation.png)
 :width:`800px`
-:label:`xai_kg_recommendataion`
+:label:`xai_kg_recommendation`
 
-在图 :numref:`xai_kg_recommendataion`中，有两个突出显示的相关概率（38.6%, 21.1%），它们是在推荐过程中模型计算的路径被激活的概率。实线箭头突出显示从“Team Fortress 2”到历史项目“Half-Life”之间的路径。它表明TB-Net能够通过各种关系连接向用户推荐物品，并输出关键因素作为解释。因此，将“Team Fortress 2”推荐给用户的解释可以翻译成固定话术：“Team Fortress 2”是游戏公司“Valve”开发的一款动作类、多人在线、射击类“action”电子游戏。这与用户历史玩过的游戏“Half-Life”有高度关联。
+在图 :numref:`xai_kg_recommendation`中，有两个突出显示的相关概率（38.6%, 21.1%），它们是在推荐过程中模型计算的关键路径被激活的概率。红色箭头突出显示从“Team Fortress 2”到历史项目“Half-Life”之间的关键路径。它表明TB-Net能够通过各种关系连接向用户推荐物品，并找出关键路径作为解释。因此，将“Team Fortress 2”推荐给用户的解释可以翻译成固定话术：“Team Fortress 2”是游戏公司“Valve”开发的一款动作类、多人在线、射击类电子游戏。这与用户历史玩过的游戏“Half-Life”有高度关联。
+
+## 可解释AI系统及实践
+
+随着各领域对可解释的诉求快速增长，越来越多企业集成可解释AI工具包，为广大用户提供快速便捷的可解释实践，业界现有的主流工具包有:
+- TensorFlow团队的What-if Tool，用户不需编写任何程序代码就能探索学习模型，让非开发人员也能参与模型调校工作。
+- IBM的AIX360，提供了多种的解释及度量方法去评估模型在各个不同维度上的可解释及可信性能。
+- Facebook Torch团队的captum，针对图像及文本场景，提供了多种主流解释方法。
+- 微软的InterpretML，用户可以训练不同的白盒模型及解释黑盒模型。
+- SeldonIO的Alibi，专注于查勘模型内部状况及决策解释，提供各种白盒、黑盒模型、单样本及全局解释方法的实现。
+- 华为MindSpore的XAI工具，提供数据工具、解释方法、白盒模型以及度量方法，为用户提供不同级别的解释（局部，全局，语义级别等）。
+
+本节将以MindSpore XAI工具为例，讲解在实践中如何使用可解释AI工具为图片分类模型和表格数据分类模型提供解释，从而协助用户理解模型进行进一步的调试调优。
+MindSpore XAI工具的架构如下，其为基于MindSpore深度学习框架的一个可解释工具，可在Ascend及GPU设备上部署。
+![MindSpore XAI 架构图](../img/ch11/mindspore_xai.png)
+:width:`800px`
+:label:`mindspore_xai`
+
+要使用MindSpore可解释AI，读者首先要通过pip安装MindSpore XAI包（支持MindSpore1.7 或以上，GPU及Ascend 处理器，推荐配合JupyterLab使用）:
+
+```bash
+pip install mindspore-xai
+```
+
+在MindSpore XAI的[官网教程](https://www.mindspore.cn/xai/docs/zh-CN/r1.8/index.html)中，详细介绍了如何安装和使用提供的解释方法, 读者可自行查阅。
+
+### MindSpore XAI工具为图片分类场景提供解释
+
+下面结合MindSpore XAI1.8版本中已支持的显着图可视方法 GradCAM 作为一个代码演示例子。读者可参阅[官方教程](https://www.mindspore.cn/xai/docs/zh-CN/1.8/using_cv_explainers.html)以取得演示用的数据集, 模型和完整脚本代码。
+
+```python
+
+rom mindspore_xai.explainer import GradCAM
+
+# 通常指定最后一层的卷积层
+grad_cam = GradCAM(net, layer="layer4")
+
+# 3 是'boat'类的ID
+saliency = grad_cam(boat_image, targets=3)
+```
+
+如果输入的是一个维度为 $1*3*224*224$ 的图片Tensor，那返回的saliency就是一个 $1*1*224*224$  的显著图Tensor。下面我们将几个例子展示如何使用可解释AI能力来更好理解图片分类模型的预测结果，获取作为分类预测依据的关键特征区域，从而判断得到分类结果的合理性和正确性，加速模型调优。
+
+
+![预测结果正确，依据的关键特征合理的例子](../img/ch11/correct_correct.png)
+:width:`400px`
+:label:`correct_correct`
+
+上图预测标签是“bird”，解释结果给出依据的关键特征在鸟身上，说明这个分类判断依据是合理的, 可以初步判定模型为可信的。
+
+![预测结果正确，依据的关键特征不合理的例子](../img/ch11/correct_wrong.png)
+:width:`400px`
+:label:`correct_wrong`
+
+原图中，有人，在预测标签中有1个标签是“person”，这个结果是对的；但是解释的时候，高亮区域在马头的上，那么这个关键特征依据很可能是错误的, 这个模型的可靠性还需进一步验证。
+
+![预测结果错误，依据的关键特征不合理的例子](../img/ch11/wrong_wrong.png)
+:width:`400px`
+:label:`wrong_wrong`
+
+在上图中，预测标签为“boat”，但是原始图像中并没有船只存在，通过图中右侧解释结果可以看到模型将水面作为分类的关键依据，得到预测结果“boat”，这个依据是错误的。通过对训练数据集中标签为“boat”的数据子集进行分析，发现绝大部分标签为“boat”的图片中，都有水面，这很可能导致模型训练的时候，误将水面作为“boat”类型的关键依据。基于此，按比例补充有船没有水面的图片集，从而大幅消减模型学习的时候误判关键特征的概率。
+
+### MindSpore XAI工具为表格分类场景提供解释
+MindSpore XAI 1.8版本支持了三个业界比较常见的表格数据模型解释方法：LIMETabular、SHAPKernel和SHAPGradient。
+
+以LIMETabular为例针对一个复杂难解释的模型，提供一个局部可解释的模型来对单个样本进行解释：
+```python
+from mindspore_xai.explainer import LIMETabular
+
+# 将特征转换为特征统计数据
+feature_stats = LIMETabular.to_feat_stats(data, feature_names=feature_names)
+
+# 初始化解释器
+lime = LIMETabular(net, feature_stats, feature_names=feature_names, class_names=class_names)
+
+# 解释
+lime_outputs = lime(inputs, targets, show=True)
+```
+
+解释器会显示出把该样本分类为setosa这一决定的决策边界，返回的 lime_outputs 是代表决策边界的一个结构数据。
+可视化解释,可得到
+![LIME解释结果](../img/ch11/tabular.png)
+:width:`400px`
+:label:`tabular_lime`
+上述解释说明针对setosa这一决策,最为重要的特征为petal length。
+
+### MindSpore XAI工具提供白盒模型
+
+除了针对黑盒模型的事后解释方法,XAI工具同样提供业界领先的白盒模型,使得用户可基于这些白盒模型进行训练,在推理过程中模型可同时输出推理结果及解释结果。以TB-Net为例(可参考:numref:`tb_net`及其[官网教程](https://e.gitee.com/mind_spore/repos/mindspore/xai/tree/master/models/whitebox/tbnet)进行使用)，该方法已上线商用，为百万级客户提供带有语义级解释的理财产品推荐服务。TB-Net利用知识图谱对理财产品的属性和客户的历史数据进行建模。在图谱中，具有共同属性值的理财产品会被连接起来，待推荐产品与客户的历史购买或浏览的产品会通过共同的属性值连接成路径，构成该客户的子图谱。然后，TB-Net对图谱中的路径进行双向传导计算，从而识别关键产品和关键路径，作为推荐和解释的依据。
+
+
+一个可解释推荐的例子如下：在历史数据中，该客户近期曾购买或浏览了理财产品A、B和N等等。通过TB-Net的路径双向传导计算可知，路径（产品P，年化利率_中等偏高，产品A）和路径（产品P，风险等级_中等风险，产品N）的权重较高，即为关键路径。此时，TB-Net输出的解释为：“推荐理财产品P给该客户，是因为它的年化利率_中等偏高，风险等级_中等风险，分别与该客户近期购买或浏览的理财产品A和B一致。”
+
+![TBNet应用金融理财场景](../img/ch11/tbnet_finance.png)
+:width:`800px`
+:label:`tbnet_finance`
+
+除了上面介绍的解释方法外，MindSpore XAI还会提供一系列的度量方法用以评估不同解释方法的优劣，另外也会陆续增加自带解释的白盒模型，用户可直接取用成熟的模型架构以快速构建自己的可解释AI系统。
 
 
 ## 未来可解释AI

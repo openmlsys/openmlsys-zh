@@ -20,5 +20,3 @@ Lyapunov来将安全性纳入考虑。
 
 :label:`safe\_learning\_control`
 
-:bibliography:`../mlsys.bib`
-
