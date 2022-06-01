@@ -48,7 +48,7 @@ def model(X, flag):
 
 尽管静态图和动态图在前端语言表达上略有差异，但本质的区别在于静态生成和动态生成的编译执行过程不同。使用前端语言构建完成模型表达后，动态生成并不采用计算框架编译器生成完整的静态计算图，而是采用前端语言的解释器Python API调用计算框架，框架利用自身的算子分发功能，将Python调用的算子在相应的硬件如CPU、GPU、NPU等上进行加速计算，然后再将计算结果返回给前端。该过程并不产生静态的计算图，而是按照前端语言描述模型结构，按照计算依赖关系进行调度执行，动态生成临时的图拓扑结构。
 
-![动态生成](../img/ch03/dynamic-gen.svg)
+![动态生成](../img/ch03/dynamic_gen.png)
 :width:`700px`
 :label:`dynamicgen`
 
@@ -86,7 +86,7 @@ def model(X1, X2):
 | 控制流实现方式  | 特定的语法          | 前端语言语法        |
 | 性能           | 优化策略多，性能更佳 | 图优化受限，性能较差 |
 | 内存占用       | 内存占用少           | 内存占用相对较多     |
-| 内存占用       | 可直接部署           | 不可直接部署        |
+| 部署能力      | 可直接部署           | 不可直接部署        |
 :label:`cmp_dynamic_static`
 
 针对两种模式的特性，结合任务需求选择合适的模式可以事半功倍，学术科研以及模型开发调试阶段，为了快速验证思想和迭代更新模型结构可以选择动态图模式进行构建算法；网络模型确定，为了加速训练过程或者为硬件部署模型，可以选择静态图模式。
@@ -133,12 +133,11 @@ def model(X, flag):
 
 :主流框架动态图转换静态图支持
 
-|       框架          |                 动态图转静态图                       |
-| :-----------------:| :--------------------------------------------------: |
-|        TensorFlow   |@tf_function追踪算子调度构建静态图，<br>其中AutoGraph机制可以自动转换控制流为静态表达 |
-|         MindSpore    |   context.set_context(mode=context.PYNATIVE_MODE)动态图模式，<br>context.set_context(mode=context.GRAPH_MODE) 静态图模式，<br>@ms_function支持基于源码转换    |
-|         PyTorch      |  torch.jit.script()支持基于源码转换，<br>torch.jit.trace()支持基于追踪转换  |
-|      PaddlePaddle    | paddle.jit.to_static()支持基于源码转换，<br>paddle.jit.TracedLayer.trace()支持基于追踪转换 |
-
+|    框架  |                 动态图转静态图                       |
+| ------------| -------------------------------------------------- |
+| TensorFlow |@tf_function追踪算子调度构建静态图，其中AutoGraph机制可以自动转换控制流为静态表达 |
+|  MindSpore  |   context.set_context(mode=context.PYNATIVE_MODE)动态图模式，context.set_context(mode=context.GRAPH_MODE) 静态图模式，@ms_function支持基于源码转换    |
+| PyTorch |  torch.jit.script()支持基于源码转换，torch.jit.trace()支持基于追踪转换  |
+|  PaddlePaddle | paddle.jit.to_static()支持基于源码转换，paddle.jit.TracedLayer.trace()支持基于追踪转换 |
 :label:`dynamic_static_switch`              
                                                            
