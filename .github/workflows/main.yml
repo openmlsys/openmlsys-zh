@@ -11,9 +11,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
+      - run: sudo apt-get update
       - run: python3 -m pip install -r requirements.txt
-      - run: sudo apt install -y pandoc
+      - run: sudo apt install pandoc=2.12
 
       - run: |
           git clone https://github.com/openmlsys/d2l-book.git
