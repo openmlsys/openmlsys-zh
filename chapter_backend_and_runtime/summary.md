@@ -17,3 +17,8 @@
 -   将通信算子的内存进行融合，可以提高通信的效率；合理分配In-Place算子的内存，可以节省内存使用并且提高计算效率。
 
 -   运行时对于算子的执行可以分为单算子调度和计算图调度两种模式，而在计算图调度模式中，根据具体硬件的能力又可以分为交互式执行和下沉式执行两种方式，交互式执行具备更多的灵活性，下沉执行可以获得更好的计算性能。
+
+## 扩展阅读
+
+-   内存分配作为机器学习后端的重要部分，建议阅读 [Sublinear Memory Cost](https://arxiv.org/abs/1604.06174)、 [Dynamic Tensor Rematerialization](https://arxiv.org/abs/2006.09616)。
+-   对于运行时的调度以及执行，建议阅读 [A Lightweight Parallel and Heterogeneous Task Graph Computing System](https://arxiv.org/abs/2004.10908)、 [Dynamic Control Flow in Large-Scale Machine Learning](https://arxiv.org/abs/1805.01772)、[DEEP LEARNING WITH DYNAMIC COMPUTATION GRAPHS](https://arxiv.org/abs/1702.02181)。

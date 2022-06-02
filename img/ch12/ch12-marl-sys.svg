@@ -1,0 +1,782 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="466.7132mm"
+   height="299.44547mm"
+   viewBox="0 0 466.71319 299.44546"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.1 (1:1.1+202109281949+c3084ef5ed)"
+   sodipodi:docname="marl_sys.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.32026164"
+     inkscape:cx="507.39763"
+     inkscape:cy="710.35668"
+     inkscape:window-width="1848"
+     inkscape:window-height="1136"
+     inkscape:window-x="72"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     inkscape:snap-global="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <defs
+     id="defs2">
+    <marker
+       style="overflow:visible"
+       id="Arrow1Mend"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Mend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path129232" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Mend-3"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Mend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path129232-3" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Mend-3-8"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Mend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path129232-3-6" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Mend-3-4"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Mend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path129232-3-8" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Mend-3-89"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Mend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path129232-3-7" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Mend-3-6"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Mend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path129232-3-4" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Mend-0"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Mend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path129232-30" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Mend-2"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Mend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path129232-5" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Mend-3-89-0"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Mend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path129232-3-7-5" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Mend-28"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Mend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path129232-9" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Mend-2-6"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Mend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path129232-5-8" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Mend-21"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Mend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path129232-0" />
+    </marker>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(153.48541,7.5859966)">
+    <rect
+       style="fill:#ffffff;fill-opacity:0;stroke:#000000;stroke-width:1.5;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect2439"
+       width="319.29016"
+       height="73.025307"
+       x="-6.8123627"
+       y="-6.8359966"
+       ry="7.4795961" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="0.35719228"
+       y="7.3493328"
+       id="text6769"><tspan
+         sodipodi:role="line"
+         id="tspan6767"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';stroke-width:0.264583"
+         x="0.35719228"
+         y="7.3493328">智能体1</tspan></text>
+    <rect
+       style="fill:#ffffff;fill-opacity:0;stroke:#000000;stroke-width:1.5;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect14994"
+       width="108.53062"
+       height="38.626457"
+       x="1.1066673"
+       y="13.8151"
+       ry="6.3606167" />
+    <rect
+       style="fill:#ffffff;fill-opacity:0.999939;stroke:#000000;stroke-width:1.5;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect14994-9"
+       width="108.53062"
+       height="38.626457"
+       x="9.5172548"
+       y="20.080038"
+       ry="6.3606167" />
+    <rect
+       style="fill:#ffffff;fill-opacity:0.999939;stroke:#000000;stroke-width:0.886039;stroke-linejoin:round"
+       id="rect14994-9-6"
+       width="48.133919"
+       height="23.788153"
+       x="20.969793"
+       y="26.469824"
+       ry="3.9171939" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="33.587643"
+       y="42.48008"
+       id="text18868"><tspan
+         sodipodi:role="line"
+         id="tspan18866"
+         style="stroke-width:0.264583"
+         x="33.587643"
+         y="42.48008">模型</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="84.019226"
+       y="32.250854"
+       id="text18868-3"><tspan
+         sodipodi:role="line"
+         id="tspan18866-8"
+         style="stroke-width:0.264583"
+         x="84.019226"
+         y="32.250854">行动者</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="135.93124"
+       y="34.698502"
+       id="text18868-3-1"><tspan
+         sodipodi:role="line"
+         id="tspan18866-8-1"
+         style="stroke-width:0.264583"
+         x="135.93124"
+         y="34.698502">轨迹</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="55.129414"
+       y="111.61241"
+       id="text18868-3-1-5"><tspan
+         sodipodi:role="line"
+         id="tspan18866-8-1-0"
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Italic';stroke-width:0.264583"
+         x="55.129414"
+         y="111.61241">模型分发</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="243.21516"
+       y="90.411438"
+       id="text18868-3-1-5-8"><tspan
+         sodipodi:role="line"
+         id="tspan18866-8-1-0-62"
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Italic';stroke-width:0.264583"
+         x="243.21516"
+         y="90.411438">模型更新存储</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="-26.510138"
+       y="181.73605"
+       id="text18868-3-1-5-2"><tspan
+         sodipodi:role="line"
+         id="tspan18866-8-1-0-5"
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Italic';stroke-width:0.264583"
+         x="-26.510138"
+         y="181.73605">集中推理</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="-26.780876"
+       y="110.9239"
+       id="text18868-3-1-5-4"><tspan
+         sodipodi:role="line"
+         id="tspan18866-8-1-0-6"
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Italic';stroke-width:0.264583"
+         x="-26.780876"
+         y="110.9239">传回轨迹</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="132.00789"
+       y="260.86563"
+       id="text18868-3-1-0"><tspan
+         sodipodi:role="line"
+         id="tspan18866-8-1-8"
+         style="stroke-width:0.264583"
+         x="132.00789"
+         y="260.86563">轨迹</tspan></text>
+    <rect
+       style="fill:#ffffff;fill-opacity:0;stroke:#000000;stroke-width:1.31629;stroke-linejoin:round"
+       id="rect14994-8-2"
+       width="72.150307"
+       height="35.024509"
+       x="-148.56631"
+       y="119.91573"
+       ry="5.7674842" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.31629;stroke-linejoin:round"
+       id="rect14994-8"
+       width="72.150307"
+       height="35.024509"
+       x="-141.41985"
+       y="127.66415"
+       ry="5.7674842" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="-117.13503"
+       y="148.94951"
+       id="text18868-8"><tspan
+         sodipodi:role="line"
+         id="tspan18866-5"
+         style="stroke-width:0.264583"
+         x="-117.13503"
+         y="148.94951">环境</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="-66.873871"
+       y="158.91365"
+       id="text18868-8-4"><tspan
+         sodipodi:role="line"
+         id="tspan18866-5-6"
+         style="stroke-width:0.264583"
+         x="-66.873871"
+         y="158.91365">观察量</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="-59.924511"
+       y="132.58028"
+       id="text18868-8-4-9"><tspan
+         sodipodi:role="line"
+         id="tspan18866-5-6-2"
+         style="stroke-width:0.264583"
+         x="-59.924511"
+         y="132.58028">动作</tspan></text>
+    <rect
+       style="fill:#ffffff;fill-opacity:0;stroke:#000000;stroke-width:1.31629;stroke-linejoin:round"
+       id="rect14994-8-8"
+       width="72.150307"
+       height="35.024509"
+       x="-33.468338"
+       y="125.49976"
+       ry="5.7674842" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="-22.948561"
+       y="148.04997"
+       id="text18868-8-1"><tspan
+         sodipodi:role="line"
+         id="tspan18866-5-0"
+         style="stroke-width:0.264583"
+         x="-22.948561"
+         y="148.04997">推理服务器</tspan></text>
+    <rect
+       style="fill:#ffffff;fill-opacity:0;stroke:#000000;stroke-width:1.31629;stroke-linejoin:round"
+       id="rect14994-8-8-3"
+       width="72.150307"
+       height="35.024509"
+       x="232.87144"
+       y="127.03558"
+       ry="5.7674842" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="243.4552"
+       y="147.87918"
+       id="text18868-8-1-0"><tspan
+         sodipodi:role="line"
+         id="tspan18866-5-0-4"
+         style="stroke-width:0.264583"
+         x="243.4552"
+         y="147.87918">模型存储器</tspan></text>
+    <rect
+       style="fill:#ffffff;fill-opacity:0;stroke:#000000;stroke-width:1.31629;stroke-linejoin:round"
+       id="rect14994-8-8-3-4"
+       width="72.150307"
+       height="35.024509"
+       x="144.12167"
+       y="125.81642"
+       ry="5.7674842" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="153.62067"
+       y="146.87305"
+       id="text18868-8-1-0-4"><tspan
+         sodipodi:role="line"
+         id="tspan18866-5-0-4-4"
+         style="stroke-width:0.264583"
+         x="153.62067"
+         y="146.87305">模型评估器</tspan></text>
+    <rect
+       style="fill:#ffffff;fill-opacity:0;stroke:#000000;stroke-width:1.31629;stroke-linejoin:round"
+       id="rect14994-8-8-3-4-7"
+       width="72.150307"
+       height="35.024509"
+       x="55.503185"
+       y="126.00691"
+       ry="5.7674842" />
+    <rect
+       style="fill:#ffffff;fill-opacity:0;stroke:#000000;stroke-width:1.5;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:4.5, 1.5;stroke-dashoffset:0"
+       id="rect14994-8-8-3-4-7-4"
+       width="260.65747"
+       height="135.01796"
+       x="50.785854"
+       y="74.764908"
+       ry="8.7207499" />
+    <rect
+       style="fill:#ffffff;fill-opacity:0;stroke:#000000;stroke-width:1.5;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:4.5, 1.5;stroke-dashoffset:0"
+       id="rect14994-8-8-3-4-7-4-4"
+       width="195.73186"
+       height="95.42511"
+       x="-152.73541"
+       y="94.206604"
+       ry="6.163465" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="65.438759"
+       y="147.22806"
+       id="text18868-8-1-0-4-6"><tspan
+         sodipodi:role="line"
+         id="tspan18866-5-0-4-4-3"
+         style="stroke-width:0.264583"
+         x="65.438759"
+         y="147.22806">模型选择器</tspan></text>
+    <rect
+       style="fill:#ffffff;fill-opacity:0;stroke:#000000;stroke-width:1.31629;stroke-linejoin:round"
+       id="rect14994-8-8-3-4-7-1"
+       width="72.150307"
+       height="35.024509"
+       x="146.03395"
+       y="77.397316"
+       ry="5.7674842" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="159.88176"
+       y="98.891731"
+       id="text18868-8-1-0-4-6-7"><tspan
+         sodipodi:role="line"
+         id="tspan18866-5-0-4-4-3-5"
+         style="stroke-width:0.264583"
+         x="159.88176"
+         y="98.891731">元学习者</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="56.849323"
+       y="89.429657"
+       id="text18868-8-1-0-4-6-7-4"><tspan
+         sodipodi:role="line"
+         id="tspan18866-5-0-4-4-3-5-7"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';stroke-width:0.264583"
+         x="56.849323"
+         y="89.429657">联盟型管理</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="-143.45882"
+       y="108.3296"
+       id="text18868-8-1-0-4-6-7-4-8"><tspan
+         sodipodi:role="line"
+         id="tspan18866-5-0-4-4-3-5-7-1"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';stroke-width:0.264583"
+         x="-143.45882"
+         y="108.3296">批量推理</tspan></text>
+    <rect
+       style="fill:#ffffff;fill-opacity:0;stroke:#000000;stroke-width:1.31629;stroke-linejoin:round"
+       id="rect14994-8-8-3-4-7-1-9"
+       width="72.150307"
+       height="35.024509"
+       x="144.70303"
+       y="171.50504"
+       ry="5.7674842" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="149.94156"
+       y="193.65414"
+       id="text18868-8-1-0-4-6-7-6"><tspan
+         sodipodi:role="line"
+         id="tspan18866-5-0-4-4-3-5-2"
+         style="stroke-width:0.264583"
+         x="149.94156"
+         y="193.65414">均衡求解器等</tspan></text>
+    <rect
+       style="fill:#ffffff;fill-opacity:0;stroke:#000000;stroke-width:1.5;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect14994-5"
+       width="108.53062"
+       height="38.626457"
+       x="172.19795"
+       y="14.38378"
+       ry="6.3606167" />
+    <rect
+       style="fill:#ffffff;fill-opacity:0.999939;stroke:#000000;stroke-width:1.5;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect14994-9-61"
+       width="108.53062"
+       height="38.626457"
+       x="180.60855"
+       y="20.648718"
+       ry="6.3606167" />
+    <rect
+       style="fill:#ffffff;fill-opacity:0.999939;stroke:#000000;stroke-width:0.886039;stroke-linejoin:round"
+       id="rect14994-9-6-1"
+       width="48.133919"
+       height="23.788153"
+       x="192.06108"
+       y="27.038504"
+       ry="3.9171939" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="206.19484"
+       y="43.035706"
+       id="text18868-5"><tspan
+         sodipodi:role="line"
+         id="tspan18866-9"
+         style="stroke-width:0.264583"
+         x="206.19484"
+         y="43.035706">模型</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="255.11052"
+       y="32.819534"
+       id="text18868-3-8"><tspan
+         sodipodi:role="line"
+         id="tspan18866-8-4"
+         style="stroke-width:0.264583"
+         x="255.11052"
+         y="32.819534">学习者</tspan></text>
+    <rect
+       style="fill:#ffffff;fill-opacity:0;stroke:#000000;stroke-width:1.5;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect2439-17"
+       width="319.29016"
+       height="73.025307"
+       x="-11.073907"
+       y="218.08417"
+       ry="7.4795961" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="-3.9043519"
+       y="232.2695"
+       id="text6769-8"><tspan
+         sodipodi:role="line"
+         id="tspan6767-5"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';stroke-width:0.264583"
+         x="-3.9043519"
+         y="232.2695">智能体2</tspan></text>
+    <rect
+       style="fill:#ffffff;fill-opacity:0;stroke:#000000;stroke-width:1.5;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect14994-7"
+       width="108.53062"
+       height="38.626457"
+       x="-3.1548784"
+       y="238.73528"
+       ry="6.3606167" />
+    <rect
+       style="fill:#ffffff;fill-opacity:0.999939;stroke:#000000;stroke-width:1.5;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect14994-9-4"
+       width="108.53062"
+       height="38.626457"
+       x="5.2557054"
+       y="245.00021"
+       ry="6.3606167" />
+    <rect
+       style="fill:#ffffff;fill-opacity:0.999939;stroke:#000000;stroke-width:0.886039;stroke-linejoin:round"
+       id="rect14994-9-6-18"
+       width="48.133919"
+       height="23.788153"
+       x="16.708244"
+       y="251.39"
+       ry="3.9171939" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="29.326096"
+       y="267.40024"
+       id="text18868-59"><tspan
+         sodipodi:role="line"
+         id="tspan18866-7"
+         style="stroke-width:0.264583"
+         x="29.326096"
+         y="267.40024">模型</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="79.75769"
+       y="257.17102"
+       id="text18868-3-5"><tspan
+         sodipodi:role="line"
+         id="tspan18866-8-3"
+         style="stroke-width:0.264583"
+         x="79.75769"
+         y="257.17102">行动者</tspan></text>
+    <rect
+       style="fill:#ffffff;fill-opacity:0;stroke:#000000;stroke-width:1.5;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect14994-5-8"
+       width="108.53062"
+       height="38.626457"
+       x="167.9364"
+       y="239.30396"
+       ry="6.3606167" />
+    <rect
+       style="fill:#ffffff;fill-opacity:0.999939;stroke:#000000;stroke-width:1.5;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect14994-9-61-8"
+       width="108.53062"
+       height="38.626457"
+       x="176.34698"
+       y="245.56889"
+       ry="6.3606167" />
+    <rect
+       style="fill:#ffffff;fill-opacity:0.999939;stroke:#000000;stroke-width:0.886039;stroke-linejoin:round"
+       id="rect14994-9-6-1-3"
+       width="48.133919"
+       height="23.788153"
+       x="187.79953"
+       y="251.95868"
+       ry="3.9171939" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="201.93329"
+       y="267.95587"
+       id="text18868-5-1"><tspan
+         sodipodi:role="line"
+         id="tspan18866-9-8"
+         style="stroke-width:0.264583"
+         x="201.93329"
+         y="267.95587">模型</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="250.84897"
+       y="257.73969"
+       id="text18868-3-8-9"><tspan
+         sodipodi:role="line"
+         id="tspan18866-8-4-6"
+         style="stroke-width:0.264583"
+         x="250.84897"
+         y="257.73969">学习者</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Mend)"
+       d="m 221.73029,51.680793 41.05117,73.696017"
+       id="path129221"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Mend-3)"
+       d="M 221.60084,238.39922 263.16343,164.2437"
+       id="path129221-3"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Mend-3)"
+       d="m 232.07068,144.81429 -14.1921,0.11901"
+       id="path129647" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Mend-3-8)"
+       d="m 143.41514,143.74434 -14.1921,0.11901"
+       id="path129647-0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Mend-3-89)"
+       d="m -33.402256,137.51102 -32.818613,0.10115"
+       id="path129647-7"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Mend-3-89-0)"
+       d="m -68.294265,145.97536 32.818613,0.10115"
+       id="path129647-7-9"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Mend-3)"
+       d="M 145.25257,93.372474 128.91909,131.5397"
+       id="path129935" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Mend-3-6)"
+       d="M 145.12679,192.6959 128.79331,154.52868"
+       id="path129935-3" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Mend)"
+       d="M 55.519965,130.52022 49.772467,52.460192"
+       id="path130093"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Mend-0)"
+       d="M 54.993175,148.814 49.288436,250.07616"
+       id="path130093-9"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Mend)"
+       d="M 38.762972,59.572454 19.500412,124.86725"
+       id="path130388"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Mend-28)"
+       d="M 13.755602,126.03049 32.884955,60.936682"
+       id="path130388-3"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Mend-2)"
+       d="M 40.851068,237.41642 22.417294,163.06537"
+       id="path130388-4"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Mend-2-6)"
+       d="m 27.302794,161.36631 18.154932,75.43181"
+       id="path130388-4-0"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Mend)"
+       d="m 118.75326,38.552769 60.05676,0.0488"
+       id="path153359"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Mend-21)"
+       d="m 114.4343,264.28683 60.05676,0.0488"
+       id="path153359-5"
+       sodipodi:nodetypes="cc" />
+  </g>
+</svg>
