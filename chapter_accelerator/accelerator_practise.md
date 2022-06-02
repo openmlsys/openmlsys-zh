@@ -291,7 +291,7 @@ __global__ void gemmKernel(const float * A,
 
 计算强度（Compute Intensity）指计算指令数量与访存指令数量的比值，在现代GPU中往往有大量计算单元但只有有限的访存带宽，程序很容易出现计算单元等待数据读取的问题，因此提高计算强度是提升程序性能的一条切实有限的指导思路。对于之前实现的GPU核函数，我们可以粗略计算其计算强度：在$K$次循环的内积计算中，对矩阵$A$与矩阵$B$的每次读取会计算一次浮点乘法与浮点加法，因此计算强度为1——两次浮点运算除以两次数据读取。之前的版本是每个线程负责处理矩阵$C$的一个元素——计算矩阵﻿﻿$A$的一行与矩阵$B$的一列的内积，我们可以通过使每个线程计算$C$更多的元素——计算矩阵$A$的多行与矩阵$B$的多列的内积——从而提升计算强度。具体地，如果在$K$次循环的内积计算中一次读取矩阵$A$中的$m$个元素和矩阵$B$中的$n$个元素，那么访存指令为$m+n$条，而计算指令为$2mn$条，所以计算强度为$\frac{2mn}{m+n}$，因此可以很容易发现提高$m$和$n$会带来计算强度的提升。
 
-我们在上一个代码例子中对全局内存的访问与存储都是借助 `float` 指针完成的，具体到硬件指令集上实际是使用指令 `LDG.E` 与 `STG.E` 完成的。我们可以使用128位宽指令`LDG.E.128` 与 `STG.E.128`  一次读取多个 `float` 数。使用宽指令的好处一方面有简化了指令序列，使用一个宽指令代替四个标准指令可以节省十几个指令的发射周期，这可以为计算指令的发射争取到额外的时间；此外128比特正好等于一个cache line的长度，使用宽指令也有助于提高cache line的命中率。但我们并不提倡在一切代码中过度追求宽指令的使用，开发者应当将更多的时间关注并行性设计和局部数据复用等更直接的优化手段。
+我们在上一个代码例子中对全局内存的访问与存储都是借助 `float` 指针完成的，具体到硬件指令集上实际是使用指令 `LDG.E` 与 `STG.E` 完成的。我们可以使用128位宽指令`LDG.E.128` 与 `STG.E.128`  一次读取多个 `float` 数。使用宽指令的好处是一方面简化了指令序列，使用一个宽指令代替四个标准指令可以节省十几个指令的发射周期，这可以为计算指令的发射争取到额外的时间；另一方面128比特正好等于一个cache line的长度，使用宽指令也有助于提高cache line的命中率。但我们并不提倡在一切代码中过度追求宽指令的使用，开发者应当将更多的时间关注并行性设计和局部数据复用等更直接的优化手段。
 
 具体的实现如下，由于每个 `float` 类型大小为32个比特，我们可以将4个 `float` 堆叠在一起构成一个128比特的 `float4` 类，对 `float4` 的访存将会是使用宽指令完成。虽然CUDA Toolkit已经有实现的 `float4` 类，但是为了代码抽象我们将自行实现我们自己的 `float4` 类。
 
@@ -554,7 +554,7 @@ Average Time: 3.188 ms, Average Throughput: 2694.440 GFLOPS
 
 :label:`sec-accelerator-use-smem`
 
-虽然令一个线程一次读取更多的数据能取得计算强度的提升进而带来性能的提升，但是这种设计会导致由于单个线程处理数据的增多导致开启总的线程数量减少，进而导致并行度下降，因此我们需要使用其他硬件特性在尽可能不影响并行度的前提下取得性能提升。在之前的代码中，我们开启若干个线程块，每个线程块处理矩阵$C$中的一个或多个矩阵块。在 :numref:`duplicated_data` 中，我们可以观察到，处理矩阵$C$同一行的线程$x, y$会读取矩阵$A$中相同的数据，我们可以借助共享内存让同一个线程块中不同的线程读取不重复的数据而提升程序吞吐量。
+虽然令一个线程一次读取更多的数据能取得计算强度的提升进而带来性能的提升，但是这种令单个线程处理数据增多的设计会导致开启总的线程数量减少，进而导致并行度下降，因此我们需要使用其他硬件特性在尽可能不影响并行度的前提下取得性能提升。在之前的代码中，我们开启若干个线程块，每个线程块处理矩阵$C$中的一个或多个矩阵块。在 :numref:`duplicated_data` 中，我们可以观察到，处理矩阵$C$同一行的线程$x, y$会读取矩阵$A$中相同的数据，我们可以借助共享内存让同一个线程块中不同的线程读取不重复的数据而提升程序吞吐量。
 
 ![线程间重复读取数据](../img/ch06/6.4/duplicated_data.svg)
 :width:` 800px`
@@ -571,7 +571,7 @@ Average Time: 3.188 ms, Average Throughput: 2694.440 GFLOPS
 :width:` 800px`
 :label:`use_smem_load`
 
-下面我们将实现使用共享内存的GPU核函数。首先，我们可以计算每个线程块在外层循环的每次迭代中从矩阵$A$中读取大小为$tileM \times tileK$的数据块，在矩阵$B$中读取大小为$tileK \times tileN$的数据块。假设每个线程块中一共含有$blockSize$个线程，那么就可以使用这$blockSize$个线程，每个线程循环$\frac{tileM * tileK}{blockSize * 4}$次将矩阵$A$中的矩阵块 `tileA` 读取进共享内存中，同理每个线程循环$\frac{tileM * tileK}{blockSize * 4}$次将矩阵$B$中的矩阵块 `tileB` 读取进共享内存中。
+下面我们将实现使用共享内存的GPU核函数。首先，我们定义每个线程块在外层循环的每次迭代中从矩阵$A$中读取大小为$tileM \times tileK$的数据块，在矩阵$B$中读取大小为$tileK \times tileN$的数据块。假设每个线程块中一共含有$blockSize$个线程，那么就可以使用这$blockSize$个线程，每个线程循环$\frac{tileM * tileK}{blockSize * 4}$次将矩阵$A$中的矩阵块 `tileA` 读取进共享内存中，同理每个线程循环$\frac{tileM * tileK}{blockSize * 4}$次将矩阵$B$中的矩阵块 `tileB` 读取进共享内存中。
 
 首先需要定义若干变量：
 
@@ -599,7 +599,8 @@ constexpr unsigned tileSizeB = LayoutTile::n * LayoutTile::k;
 constexpr unsigned tileIterationsB = tileSizeB / blockSize / ratio;
 constexpr unsigned tileGlobalIntervalB = blockSize / LayoutTileT::n;
 constexpr unsigned tileComputeIterationsB = LayoutTileT::n / LayoutBlock::n;
-constexpr unsigned tileSharedIntervalBT = LayoutTileT::n / tileComputeIterationsB;const unsigned nInTileB = threadIdx.x % LayoutTileT::n;
+constexpr unsigned tileSharedIntervalBT = LayoutTileT::n / tileComputeIterationsB;
+const unsigned nInTileB = threadIdx.x % LayoutTileT::n;
 const unsigned kinTileB = threadIdx.x / LayoutTileT::n;
 ```
 因为 `LayoutTile` 与 `LayoutThread` 是表示的 `float` 数据的布局，我们有时将其看为 `float4` 的数据储存，因此我们需要加入变量 `LayoutTileT` 与 `LayoutThreadT` 。 `blockSize` 指一个线程块内的线程数量。 我们在此版本使用一维线程块的布局模拟二维布局，所以我们需要计算在二维布局下的坐标：用 `mInTileC` 与 `nInTileC` 表示在给定 `LayoutBlock` 布局下的二维线程坐标。由于 `tileA` 是$tileM \times timeK$的尺寸，因此我们可以确定其中数据数量`tileSizeA` ，由于一个线程块内有 `blockSize` 个线程且每个线程一次读取 `ratio` 个 `float` 数，因此整个 `tileA` 需要用 `tileIterationsA = tileSizeA / blockSize / ratio` 次读取。每个线程在最开始时负责读取的 `tileA` 的位置使用变量 `kInTileA` 和 `mInTileA` 表示。因为需要用`tileIterationsA` 次读取 `tileA` ，每次向下滑动的距离我们使用变量`tileGlobalIntervalA`表示。同时因为需要用每个线程需要处理 `thread tile`  中多个子矩阵块，其中每个线程处理 `thread tile` 时在行方向上迭代的次数 定义为`tileComputeIterationsA` 。这些子矩阵块在 `m` 方向的间隔我们用`tileSharedIntervalA` 表示。类似地，我们定义与 `tileB` 的若干变量。
@@ -767,7 +768,7 @@ Average Time: 0.610 ms, Average Throughput: 14083.116 GFLOPS
 
 ### 隐藏共享内存读取延迟
 
-在GPU中读取数据共享内存中的数据使用指令 `LDS` ，在这条指令发出后并不会等待数据读取到寄存器后再执行下一条语句，只有执行到依赖 `LDS` 指令读取的数据的指令时才会等待读取的完成。而在上一小节中，我们在内层$tileK$次循环中，每次循环迭代对共享内存发射完读取指令之后就会立即执行依赖于读取数据的数学运算，这样就会导致计算单元等待数据从共享内存的读取，如 :numref:`use_smem_pipeline` 所示。事实上，对共享内存的访问周期能多达几十个时钟周期，而计算指令的执行往往只有几个时钟周期，因此通过一定方式隐藏对共享内存的访问会取得不小的收益。我们可以重新优化流水线隐藏一定的数据读取延迟。具体地，我们可以在内层的$tileK$次循环中每次循环开始时读取发射下一次内层循环数据的读取指令。由于在执行本次运算时计算指令并不依赖于下一次循环的数据，因此计算过程不会等待之前发出的读取下一次内层循环数据的指令，具体见 :numref:`hide_smem_latency` 。
+在GPU中使用指令 `LDS` 读取共享内存中的数据，在这条指令发出后并不会等待数据读取到寄存器后再执行下一条语句，只有执行到依赖 `LDS` 指令读取的数据的指令时才会等待读取的完成。而在上一小节中，我们在内层$tileK$次循环中，每次发射完读取共享内存的指令之后就会立即执行依赖于读取数据的数学运算，这样就会导致计算单元等待数据从共享内存的读取，如 :numref:`use_smem_pipeline` 所示。事实上，对共享内存的访问周期能多达几十个时钟周期，而计算指令的执行往往只有几个时钟周期，因此通过一定方式隐藏对共享内存的访问会取得不小的收益。我们可以重新优化流水线隐藏一定的数据读取延迟。具体地，我们可以在内层的$tileK$次循环中每次循环开始时读取发射下一次内层循环数据的读取指令。由于在执行本次运算时计算指令并不依赖于下一次循环的数据，因此计算过程不会等待之前发出的读取下一次内层循环数据的指令，具体见 :numref:`hide_smem_latency` 。
 
 ![上一个GPU核函数的流水线](../img/ch06/6.4/use_smem_pipeline.svg)
 :width:` 800px`
@@ -837,7 +838,7 @@ for (unsigned d = 0; d < tileComputeIterationsA * LayoutThread::m; ++d) {
 Max Error: 0.000092
 Average Time: 0.585 ms, Average Throughput: 14686.179 GFLOPS
 ```
-使用Nsight Compute观察发现：相比上一个GPU核函数，指标 `Stall Short Scoreboard` 减少了67%。Scoreboard的功能是由于此前提过GPU内存读写指令发出后并不会等待数据读取到寄存器后再执行下一条语句，但是会在Scoreboard设置符号并在完成读取后置回符号，等到之后有数据依赖的指令执行前会等待Scoreboard中符号的置回。这里`Stall Short Scoreboard` 的减少充分说明了内存延迟是有效的。
+使用Nsight Compute观察发现：相比上一个GPU核函数，指标 `Stall Short Scoreboard` 减少了67%。而此前提过GPU内存读写指令发出后并不会等待数据读取到寄存器后再执行下一条语句，但是会在Scoreboard设置符号并在完成读取后置回符号，等到之后有数据依赖的指令执行前会等待Scoreboard中符号的置回。所以这里`Stall Short Scoreboard` 的减少充分说明了内存延迟是有效的。
 
 ### 隐藏全局内存读取延迟
 
