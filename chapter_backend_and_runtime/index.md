@@ -8,14 +8,11 @@
 本章的学习目标包括：
 
 -   了解编译器后端和运行时的作用
-
 -   掌握计算图优化的常用方法
-
 -   掌握算子选择的常用方法
-
 -   掌握内存分配的常用方法
-
 -   掌握计算图调度和执行的常用方法
+-   了解目前算子编译器的基本特点以及其尚未收敛的几个问题（扩展部分）
 
 ```toc
 :maxdepth: 2
@@ -25,5 +22,6 @@ graph_optimizer
 kernel_selecter
 memory_allocator
 compute_schedule_and_execute
+operator compiler
 summary
 ```
