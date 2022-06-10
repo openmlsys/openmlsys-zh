@@ -11,9 +11,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
+      - uses: s-weigand/setup-conda@v1
+      - run: conda config --append channels conda-forge
       - run: python3 -m pip install -r requirements.txt
-      - run: sudo apt install -y pandoc
+      - run: conda install -y pandoc==2.17
 
       - run: |
           git clone https://github.com/openmlsys/d2l-book.git
