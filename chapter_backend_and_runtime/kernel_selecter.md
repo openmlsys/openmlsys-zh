@@ -35,7 +35,7 @@ $$offsetnchw(n,c,h,w) = n*CHW + c*HW + h*W +w$$
 :width:`800px`
 :label:`nchw`
 
-类似的NHWC数据格式是先取C方向数据，再取W方向，然后是H方向，最后取N方向。NHWC是Tensorflow默认的数据格式。这种格式在PyTorch中称为Chanel-Last。
+类似的NHWC数据格式是先取C方向数据，再取W方向，然后是H方向，最后取N方向。NHWC是Tensorflow默认的数据格式。这种格式在PyTorch中称为Channel-Last。
 $$offsetnhwc(n,h,w,c) = n*HWC + h*WC + w*C +c$$
  :numref:`nchwandnhwc`展示了不同数据格式下逻辑排布到内存物理侧数据排布的映射。\[x:1\]代表从最内侧维度到最下一维度的索引变换。比如\[a:1\]表示当前行W轴结束后，下一个H轴排布。\[b:1\]表示最内侧C轴排布完成后进行按照W轴进行排列。
 
