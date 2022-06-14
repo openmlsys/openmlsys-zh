@@ -1,5 +1,5 @@
 ## 环境安装
-机器学习系统书籍部署在Github是依赖于d2lbook工具实现的。因此我们首先要安装d2lbook。
+机器学习系统书籍部署在GitHub是依赖于d2lbook工具实现的。因此我们首先要安装d2lbook。
 ```bash
 git clone https://github.com/openmlsys/d2l-book.git
 cd d2l-book
