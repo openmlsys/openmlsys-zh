@@ -25,7 +25,7 @@
 
 ## 可解释AI定义
 
-按DARPA（美国国防部先进研究项目局）的描述，如图 :numref:`xai_concept`所示，
+按DARPA（美国国防部先进研究项目局）的描述，如 :numref:`xai_concept`所示，
 可解释AI的概念在于：区别于现有的AI系统，可解释AI系统可以解决用户面对黑盒模型时遇到的问题，使得用户知其然并知其所以然。
 
 
@@ -46,7 +46,7 @@
 
 ## 可解释AI算法现状介绍
 
-随着可解释AI概念的提出，可解释AI越来越受到学术界及工业界的关注，下图展示了人工智能领域顶级学术会议中可解释AI关键字的趋势。为了让读者更好的对现有可解释AI算法有一个整体认知，我们这里参考 :cite:`2020tkde_li`总结归纳了可解释AI的算法类型，如图 :numref:`XAI_methods`所示。
+随着可解释AI概念的提出，可解释AI越来越受到学术界及工业界的关注，下图展示了人工智能领域顶级学术会议中可解释AI关键字的趋势。为了让读者更好的对现有可解释AI算法有一个整体认知，我们这里参考 :cite:`2020tkde_li`总结归纳了可解释AI的算法类型，如 :numref:`XAI_methods`所示。
 
 ![可解释AI（XAI）算法分支](../img/ch11/XAI_methods.PNG)
 :width:`800px`
@@ -62,7 +62,7 @@
 (i)
 模型提取——从原始黑盒模型中提取出一个可解释的模型，比如通过模型蒸馏的方式将原有黑盒模型蒸馏到可解释的决策树 :cite:`frosst2017distilling` :cite:`zhang2019interpreting`，从而使用决策树中的规则解释该原始模型；
 (ii)
-基于特征的方法——估计特征的重要性或相关性，如图 :numref:`xai_global_feature_importance`所示,
+基于特征的方法——估计特征的重要性或相关性，如 :numref:`xai_global_feature_importance`所示,
 该类型解释可提供如“信用逾期记录是模型依赖的最重要特征”的解释，从而协助判定模型是否存在偏见. 一种典型的全局特征解释方法是SHAP（其仅能针对树模型输出全局解释）:cite:`lundberg2017unified`。
 (iii) 透明模型设计——修改或重新设计黑盒模型以提高其可解释性。这类方法目前也逐渐成为探索热点，近期的相关工作包括ProtoPNet :cite:`chen2019looks`, Interpretable CNN :cite:`zhang2018interpretable`, ProtoTree :cite:`nauta2021neural`等。 
 
@@ -73,13 +73,13 @@
 
 全局解释可以提供黑盒模型的整体认知。但由于黑盒模型的高复杂性，在实践中往往很难通过模型提取/设计得到与原模型行为相近的简单透明模型，也往往很难对整个数据集抽象出统一的特征重要性。此外，在为单个观察生成解释时，全局解释也缺乏局部保真度，因为全局重要的特征可能无法准确解释单个样例的决定。因此，局部方法成为了近些年领域内重要的研究方向。局部方法尝试为单个实例或一组实例检验模型行为的合理性。当仅关注局部行为时，复杂模型也可以变得简单，因此即使是简单的函数也有可以为局部区域提供可信度高的解释。基于获得解释的过程，局部方法可以分为两类：局部近似和基于传播的方法。
 
-局部近似是通过在样本近邻区域模拟黑盒模型的行为生成可理解的子模型。相比于全局方法中的模型提取，局部近似仅需关注样本临近区域，因此更容易获得精确描述局部行为的子模型。如图 :numref:`xai_lime`所示，通过在关注数据点$x$附近生成$m$个数据点$(x_i^\prime, f(x_i^\prime)), for\  i=1,2, ...m$（这里$f$为黑盒模型决策函数）,用线性拟合这些数据点，可以得到一个线性模型$g=\sum_i^k w_ix^i$，这里$k$表示数据的特征维度。那么线性模型中的权重$w_i$即可用于表示数据$x$中第$i$个特征对于模型$f$的重要性。
+局部近似是通过在样本近邻区域模拟黑盒模型的行为生成可理解的子模型。相比于全局方法中的模型提取，局部近似仅需关注样本临近区域，因此更容易获得精确描述局部行为的子模型。如 :numref:`xai_lime`所示，通过在关注数据点$x$附近生成$m$个数据点$(x_i^\prime, f(x_i^\prime)), for\  i=1,2, ...m$（这里$f$为黑盒模型决策函数）,用线性拟合这些数据点，可以得到一个线性模型$g=\sum_i^k w_ix^i$，这里$k$表示数据的特征维度。那么线性模型中的权重$w_i$即可用于表示数据$x$中第$i$个特征对于模型$f$的重要性。
 
 ![局部近似方法示例](../img/ch11/xai_lime.png)
 :width:`800px`
 :label:`xai_lime`
 
-基于传播的方法通常是传播某些信息直接定位相关特征，这些方法包含了基于反向传播的方法和基于前向传播的方法。基于反向传播的方法通过梯度回传将输出的贡献归因于输入特征。如图 :numref:`xai_gradient_based`所示,通过梯度回传，计算模型输出对输入的梯度$\frac{d(f(x)}{dx}$ 作为模型解释。常见的基于梯度传播的方法有基本Gradient方法，GuidedBackprop :cite:`zeiler2014visualizing`, GradCAM :cite:`selvaraju2017grad`等. 
+基于传播的方法通常是传播某些信息直接定位相关特征，这些方法包含了基于反向传播的方法和基于前向传播的方法。基于反向传播的方法通过梯度回传将输出的贡献归因于输入特征。如 :numref:`xai_gradient_based`所示,通过梯度回传，计算模型输出对输入的梯度$\frac{d(f(x)}{dx}$ 作为模型解释。常见的基于梯度传播的方法有基本Gradient方法，GuidedBackprop :cite:`zeiler2014visualizing`, GradCAM :cite:`selvaraju2017grad`等. 
 而基于前向传播的方法通过扰动特征后, 进行前向推理的输出差异来量化输出与特征的相关性。其中，常见的几种方法有RISE :cite:`petsiuk2018rise`，ScoreCAM :cite:`wang2020score`等。
 
 
@@ -122,16 +122,16 @@ $$\textbf{TCAV}_{Q_{C,k,l}}=\frac{\vert \{\mathbf{x}\in X_{k}:S_{C,k,l}(\mathbf{
 :width:`800px`
 :label:`tb_net`
 
-TB-Net的框架如图 :numref:`tb_net`所示：其中，$i_c$代表待推荐物品，$h_n$代表历史记录中用户交互的物品，$r$和$e$代表图谱中的关系（relation）和实体（entity），它们的向量化表达拼接在一起形成关系矩阵和实体矩阵。首先，TB-Net通过$i_c$和$h_n$的相同特征值来构建用户$u$的子图谱，每一对$i_c$和$h_n$都由关系和实体所组成的路径来连接。然后，TB-Net的路径双向传导方法将物品、实体和关系向量的计算从路径的左侧和右侧分别传播到中间节点，即计算左右两个流向的向量汇集到同一中间实体的概率。该概率用于表示用户对中间实体的喜好程度，并作为解释的依据。最后，TB-Net识别子图谱中关键路径（即关键实体和关系），输出推荐结果和具有语义级别的解释。
+TB-Net的框架如 :numref:`tb_net`所示：其中，$i_c$代表待推荐物品，$h_n$代表历史记录中用户交互的物品，$r$和$e$代表图谱中的关系（relation）和实体（entity），它们的向量化表达拼接在一起形成关系矩阵和实体矩阵。首先，TB-Net通过$i_c$和$h_n$的相同特征值来构建用户$u$的子图谱，每一对$i_c$和$h_n$都由关系和实体所组成的路径来连接。然后，TB-Net的路径双向传导方法将物品、实体和关系向量的计算从路径的左侧和右侧分别传播到中间节点，即计算左右两个流向的向量汇集到同一中间实体的概率。该概率用于表示用户对中间实体的喜好程度，并作为解释的依据。最后，TB-Net识别子图谱中关键路径（即关键实体和关系），输出推荐结果和具有语义级别的解释。
 
-以游戏推荐为场景，随机对一个用户推荐新的游戏，如图 :numref:`xai_kg_recommendation`所示，其中Half-Life, DOTA 2, Team Fortress 2等为游戏名称。关系属性中，game.year 代表游戏发行年份，game.genres代表游戏属性，game.developer代表游戏的开发商，game.categories代表游戏分类。属性节点中，MOBA代表多人在线战术竞技游戏，Valve代表威尔乌游戏公司，Action代表动作类，Multi-player代表多人游戏，Valve Anti-Cheat enabled代表威尔乌防作弊类，Free代表免费，Cross-Platform代表跨平台。右边的游戏是用户历史记录中玩过的游戏。而测试数据中正确推荐的游戏是“Team Fortress 2”。
+以游戏推荐为场景，随机对一个用户推荐新的游戏，如 :numref:`xai_kg_recommendation`所示，其中Half-Life, DOTA 2, Team Fortress 2等为游戏名称。关系属性中，game.year 代表游戏发行年份，game.genres代表游戏属性，game.developer代表游戏的开发商，game.categories代表游戏分类。属性节点中，MOBA代表多人在线战术竞技游戏，Valve代表威尔乌游戏公司，Action代表动作类，Multi-player代表多人游戏，Valve Anti-Cheat enabled代表威尔乌防作弊类，Free代表免费，Cross-Platform代表跨平台。右边的游戏是用户历史记录中玩过的游戏。而测试数据中正确推荐的游戏是“Team Fortress 2”。
 
 ![Steam游戏推荐可解释示例 （用户玩过的游戏: Half-Life, DOAT 2. 推荐命中的游戏: “Team Fortress 2”。具有属性信息的节点如，game.geners: Action, free-to-play; game.developer: Valve; game.categories:
 Multiplayer, MOBA.）](../img/ch11/xai_kg_recommendation.png)
 :width:`800px`
 :label:`xai_kg_recommendation`
 
-在图 :numref:`xai_kg_recommendation`中，有两个突出显示的相关概率（38.6%, 21.1%），它们是在推荐过程中模型计算的关键路径被激活的概率。红色箭头突出显示从“Team Fortress 2”到历史项目“Half-Life”之间的关键路径。它表明TB-Net能够通过各种关系连接向用户推荐物品，并找出关键路径作为解释。因此，将“Team Fortress 2”推荐给用户的解释可以翻译成固定话术：“Team Fortress 2”是游戏公司“Valve”开发的一款动作类、多人在线、射击类电子游戏。这与用户历史玩过的游戏“Half-Life”有高度关联。
+在 :numref:`xai_kg_recommendation`中，有两个突出显示的相关概率（38.6%, 21.1%），它们是在推荐过程中模型计算的关键路径被激活的概率。红色箭头突出显示从“Team Fortress 2”到历史项目“Half-Life”之间的关键路径。它表明TB-Net能够通过各种关系连接向用户推荐物品，并找出关键路径作为解释。因此，将“Team Fortress 2”推荐给用户的解释可以翻译成固定话术：“Team Fortress 2”是游戏公司“Valve”开发的一款动作类、多人在线、射击类电子游戏。这与用户历史玩过的游戏“Half-Life”有高度关联。
 
 ## 可解释AI系统及实践
 
