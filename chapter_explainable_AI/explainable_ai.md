@@ -163,7 +163,7 @@ pip install mindspore-xai
 
 ```python
 
-rom mindspore_xai.explainer import GradCAM
+from mindspore_xai.explainer import GradCAM
 
 # 通常指定最后一层的卷积层
 grad_cam = GradCAM(net, layer="layer4")
