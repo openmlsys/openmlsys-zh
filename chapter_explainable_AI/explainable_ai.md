@@ -79,7 +79,7 @@
 :width:`800px`
 :label:`xai_lime`
 
-基于传播的方法通常是传播某些信息直接定位相关特征，这些方法包含了基于反向传播的方法和基于前向传播的方法。基于反向传播的方法通过梯度回传将输出的贡献归因于输入特征。如 :numref:`xai_gradient_based`所示,通过梯度回传，计算模型输出对输入的梯度$\frac{d(f(x)}{dx}$ 作为模型解释。常见的基于梯度传播的方法有基本Gradient方法，GuidedBackprop :cite:`zeiler2014visualizing`, GradCAM :cite:`selvaraju2017grad`等. 
+基于传播的方法通常是传播某些信息直接定位相关特征，这些方法包含了基于反向传播的方法和基于前向传播的方法。基于反向传播的方法通过梯度回传将输出的贡献归因于输入特征。如 :numref:`xai_gradient_based`所示,通过梯度回传，计算模型输出对输入的梯度$\frac{d(f(x))}{dx}$ 作为模型解释。常见的基于梯度传播的方法有基本Gradient方法，GuidedBackprop :cite:`zeiler2014visualizing`, GradCAM :cite:`selvaraju2017grad`等. 
 而基于前向传播的方法通过扰动特征后, 进行前向推理的输出差异来量化输出与特征的相关性。其中，常见的几种方法有RISE :cite:`petsiuk2018rise`，ScoreCAM :cite:`wang2020score`等。
 
 
