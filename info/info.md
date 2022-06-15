@@ -5,7 +5,7 @@ git clone https://github.com/openmlsys/d2l-book.git
 cd d2l-book
 python setup.py install
 ```
-使用d2lbook构建HTML需要安装`pandoc`, 可以使用`apt-get install pandoc`（如果是MacOS可以用Homebrew）和。
+使用d2lbook构建HTML需要安装`pandoc`, 可以使用`conda install pandoc` （如果是MacOS可以用Homebrew）， apt源中pandoc发布版本较低，表格转换格式可能有误，请尽量使用较新版本的pandoc。
 构建PDF时如果有SVG图片需要安装LibRsvg来转换SVG图片，安装`librsvg`可以通过`apt-get install librsvg`（如果是MacOS可以用Homebrew）。
 当然构建PDF必须要有LaTeX，如安装[Tex Live](https://www.tug.org/texlive/).
 
@@ -15,9 +15,9 @@ python setup.py install
  git clone https://github.com/openmlsys/openmlsys-zh.git
  cd openmlsys-zh
 ```
-使用d2lbook工具编译HTML。
+使用d2lbook工具编译HTML。 请尽量使用build_html.sh脚本进行编译，保证首页正确合并到书籍中去。
 ```
-d2lbook build html
+sh build_html.sh
 ```
 
 生成的html会在`_build/html`。
