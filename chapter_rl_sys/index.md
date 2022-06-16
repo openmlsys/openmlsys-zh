@@ -15,7 +15,11 @@ rl_sys_intro
 ros
 ros_code_ex
 perception
+perception_code_ex
 planning
+planning_code_ex
 control
+control_code_ex
+robot_safety
 summary
 ```
