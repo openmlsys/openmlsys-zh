@@ -23,6 +23,8 @@ pipenv --python $(/usr/bin/python3 -V | cut -d" " -f2) --site-packages
 
 本章节中的案例有参考ROS2的[官方教程](https://docs.ros.org/en/foxy/Tutorials.html)。这个官方教程讲解的非常详细，非常适合初学者入门ROS2。如果读者对英文有自信的话，可以尝试阅读官方教程来了解更多ROS2的细节。
 
+另外，本章节的案例所使用的代码可以在本书相关的[ROS2案例代码库](https://github.com/openmlsys/openmlsys-ros2)中的`src/my_hello_world`和`src/my_interfaces`文件夹内找到。
+
 ### 安装ROS2 Foxy Fitzroy
 
 在Ubuntu上安装ROS2相对简单，绝大多数情况跟随官方教程安装即可。
@@ -897,5 +899,3 @@ ros2 run my_hello_world my_sum_action_server
 ### 小结
 
 在本章节中，我们了解了怎样安装ROS2和在Python虚拟环境中进行ROS2项目的开发。然后我们通过一些案例来更加深入的了解了ROS2的一些核心概念，即节点，主题，参数，服务，和动作。
-
-本章节所有的代码都托管在本章节相关的[GitHub库](https://github.com/openmlsys/openmlsys-ros2)中。欢迎大家使用！
