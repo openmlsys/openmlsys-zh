@@ -4,12 +4,12 @@
 
 🔥 **书籍网页版：** [机器学习系统：设计和实现](https://openmlsys.github.io/)
 
-🔥 **书籍PDF：** 将在勘误后，四月底发布
+🔥 **书籍PDF：** 将在勘误后，2022年中发布。
 
 ## 发布
 
+- 27/06/2022: OpenMLSys社区发布通俗易懂的高性能AI算子开发教程，助力学生和工程师60分钟理解算子性能优化的关键知识点。相应的[技术博客](https://zhuanlan.zhihu.com/p/531498210)和[复现代码](https://github.com/openmlsys/openmlsys-cuda)都已免费公开。感谢@[Jie Ren](https://github.com/JieRen98) 和 @[Wenteng Liang](https://github.com/Went-Liang) 的贡献！🔥 
 - 17/03/2022: 本书处于勘误阶段。如发现文字和图片错误，可创建Issue并@[章节编辑](info/editors.md)。我们非常欢迎社区提交PR直接勘误。
-- 27/06/2022: OpenMLSys社区发布通俗易懂的高性能AI算子开发教程，助力学生和工程师60分钟理解算子性能优化的关键知识点。相应的[技术博客](https://zhuanlan.zhihu.com/p/531498210)和[复现代码](https://github.com/openmlsys/openmlsys-cuda)都已免费公开。感谢@[Jie Ren](https://github.com/JieRen98) 和 @[Wenteng Liang](https://github.com/Went-Liang) 的贡献！
 
 ## 适用读者
 
