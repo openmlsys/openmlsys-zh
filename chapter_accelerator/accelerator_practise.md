@@ -1,7 +1,6 @@
 ## 加速器实践
 
-上一节中介绍了调用第三方库或算子优化器的外部接口从而利用硬件加速器加速计算，这种方法要求我们算法的算子全部被第三方库或是算法优化器所支持，对于一些特殊的自定义算子很有可能不被支持，因此能自行实现高性能算子是实现定制化分布式系统的一个极为重要的能力。本节将会以广义矩阵乘法为例，通过提高计算强度、使用共享内存、优化内存读取流水线等方法最终取得接近硬件加速器性能峰值的实现，同时介绍若干性能优化的关键技术。选择广义矩阵乘法的原因是在深度学习中全连接网络的重要组件就是广义矩阵乘法，事实上，卷积操作也往往是通过im2col等方法将其转化为广义矩阵乘法；此外实现一个高性能的广义矩阵乘法算子相比其他算子（如矩阵转置）对开发者的编程能力和底层硬件架构要求更高。
-
+在本节中，我们会通过具体的CUDA代码向读者介绍如何编写一个并行计算的广义矩阵乘法程序，通过提高计算强度、使用共享内存、优化内存读取流水线等方法最终取得接近硬件加速器性能峰值的实现。虽然在以上章节介绍了TensorCore相关的内容，但由于篇幅限制，我们在本节中不使用此硬件结构。通过使用更为基本的CUDA代码实现FP32的广义矩阵乘法，与此同时并讲解若干实用优化策略。
 ### 环境
 
 本节的实践有以下的软件环境依赖：
@@ -42,7 +41,7 @@ for (unsigned m = 0; m < M; ++m) {
 }
 ```
 
-因此可以看到，矩阵$C$ 中各个元素的计算是独立的。我们可以利用GPU的大量线程去分别计算矩阵$C$ 中相应的元素，以达到并行计算的目的，GPU核函数将如下所示：
+可以看到，矩阵$C$ 中各个元素的计算是独立的。我们可以利用GPU的大量线程去分别计算矩阵$C$ 中相应的元素，以达到并行计算的目的，GPU核函数将如下所示：
 
 ```c++
 __global__ void gemmKernel(const float * A,
@@ -324,27 +323,27 @@ __global__ void gemmKernel(const float *__restrict__ A,
                            const float *__restrict__ B, float *__restrict__ C,
                            float alpha, float beta, unsigned M, unsigned N,
                            unsigned K) {
-  constexpr unsigned ratio = sizeof(float4) / sizeof(float);
-  unsigned int m = (threadIdx.x + blockDim.x * blockIdx.x) * ratio;
-  unsigned int n = (threadIdx.y + blockDim.y * blockIdx.y) * ratio;
+  constexpr unsigned kCount = sizeof(float4) / sizeof(float);
+  unsigned int m = (threadIdx.x + blockDim.x * blockIdx.x) * kCount;
+  unsigned int n = (threadIdx.y + blockDim.y * blockIdx.y) * kCount;
   Tensor2D<const float> tensorA{A, M, K};
   tensorA.addOffset(m, 0);
-  Tensor2D<const float4> tensorB{B, K, N / ratio};
-  tensorB.addOffset(0, n / ratio);
-  Tensor2D<float4> tensorC{C, M, N / ratio};
-  tensorC.addOffset(m, n / ratio);
+  Tensor2D<const float4> tensorB{B, K, N / kCount};
+  tensorB.addOffset(0, n / kCount);
+  Tensor2D<float4> tensorC{C, M, N / kCount};
+  tensorC.addOffset(m, n / kCount);
   if (!tensorC.validOffset(0, 0)) return;
 
   float4 c[4];
   memset(c, 0, sizeof(c));
   for (unsigned k = 0; k < K; ++k) {
     float4 fragmentA{};
-    for (unsigned i = 0; i < ratio; ++i) {
+    for (unsigned i = 0; i < kCount; ++i) {
       fragmentA[i] = tensorA(i, k);
     }
     float4 fragmentB = tensorB(k, 0);
 
-    for (unsigned i = 0; i < ratio; ++i) {
+    for (unsigned i = 0; i < kCount; ++i) {
       c[i] = c[i] + fragmentB * fragmentA[i];
     }
   }
@@ -353,7 +352,7 @@ __global__ void gemmKernel(const float *__restrict__ A,
     term = term * alpha;
   }
 
-  for (unsigned i = 0; i < ratio; ++i) {
+  for (unsigned i = 0; i < kCount; ++i) {
     float4 result = c[i];
     if (beta != 0) {
       result = c[i] + tensorC(i, 0) * beta;
@@ -386,9 +385,9 @@ __global__ void gemmKernel(const float *__restrict__ A,
                            const float *__restrict__ B, float *__restrict__ C,
                            float alpha, float beta, unsigned M, unsigned N,
                            unsigned K) {
-  constexpr unsigned ratio = sizeof(float4) / sizeof(float);
-  unsigned int m = (threadIdx.x + LayoutTile::m * blockIdx.x) * ratio;
-  unsigned int n = (threadIdx.y + LayoutTile::n * blockIdx.y) * ratio;
+  constexpr unsigned kCount = sizeof(float4) / sizeof(float);
+  unsigned int m = (threadIdx.x + LayoutTile::m * blockIdx.x) * kCount;
+  unsigned int n = (threadIdx.y + LayoutTile::n * blockIdx.y) * kCount;
   // ...
 }
 ```
@@ -458,24 +457,24 @@ unsigned n = threadIdx.y * LayoutThread::n + LayoutTile::n * blockIdx.y;
 由于每个线程从原来的处理一个数据块变为多个数据块，我们需要以下几个变量：
 
 ```c++
-const unsigned iterationA = LayoutTile::m / LayoutBlock::m / LayoutThread::m;
-const unsigned iterationB = LayoutTile::n / LayoutBlock::n / LayoutThread::n;
-const unsigned intervalA = LayoutTile::m / iterationA;
-const unsigned intervalB = LayoutTile::n / iterationB;
+const unsigned itekCountnA = LayoutTile::m / LayoutBlock::m / LayoutThread::m;
+const unsigned itekCountnB = LayoutTile::n / LayoutBlock::n / LayoutThread::n;
+const unsigned intervalA = LayoutTile::m / itekCountnA;
+const unsigned intervalB = LayoutTile::n / itekCountnB;
 ```
- `iterationA` 是每个线程处理 `thread tile` 在行方向上迭代的次数。`intervalA` 是 `thread tile` 子矩阵在行方向的间隔。同理 `iterationB` 与 `intervalB` 是在列方向上数据块的数量与数据块的间隔。
+ `itekCountnA` 是每个线程处理 `thread tile` 在行方向上迭代的次数。`intervalA` 是 `thread tile` 子矩阵在行方向的间隔。同理 `itekCountnB` 与 `intervalB` 是在列方向上数据块的数量与数据块的间隔。
 因为 `thread tile` 扩大为若干个矩阵块，我们使用以下代码用来记录每个矩阵块是否越界：
 
 ```c++
-bool validLoadTileA[iterationA];
-bool validLoadTileB[iterationB];
+bool validLoadTileA[itekCountnA];
+bool validLoadTileB[itekCountnB];
 #pragma unroll
-for (unsigned i = 0; i < iterationA; ++i) {
+for (unsigned i = 0; i < itekCountnA; ++i) {
   validLoadTileA[i] = pA.validRowOffset(i * intervalA);
 }
 #pragma unroll
-for (unsigned i = 0; i < iterationB; ++i) {
-  validLoadTileB[i] = pB.validColOffset(i * intervalB / ratio);
+for (unsigned i = 0; i < itekCountnB; ++i) {
+  validLoadTileB[i] = pB.validColOffset(i * intervalB / kCount);
 }
 ```
 
@@ -485,21 +484,21 @@ for (unsigned i = 0; i < iterationB; ++i) {
 constexpr float4 float4Zero{0.f, 0.f, 0.f, 0.f};
 for (unsigned k = 0; k < K; ++k) {
 #pragma unroll
-  for (unsigned iterA = 0; iterA < iterationA; ++iterA) {
+  for (unsigned iterA = 0; iterA < itekCountnA; ++iterA) {
     float4 fragmentA{};
     validLoadTileA[iterA] &= pA.validColOffset(k);
 #pragma unroll
-    for (unsigned i = 0; i < ratio; ++i) {
+    for (unsigned i = 0; i < kCount; ++i) {
       fragmentA[i] = validLoadTileA[i] ? pA(i + iterA * intervalA, k) : 0;
     }
 #pragma unroll
-    for (unsigned iterB = 0; iterB < iterationB; ++iterB) {
+    for (unsigned iterB = 0; iterB < itekCountnB; ++iterB) {
       validLoadTileB[iterB] &= pB.validRowOffset(k);
       float4 fragmentB = validLoadTileB[iterB]
-                             ? pB(k, iterB * intervalB / ratio)
+                             ? pB(k, iterB * intervalB / kCount)
                              : float4Zero;
 #pragma unroll
-      for (unsigned i = 0; i < ratio; ++i) {
+      for (unsigned i = 0; i < kCount; ++i) {
         c[iterA][iterB][i] = c[iterA][iterB][i] + fragmentB * fragmentA[i];
       }
     }
@@ -522,17 +521,17 @@ for (auto &termA : c) {
 }
 
 #pragma unroll
-for (unsigned iterA = 0; iterA < iterationA; ++iterA) {
+for (unsigned iterA = 0; iterA < itekCountnA; ++iterA) {
 #pragma unroll
- for (unsigned iterB = 0; iterB < iterationB; ++iterB) {
+ for (unsigned iterB = 0; iterB < itekCountnB; ++iterB) {
 #pragma unroll
-   for (unsigned i = 0; i < ratio; ++i) {
+   for (unsigned i = 0; i < kCount; ++i) {
      float4 result{c[iterA][iterB][i]};
      if (beta != 0) {
        result = result +
-                pC(i + iterA * intervalA, iterB * intervalB / ratio) * beta;
+                pC(i + iterA * intervalA, iterB * intervalB / kCount) * beta;
      }
-     pC(i + iterA * intervalA, iterB * intervalB / ratio) = result;
+     pC(i + iterA * intervalA, iterB * intervalB / kCount) = result;
    }
  }
 }
@@ -577,10 +576,10 @@ Average Time: 3.188 ms, Average Throughput: 2694.440 GFLOPS
 
 ```c++
 using LayoutTileT =
-     Layout<LayoutTile::m / ratio, LayoutTile::n / ratio,
-                               LayoutTile::k / ratio>;
+     Layout<LayoutTile::m / kCount, LayoutTile::n / kCount,
+                               LayoutTile::k / kCount>;
  using LayoutThreadT =
-     Layout<LayoutThread::m / ratio, LayoutThread::n / ratio>;
+     Layout<LayoutThread::m / kCount, LayoutThread::n / kCount>;
 
 constexpr unsigned blockSize = LayoutBlock::m * LayoutBlock::n;
 
@@ -588,7 +587,7 @@ const unsigned nInTileC = threadIdx.x % LayoutBlock::m;
 const unsigned mInTileC = threadIdx.x / LayoutBlock::m;
 
 constexpr unsigned tileSizeA = LayoutTile::m * LayoutTile::k;
-constexpr unsigned tileIterationsA = tileSizeA / blockSize / ratio;
+constexpr unsigned tileIterationsA = tileSizeA / blockSize / kCount;
 constexpr unsigned tileGlobalIntervalA = blockSize / LayoutTileT::k;
 constexpr unsigned tileComputeIterationsA = LayoutTileT::m / LayoutBlock::m;
 constexpr unsigned tileSharedIntervalA = LayoutTile::m / tileComputeIterationsA;
@@ -596,14 +595,14 @@ const unsigned kInTileA = threadIdx.x % LayoutTileT::k;
 const unsigned mInTileA = threadIdx.x / LayoutTileT::k;
 
 constexpr unsigned tileSizeB = LayoutTile::n * LayoutTile::k;
-constexpr unsigned tileIterationsB = tileSizeB / blockSize / ratio;
+constexpr unsigned tileIterationsB = tileSizeB / blockSize / kCount;
 constexpr unsigned tileGlobalIntervalB = blockSize / LayoutTileT::n;
 constexpr unsigned tileComputeIterationsB = LayoutTileT::n / LayoutBlock::n;
 constexpr unsigned tileSharedIntervalBT = LayoutTileT::n / tileComputeIterationsB;
 const unsigned nInTileB = threadIdx.x % LayoutTileT::n;
 const unsigned kinTileB = threadIdx.x / LayoutTileT::n;
 ```
-因为 `LayoutTile` 与 `LayoutThread` 是表示的 `float` 数据的布局，我们有时将其看为 `float4` 的数据储存，因此我们需要加入变量 `LayoutTileT` 与 `LayoutThreadT` 。 `blockSize` 指一个线程块内的线程数量。 我们在此版本使用一维线程块的布局模拟二维布局，所以我们需要计算在二维布局下的坐标：用 `mInTileC` 与 `nInTileC` 表示在给定 `LayoutBlock` 布局下的二维线程坐标。由于 `tileA` 是$tileM \times timeK$的尺寸，因此我们可以确定其中数据数量`tileSizeA` ，由于一个线程块内有 `blockSize` 个线程且每个线程一次读取 `ratio` 个 `float` 数，因此整个 `tileA` 需要用 `tileIterationsA = tileSizeA / blockSize / ratio` 次读取。每个线程在最开始时负责读取的 `tileA` 的位置使用变量 `kInTileA` 和 `mInTileA` 表示。因为需要用`tileIterationsA` 次读取 `tileA` ，每次向下滑动的距离我们使用变量`tileGlobalIntervalA`表示。同时因为需要用每个线程需要处理 `thread tile`  中多个子矩阵块，其中每个线程处理 `thread tile` 时在行方向上迭代的次数 定义为`tileComputeIterationsA` 。这些子矩阵块在 `m` 方向的间隔我们用`tileSharedIntervalA` 表示。类似地，我们定义与 `tileB` 的若干变量。
+因为 `LayoutTile` 与 `LayoutThread` 是表示的 `float` 数据的布局，我们有时将其看为 `float4` 的数据储存，因此我们需要加入变量 `LayoutTileT` 与 `LayoutThreadT` 。 `blockSize` 指一个线程块内的线程数量。 我们在此版本使用一维线程块的布局模拟二维布局，所以我们需要计算在二维布局下的坐标：用 `mInTileC` 与 `nInTileC` 表示在给定 `LayoutBlock` 布局下的二维线程坐标。由于 `tileA` 是$tileM \times timeK$的尺寸，因此我们可以确定其中数据数量`tileSizeA` ，由于一个线程块内有 `blockSize` 个线程且每个线程一次读取 `kCount` 个 `float` 数，因此整个 `tileA` 需要用 `tileIterationsA = tileSizeA / blockSize / kCount` 次读取。每个线程在最开始时负责读取的 `tileA` 的位置使用变量 `kInTileA` 和 `mInTileA` 表示。因为需要用`tileIterationsA` 次读取 `tileA` ，每次向下滑动的距离我们使用变量`tileGlobalIntervalA`表示。同时因为需要用每个线程需要处理 `thread tile`  中多个子矩阵块，其中每个线程处理 `thread tile` 时在行方向上迭代的次数 定义为`tileComputeIterationsA` 。这些子矩阵块在 `m` 方向的间隔我们用`tileSharedIntervalA` 表示。类似地，我们定义与 `tileB` 的若干变量。
 
 此外我们需要声明共享内存 `tile` 和从全局内存读取的数据 `buffer` ：
 
@@ -660,7 +659,7 @@ for (unsigned j = 0; j < LayoutTile::k; j++) {
    for (unsigned b = 0; b < LayoutThread::m; ++b) {
      fragmentA[a][b] =
          tileA[a * tileSharedIntervalA + mInTileC * LayoutThread::m + b]
-              [j / ratio][j % ratio];
+              [j / kCount][j % kCount];
    }
  }
 #pragma unroll
@@ -739,9 +738,9 @@ __shared__ float4 tileA[LayoutTile::k][LayoutTileT::m];
  for (unsigned a = 0; a < tileIterationsA; ++a) {
 #pragma unroll
    for (unsigned j = 0; j < LayoutThread::m; ++j) {
-     tileA[kInTileA * ratio + j]
-          [(a * tileGlobalIntervalA + mInTileA) / ratio]
-          [(a * tileGlobalIntervalA + mInTileA) % ratio] = bufferA[a][j];
+     tileA[kInTileA * kCount + j]
+          [(a * tileGlobalIntervalA + mInTileA) / kCount]
+          [(a * tileGlobalIntervalA + mInTileA) % kCount] = bufferA[a][j];
    }
  }
 ```
@@ -862,9 +861,9 @@ bool writeStageIdx = false;
 for (unsigned i = 0; i < tileIterationsA; ++i) {
 #pragma unroll
   for (unsigned j = 0; j < LayoutThread::m; ++j) {
-    tileA[writeStageIdx][kInTileA * ratio + j]
-         [(i * tileGlobalIntervalA + mInTileA) / ratio]
-         [(i * tileGlobalIntervalA + mInTileA) % ratio] = bufferA[i][j];
+    tileA[writeStageIdx][kInTileA * kCount + j]
+         [(i * tileGlobalIntervalA + mInTileA) / kCount]
+         [(i * tileGlobalIntervalA + mInTileA) % kCount] = bufferA[i][j];
   }
 }
 
@@ -919,9 +918,9 @@ for (unsigned j = 0; j < tileIterationsB; ++j) {
 for (unsigned d = 0; d < tileIterationsA; ++d) {
 #pragma unroll
   for (unsigned e = 0; e < LayoutThread::m; ++e) {
-    tileA[writeStageIdx][kInTileA * ratio + e]
-         [(d * tileGlobalIntervalA + mInTileA) / ratio]
-         [(d * tileGlobalIntervalA + mInTileA) % ratio] = bufferA[d][e];
+    tileA[writeStageIdx][kInTileA * kCount + e]
+         [(d * tileGlobalIntervalA + mInTileA) / kCount]
+         [(d * tileGlobalIntervalA + mInTileA) % kCount] = bufferA[d][e];
   }
 }
 #pragma unroll
@@ -974,69 +973,3 @@ Average Time: 0.613 ms, Throughput: 14002.600 GFLOPS
 ```
 使用Nsight Compute分析发现 `LDG` 和 `STS` 等指令使用较多，导致指令发射压力较大，具体体现在 `Stall Wait` 与 `Stall Dispatch Stall` 指标相比我们较差。但其他指标诸如 `Stall Long Scoreboard` 等优于我们，但总体上我们略胜一筹。
 尽管我们的代码相比cuBLAS已经取得了一定的性能提升，但是需要强调的是cuBLAS内部为各种不同的矩阵尺寸以及不同的设备实现了若干不同的GPU核函数，我们实现的核函数在其他尺寸或其他设备设备上性能可能无法取得此加速比。
-
-1.  **并行资源映射——提高并行性**：将多层级的并行资源（`block` 、`warp` 、`thread` ）与对应需要计算/搬移的数据建立映射关系，提高程序并行性。将可并行的计算/数据搬移操作映射到并行资源上，对于一般矩阵乘法实例，在朴素实现的例子中 :numref:`sec-accelerator-naive` ，我们令每个`block` 与矩阵$C$中的一个矩阵块建立映射关系，每个`thread` 与矩阵块中的一个元素建立映射关系。
-2.  **优化内存结构——减小访存延迟**：观察计算过程中同一个`block` 中数据复用的情况，将复用的数据被如共享内存、寄存器等高性能体系结构存储下来，以此提高吞吐量。如在 :numref:`sec-accelerator-use-smem` 中我们将矩阵$A$与矩阵$B$中会被同一个`block` 内不同`thread` 共同访问的数据缓存到共享内存中。
-3.  **优化指令执行——减小指令发射开销**：使用\#unroll功能进行循环展开来提升指令级并行，减少逻辑判断；使用向量化加载指令以提高带宽等，对于Ampere架构，最大向量化加载指令为`LDG.E.128`，可以采用`float4` 类型的数据进行读取。
-4.  **优化访存流水线——隐藏访存延迟**：在进行内存结构变化（矩阵数据搬移）时，可以优化访存流水线，在数据搬移的间隔执行计算操作以隐藏数据搬移的延迟。
-
-### 扩展
-
-张量核是在从Volta架构加入的新硬件电路，此电路能对半精度（FP16）、双精度（FP64）、低比特整型（INT8等）和特殊格式（TF16等）数据格式加速。其提供了新的数据读取与计算指令集并使用CUDA代码对部分指令封装以允许用户使用此结构。
-
-在 `mma.h` 中定义了若干C++接口，主要有的几个结构在命名空间 `nvcuda::wmma` 下，他们分有 `row_major` 与 `col_major` 用于表示数据布局； `matrix_a` 、 `matrix_b` 和`accumulator` 用于区别矩阵类型；   `fragment` 用于表示数据存储的类； `fill_fragment` 、 `load_matrix_sync` 和 `store_matrix_sync` 用于对 `fragment` 进行设置、加载以及向全局内存操作； `mma_sync` 用于计算。但是由于其灵活性较差，且实际只是底层指令的封装，实际实践中主要是使用英伟达提供的PTX指令集内嵌到C++代码中进行编程。
-
-PTX指令集是英伟达推出的一种CUDA指令集中间表示，其并不是直接由二进制反汇编得来的汇编语言，事实上它更像是Java语言中的ByteCode概念。PTX给用户更细粒度的编程的可能，但是要注意的是由于它并不是直接的汇编语言，所以最后被CUDA汇编器汇编得到的二进制文件可能会用其他等价语句实现。例如，在安培设备中不支持 `mma.m8n8k4` 相关功能，但用户仍然可以在代码中直接使用此PTX指令，但在汇编过程会被实现为等价的非 `mma` 指令，进而导致性能不如预期。
-
-与一般矩阵乘法相关的PTX指令主要有 `wmma` 和 `mma` 。 `wmma` 是相对 `mma` 高一层的指令，它可以提供若干修饰符如 `load` 用于读取数据， `store` 用于储存数据， `mma` 用于计算等操作。
-
-修饰符的使用可以类似于以下形式 `wmma.load.a.sync.aligned.m16n16k16.global.row.f16` 。 `a` 代表目标为矩阵$A$中的数据；`sync` 代表线程束内线程在执行这条指令之前会进行同步； `aligned` 代表要求线程束内所有线程都执行相同的指令； `m16n16k16` 代表一个线程束的线程共同完成数据处理的规模； `global` 代表是从全局内存读取； `row` 代表数据是行优先的布局储存的； `f16` 代表数据类型为半精度。其他可能的修饰符可以在官方文档中查阅。 `mma` 指令相比 `wmma.mma` 功能更加丰富，使用也更加灵活，其使用可类似以下形式 `mma.sync.aligned.m16n8k16.row.col.f16.f16.f16.f16` 。 `sync` 代表线程束内线程在执行这条指令之前会进行同步； `aligned` 代表要求线程束内所有线程都执行相同的指令； `m16n8k16` 代表一个线程束的线程共同完成数据处理的规模； `row.col` 代表从矩阵$A$读入的矩阵块布局是行优先，从矩阵$B$读入的数据块布局是列优先；`f16.f16.f16.f16` 分别代表累加结果的矩阵块、从矩阵$A$读入的矩阵块、从矩阵$B$读入的矩阵块、累加输入的矩阵块的数据类型都是半精度浮点数。
-
-通常我们并不会直接写PTX代码而是将一段或多段PTX指令内联嵌入到CUDA代码中，下面提供了一个例子。假设我们对一个向量的数值乘2，我们可以实现以下代码：
-
-```c++
-__global__ void times2(int *arr) {
-  unsigned tid = threadIdx.x + blockIdx.x * blockDim.x;
-  int data = arr[tid];
-  data *= 2;
-  arr[tid] = data;
-}
-```
-如果我们希望第三行读取数据使用PTX指令 `ld.global.u32` ，我们可以实现以下的代码：
-```c++
-__global__ void times2UsePTX(int *arr) {
-  unsigned tid = threadIdx.x + blockIdx.x * blockDim.x;
-  int data;
-  asm volatile(
-      "{\n"
-      "  ld.global.u32 %0, [%1];\n"
-      "}\n"
-      : "=r"(data)
-      : "l"(&arr[tid]));
-  data *= 2;
-  arr[tid] = data;
-}
-```
-第一个冒号后面应当是会被赋值的变量，第二个冒号后面是会被读取的变量； `r` 代表32位无符号整型寄存器， `l` 代表64位无符号整型寄存器，除此之外还可能是 `h` 代表16位无符号整型寄存器， `f` 代表32位浮点寄存器， `d` 代表64位浮点寄存器。类似的，我们也可以用类似的方式将 `mma` PTX指令嵌入到我们的CUDA代码中，下面给出了一个例子：
-```c++
-// ...
-half_t a[8];
-half_t b[4];
-half_t c[4];
-half_t d[4];
-
-uint32_t const *A = reinterpret_cast<uint32_t const *>(&a);
-uint32_t const *B = reinterpret_cast<uint32_t const *>(&b);
-uint32_t const *C = reinterpret_cast<uint32_t const *>(&c);
-uint32_t *D = reinterpret_cast<uint32_t *>(&d);
-
-asm volatile("mma.sync.aligned.m16n8k16.row.col.f16.f16.f16.f16 {%0,%1}, {%2,%3,%4,%5}, {%6,%7}, {%8,%9};\n"
-   : "=r"(D[0]), "=r"(D[1])
-   : "r"(A[0]), "r"(A[1]), "r"(A[2]), "r"(A[3]),
-     "r"(B[0]), "r"(B[1]),
-     "r"(C[0]), "r"(C[1])
-);
-//...
-```
-
-由于篇幅限制，我们在本节中不会过多的介绍张量核的实践，感兴趣的读者可以自行尝试实现。
