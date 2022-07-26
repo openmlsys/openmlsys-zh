@@ -63,15 +63,15 @@ ReduceScatter算子可以视为Reduce 和 Scatter算子的组合体，即对于�
 
 我们将讨论如何利用AllReduce算子来实现数据中心中的高效梯度平均。首先，参照前文的分析，可以考虑一种简单的计算平均梯度的方法：在集群中分配一个设备来收集本地梯度，并在计算平均梯度后再将其广播到全部的设备。这种做法易于实现，但是引入了两个问题。首先，多台设备同时给该聚合设备发送数据时，聚合设备会因严重的带宽不足产生网络拥塞。其次，单台设备需要负担大量的梯度平均计算，而受限于单台设备上的有限算力，这种计算往往会受限于算力瓶颈。
 
-![AllReduce初始状态和终止状态](../img/ch09/ch10-AllReduce-state.png)
+![AllReduce初始状态和终止状态](../img/ch09/ch10-allreduce-state.png)
 :width:`800px`
-:label:`ch10-AllReduce-state`
+:label:`ch10-allreduce-state`
 
 为了解决上述问题，可以引入AllReduce算子的Reduce-Broadcast实现来优化算法，其设计思路是：通过让全部的节点参与到梯度的网络通信和平均计算中，将巨大的网络和算力开销均摊给全部节点。这种做法可以解决先前单个梯度聚合节点的问题。假设有$M$个设备，每个设备存有一个模型副本，该模型由$N$个参数/梯度构成。那么按照AllReduce算子的要求，需要先将全部的参数按照设备数量切分成$M$个分区（Partition），使得每个分区具有$N/M$个参数。我们首先给出这个算法的初始和终止状态。如 :numref:`ch10-AllReduce-state` 所示，该例子含有3个设备。在每个设备有一个模型副本的情况下，这个副本有3个参数。那么按照AllReduce的分区方法，参数会被划分成3个分区（3个设备），而每一个分区则有1个参数（$N/M$，N代表3个参数，M代表3个设备）。在这个例子中，假定设备1拥有参数2,4,6，设备2拥有参数1,2,3，设备3拥有参数4,8,12，那么在使用AllReduce算子进行计算过后，全部的设备都将拥有梯度相加后的结果7,14,21，其中分区1的结果7是由3个设备中分区1的初始结果相加而成（7 = 1 + 2 + 4）。为了计算平均梯度，每个设备只需要在最后将梯度之和除以设备数量即可（分区1的最终结果为7除以3）。
 
-![AllReduce算法的过程](../img/ch09/ch10-AllReduce-process.png)
+![AllReduce算法的过程](../img/ch09/ch10-allreduce-process.png)
 :width:`800px`
-:label:`ch10-AllReduce-process`
+:label:`ch10-allreduce-process`
 
 AllReduce算子会把梯度的计算拆分成$M-1$个Reduce算子和$M-1$个Broadcast算子（其中$M$是节点的数量）。其中，Reduce算子用于计算出梯度的和（Summation），Broadcast算子用于把梯度之和广播给全部的节点。为了说明这些算子的执行过程，可以参照 :numref:`ch10-AllReduce-process` 。AllReduce算子由Reduce算子开始，在第一个Reduce算子中，AllReduce算子会对全部节点进行配对（Pairing），让他们共同完成梯度相加的操作。在 :numref:`ch10-AllReduce-process` 的第一个Reduce算子中，设备1和设备2进行了配对共同对分区1的数据相加。其中，设备2把本地的梯度数据1发送给设备1，设备将接收到1和本地的分区1内的梯度数据：2进行相加，计算出中间（intermediate）梯度相加的结果：3。与此同时，设备1和设备3进行配对，共同完成对分区3的数据相加。而设备3和设备2进行配对，共同完成对于分区2的数据相加。
 
