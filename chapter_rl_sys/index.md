@@ -2,7 +2,7 @@
 
 在本章中，我们介绍机器学习的一个重要分支——机器人及其在系统方面的知识。本章的学习目标包括：
 
-- 掌握机器人学习基本知识。
+- 掌握机器人系统基本知识。
 
 - 掌握通用机器人操作系统。
 
@@ -15,7 +15,11 @@ rl_sys_intro
 ros
 ros_code_ex
 perception
+perception_code_ex
 planning
+planning_code_ex
 control
+control_code_ex
+robot_safety
 summary
 ```
