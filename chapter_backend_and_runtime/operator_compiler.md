@@ -10,13 +10,27 @@
 
 编译器如果不考虑优化和实际中芯片的体系结构特点，我们只需要按照算子表达式的**计算逻辑**，把输入进来的张量全部加载进计算核心里完成计算，之后再把计算结果从计算核心里面取出并保存下来即可。这里的**计算逻辑**指的就是基本数学运算（如加、减、乘、除）以及其他函数表达式（如卷积、转置、损失函数）等。
 
-但事实上，我们有“处理器在短时间内重复访问同一内存位置时效率高”这一[局部性概念](https://en.wikipedia.org/wiki/Locality_of_reference)。基于局部性概念，我们希望尽量把需要重复处理的数据放在固定的内存位置，且这一内存位置离处理器越近越好，以通过提升访存速度而进行性能提升。另外，我们有“计算任务总量一定时，同时并行计算的任务量越多，总耗时最少”这一[并行性概念](https://en.wikipedia.org/wiki/Parallel_computing)。基于并行性概念，我们希望尽量使得输入数据能够切分成多个互相没有依赖关系的数据段，以通过并行地对它们进行计算而进行性能提升。且我们知道现代计算机中有[缓存（cache）](https://en.wikipedia.org/wiki/Cache_(computing))可以进一步提高访存速度，但是由于其造价高昂而往往容量很小。为了充分利用缓存，我们希望尽量把重要的、需要经常访存的数据存入缓存中，以通过高速访存而进行性能提升。以上种种在程序实际运行的时候针对数据做出的特殊操作，我们统称为**调度（schedule）策略**。
+![现代计算机存储层次图](memory_architecture.png)
+:width:`800px`
+:label:`memory_architecture`
+
+但事实上，受限于计算机的造价问题，:numref:`memory_architecture`向我们展示了现代计算机的内存存储结构。该图表明：越靠近金字塔顶尖的存储器造价越高但是访问速度越快。
+基于这一硬件设计的事实，我们有[局部性概念](https://en.wikipedia.org/wiki/Locality_of_reference)： 
+1. 时间局部性，相对较短时间内重复访问特定内存位置。如，多次访问L1高速缓存的同一位置的效率会高于多次访问L1中不同位置的效率。
+3. 空间局部性，在相对较近的存储位置进行访问。如，多次访问L1中相邻位置的效率会高于来回在L1和主存跳跃访问的效率。
+满足这两者任一都会有较好的性能提升。基于局部性概念，我们希望尽量把需要重复处理的数据放在固定的内存位置，且这一内存位置离处理器越近越好，以通过提升访存速度而进行性能提升。
+
+![串行计算和并行计算区别图](parallel_computing.jpeg)
+:width:`800px`
+:label:`parallel_computing`
+
+另外，我们把传统的串行计算任务按逻辑和数据依赖关系进行分割后，有机会得到多组互不相关的数据，并把他们同时计算，如图:numref:`parallel_computing`所示。
+以上种种在程序实际运行的时候针对数据做出的特殊操作，我们统称为**调度（schedule）策略**。
 
 MIT CASIL组的[Jonathan Ragan-Kelley](http://people.csail.mit.edu/jrk/)在2013年发表的文章 :cite: `ragan2013halide`中给出了schedule的精确定义：
-
-1. When and where should be the value at each coordinate in each function be computed?
-2. Where should they be stored?
-3. How long are values cached and communicated across multiple consumers, and when are they independently recomputed by each?
+1. 应该在何时何处计算函数中的每个值？
+2. 数据应该储存在哪里？
+3. 每个值在多个消费者（consumer，指使用这些值进行计算的其他值）之间访存需要花费多长时间？另外在何时由每个消费者独立重新计算？
 
 通俗理解，调度策略指的是：在编译阶段根据目标硬件体系结构的特点而设计出的一整套通过提升局部性和并行性而使得编译出的可执行文件在运行时性能最优的算法。这些算法并不会影响计算结果，只是干预计算过程，以达到提升运算速度的效果。
 
@@ -73,7 +87,7 @@ for (m.outer: int32, 0, 32) {
 
 #### 多面体模型优化
 
-然而业界另一编译器框架[MLIR](https://mlir.llvm.org/)做法则不同。它并没有明确提出调度抽象的概念，而是多面体模型编译（polyhedron compilation）技术 :cite:`grosser2011polly`主要对`for`循环进行优化。该算法的主要思想是针对输入代码的访存特点进行建模，调整 for 循环语句中的每一个实例的执行顺序（即调度方式），使得新调度下的 for 循环代码有更好的局部性和并行性。
+然而业界另一编译器框架[MLIR](https://mlir.llvm.org/)做法则不同。它并没有明确提出调度抽象的概念，而是以多面体模型编译（polyhedron compilation）技术 :cite:`grosser2011polly`主要对`for`循环进行优化。该算法的主要思想是针对输入代码的访存特点进行建模，调整 for 循环语句中的每一个实例的执行顺序（即调度方式），使得新调度下的 for 循环代码有更好的局部性和并行性。
 
 假设我们有以下形式的代码：
 
@@ -91,7 +105,12 @@ for (int i_new = 0; i_new < N; i_new++)
     a[i_new+1][j_new-i_new] = a[i_new][j_new-i_new+1] - a[i_new][j_new-i_new] + a[i_new][j_new-i_new-1];
 ```
 
-观察得到的代码，发现从直觉上优化后的代码较为复杂。但是仅凭肉眼很难发现其性能优势之处。仍需对此优化后的代码进行如算法描述那样建模，并分析依赖关系后得出结论：经过算法优化后解除了原代码中的循环间的依赖关系，从而提高了并行计算的机会。该算法较为复杂，限于篇幅，在这里不再详细展开。读者可移步到笔者专门为此例写的文章-[深度学习编译之多面体模型编译——以优化简单的两层循环代码为例](https://zhuanlan.zhihu.com/p/376285976)详读。
+观察得到的代码，发现优化后的代码较为复杂。但是仅凭肉眼很难发现其性能优势之处。仍需对此优化后的代码进行如算法描述那样建模，并分析依赖关系后得出结论，如图:numref:`poly_result`所示：经过算法优化后解除了原代码中的循环间的依赖关系，从而提高了并行计算的机会。即沿着图中虚线方向分割并以绿色块划分后，可以实现并行计算。
+该算法较为复杂，限于篇幅，在这里不再详细展开。读者可移步到笔者专门为此例写的文章-[深度学习编译之多面体模型编译——以优化简单的两层循环代码为例](https://zhuanlan.zhihu.com/p/376285976)详读。
+
+![多面体模型优化结果](poly.png)
+:width:`800px`
+:label:`poly_result`
 
 除了核心的优化任务之外，还有两方面值得简要一提。
 
@@ -99,7 +118,15 @@ for (int i_new = 0; i_new < N; i_new++)
 
 一般意义上来说，通用编译器的设计会尽量适配多种后端。如此一来，在面临不同体系结构特点和不同编程模型的多种后端时，算子编译器承受了相当大的压力。
 
-当下的AI芯片中，常见的编程模型分为：[单指令多数据（Single instruction, multiple data, SIMD）](https://en.wikipedia.org/wiki/Single_instruction,_multiple_data)，即单条指令一次性处理大量数据；[单指令多线程（Single instruction, multiple threads, SIMT）](https://en.wikipedia.org/wiki/Single_instruction,_multiple_threads)，即单条指令一次性处理多个线程的数据。前者对应的是带有向量计算指令的芯片，比如华为的昇腾系列芯片等；后者对应的是带有明显的线程分级的芯片，比如英伟达的V系列和A系列芯片等。另外，也有一些芯片开始结合这两种编程模型的特点，像寒武纪的思元系列芯片，既有类似线程并行计算的概念，又有向量指令的支持。针对不同的编程模型，算子编译器在进行优化（如向量化等）时的策略也会有所不同。
+当下的AI芯片中，常见的编程模型分为：[单指令多数据（Single instruction, multiple data, SIMD）](https://en.wikipedia.org/wiki/Single_instruction,_multiple_data)，即单条指令一次性处理大量数据，如图:numref:`SIMD`所示；[单指令多线程（Single instruction, multiple threads, SIMT）](https://en.wikipedia.org/wiki/Single_instruction,_multiple_threads)，即单条指令一次性处理多个线程的数据，如图:numref:`SIMT`所示。前者对应的是带有向量计算指令的芯片，比如华为的昇腾系列芯片等；后者对应的是带有明显的线程分级的芯片，比如英伟达的V系列和A系列芯片等。另外，也有一些芯片开始结合这两种编程模型的特点，像寒武纪的思元系列芯片，既有类似线程并行计算的概念，又有向量指令的支持。针对不同的编程模型，算子编译器在进行优化（如向量化等）时的策略也会有所不同。
+
+![单指令多数据流示意图](SIMD.png)
+:width:`800px`
+:label:`SIMD`
+
+![单指令多线程示意图](SIMT.png)
+:width:`800px`
+:label:`SIMT`
 
 ### 如何表达的准确而完整？
 
