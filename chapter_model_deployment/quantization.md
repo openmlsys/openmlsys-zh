@@ -55,5 +55,3 @@ $$
 $$
 
     The quantization method has achieved wide application as a general model compression method that can significantly improve the efficiency of neural network storage and compression.
-
-### 9.3.2 Model sparsity
