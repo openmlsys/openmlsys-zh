@@ -11,7 +11,7 @@
 算子编译器为了实现较好地优化加速，会根据现代计算机体系结构特点，将程序运行中的每个细小操作抽象为“调度策略”。
 如果不考虑优化和实际中芯片的体系结构特点，我们只需要按照算子表达式的**计算逻辑**，把输入进来的张量全部加载进计算核心里完成计算，之后再把计算结果从计算核心里面取出并保存下来即可。这里的**计算逻辑**指的就是基本数学运算（如加、减、乘、除）以及其他函数表达式（如卷积、转置、损失函数）等。
 
-![现代计算机存储层次图](../img/ch04/memory_architecture.png)
+![现代计算机存储层次图](../img/ch05/memory_architecture.png)
 :width:`800px`
 :label:`memory_architecture`
 
@@ -21,7 +21,7 @@
 3. 空间局部性，在相对较近的存储位置进行访问。如，多次访问L1中相邻位置的效率会高于来回在L1和主存跳跃访问的效率。
 满足这两者任一都会有较好的性能提升。基于局部性概念，我们希望尽量把需要重复处理的数据放在固定的内存位置，且这一内存位置离处理器越近越好，以通过提升访存速度而进行性能提升。
 
-![串行计算和并行计算区别图](../img/ch04/parallel_computing.jpeg)
+![串行计算和并行计算区别图](../img/ch05/parallel_computing.jpeg)
 :width:`800px`
 :label:`parallel_computing`
 
@@ -58,7 +58,7 @@ for (m: int32, 0, 1024) {
 
 为了提升性能，我们提出使用平铺（tile），循环移序（reorder）和切分（split）的调度策略，对于`m`循环和`n`循环都按照大小为32的因子（factor）进行平铺，对于`k`循环按照大小为4的因子进行切分，最后将切出的`k`循环移动到合适位置。经过该策略优化过程示意图及优化后的代码如图:numref:`tvm_schedule`所示：
 
-![子策略组合优化示意图](../img/ch04/tvm.png)
+![子策略组合优化示意图](../img/ch05/tvm.png)
 :width:`800px`
 :label:`tvm_schedule`
 
@@ -78,7 +78,7 @@ for (int i = 0; i < N; i++)
     a[i+1][j] = a[i][j+1] - a[i][j] + a[i][j-1];
 ```
 
-![示例代码的多面体模型](../img/ch04/poly_test.png)
+![示例代码的多面体模型](../img/ch05/poly_test.png)
 :width:`800px`
 :label:`poly_rest`
 
@@ -93,7 +93,7 @@ for (int i_new = 0; i_new < N; i_new++)
 观察得到的代码，发现优化后的代码较为复杂。但是仅凭肉眼很难发现其性能优势之处。仍需对此优化后的代码进行如算法描述那样建模，并分析依赖关系后得出结论，如图:numref:`poly_result`所示：经过算法优化后解除了原代码中的循环间的依赖关系，从而提高了并行计算的机会。即沿着图中虚线方向分割并以绿色块划分后，可以实现并行计算。
 该算法较为复杂，限于篇幅，在这里不再详细展开。读者可移步到笔者专门为此例写的文章-[深度学习编译之多面体模型编译——以优化简单的两层循环代码为例](https://zhuanlan.zhihu.com/p/376285976)详读。
 
-![多面体模型优化结果](../img/ch04/poly.png)
+![多面体模型优化结果](../img/ch05/poly.png)
 :width:`800px`
 :label:`poly_result`
 
@@ -105,11 +105,11 @@ for (int i_new = 0; i_new < N; i_new++)
 
 当下的AI芯片中，常见的编程模型分为：[单指令多数据（Single instruction, multiple data, SIMD）](https://en.wikipedia.org/wiki/Single_instruction,_multiple_data)，即单条指令一次性处理大量数据，如图:numref:`SIMD`所示；[单指令多线程（Single instruction, multiple threads, SIMT）](https://en.wikipedia.org/wiki/Single_instruction,_multiple_threads)，即单条指令一次性处理多个线程的数据，如图:numref:`SIMT`所示。前者对应的是带有向量计算指令的芯片，比如华为的昇腾系列芯片等；后者对应的是带有明显的线程分级的芯片，比如英伟达的V系列和A系列芯片等。另外，也有一些芯片开始结合这两种编程模型的特点，像寒武纪的思元系列芯片，既有类似线程并行计算的概念，又有向量指令的支持。针对不同的编程模型，算子编译器在进行优化（如向量化等）时的策略也会有所不同。
 
-![单指令多数据流示意图](../img/ch04/SIMD.png)
+![单指令多数据流示意图](../img/ch05/SIMD.png)
 :width:`800px`
 :label:`SIMD`
 
-![单指令多线程示意图](../img/ch04/SIMT.png)
+![单指令多线程示意图](../img/ch05/SIMT.png)
 :width:`800px`
 :label:`SIMT`
 
