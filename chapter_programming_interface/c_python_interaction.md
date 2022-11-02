@@ -136,8 +136,7 @@ class TensorAddGpuKernel : public GpuKernel {
 };
 ```
 
-TensorAdd中调用了CUDA
-kernelTensorAddKernel来实现element_num个元素的并行相加:
+TensorAdd中调用了CUDA kernel TensorAddKernel来实现element_num个元素的并行相加:
 ```python
 // mindspore/ccsrc/backend/kernel_compiler/gpu/math/tensor_add_v2_gpu_kernel.h
 
