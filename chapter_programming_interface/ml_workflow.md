@@ -161,7 +161,7 @@ def train_net(args, model, epoch_size, data_path, repeat_size, ckpoint_cb, sink_
     model.train(epoch_size, ds_train, callbacks=[ckpoint_cb, LossMonitor(125)], dataset_sink_mode=sink_mode)
 ```
 
-其中，dataset_sink_mode用于控制数据是否下沉，数据下沉是指数据通过通道直接传送到Device上，可以加快训练速度，dataset_sink_mode为True表示数据下沉，否则为非下沉。
+其中，dataset_sink_mode用于控制数据是否下沉，数据下沉是指数据通过通道直接传送到Device上，可以加快训练速度，dataset_sink_mode为True表示数据下沉，False则为非下沉。
 
 有了数据集、模型、损失函数、优化器后就可以进行训练了，这里把train_epoch设置为1，对数据集进行1个迭代的训练。在train_net和
 test_net方法中，我们加载了之前下载的训练数据集，mnist_path是MNIST数据集路径。
