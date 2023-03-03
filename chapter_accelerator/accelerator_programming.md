@@ -75,6 +75,8 @@ AKG则是MindSpore社区的开源算子编译工具。与上述介绍的算子�
 
 -   **算子库层级**
 
+:label:`sec-accelerator-use-cublas`
+
 在上述不同层级的编程方式中，直接调用算子加速库使能加速器无疑是最快捷高效的方式。NVIDIA提供了cuBLAS/cuDNN两类算子计算库，cuBLAS提供了使能张量计算核心的接口，用以加速矩阵乘法(GEMM)运算，cuDNN提供了对应接口加速卷积(CONV)运算等。
 以 :numref:`accelerator-programable-title`小节的GEMM运算为例，与常规CUDA调用cuBLAS算子库相似，通过cuBLAS加速库使能张量计算核心步骤包括：
 

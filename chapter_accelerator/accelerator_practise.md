@@ -154,7 +154,7 @@ Max Error: 0.000092
 Average Time: 3.188 ms, Average Throughput: 2694.440 GFLOPS
 ```
 
-使用Nsight Compute分析发现：类似地，本次优化在`Stall LG Throttle` 等指标上取得了进一步的提升。
+使用Nsight Compute分析发现：类似地，本次优化在 `Stall LG Throttle` 等指标上取得了进一步的提升。
 
 ### 使用共享内存缓存复用数据
 
@@ -166,7 +166,7 @@ Average Time: 3.188 ms, Average Throughput: 2694.440 GFLOPS
 :width:` 800px`
 :label:`duplicated_data`
 
-具体地，需要对代码进行如下改造：首先此前代码在计算内积过程是进行$K$次循环读取数据并累加计算，在此设定下每次循环中处理矩阵$C$中相同行的线程会读取相同的矩阵$A$的数据，处理矩阵$C$中相同列的线程会读取相同的矩阵$B$的数据。可以通过将此$K$次循环拆解成两层循环，外层循环$\frac{K}{tileK}$次，每次外循环的迭代读取一整块数据，内层循环$tileK$次进行累加数据。直观来看，外层循环如 :numref:`use_smem_store` 所示，每次循环将矩阵$A$和矩阵$B$中一整个 `tile` 读取到共享内存中；内层循环如 :numref:`use_smem_load` 所示，每次循环从共享内存读取数据并计算。这种设计带来的好处是，可以让每个线程不必独自从全局内存读取所有需要的数据，整个线程块将共同需要的数据从全局内存中读取并写入到共享内存中，此后每个线程在计算过程中只需要从共享内存中读取所需要的数据即可。
+具体地，需要对代码进行如下改造：首先此前代码在计算内积过程是进行$K$次循环读取数据并累加计算，在此设定下每次循环中处理矩阵$C$中相同行的线程会读取相同的矩阵$A$的数据，处理矩阵$C$中相同列的线程会读取相同的矩阵$B$的数据。可以通过将此$K$次循环拆解成两层循环，外层循环$\frac{K}{tileK}$次，每次外层循环的迭代读取一整块数据，内层循环$tileK$次进行累加数据。数据从全局内存向共享内存的搬运过程如图 :numref:`use_smem_store` 所示，每次内层循环开始前将矩阵$A$和矩阵$B$中一整个 `tile` 读取到共享内存中；数据从共享内存到寄存器的搬运如图 :numref:`use_smem_load` 所示，每次内层循环循环从共享内存读取数据并计算。这种设计带来的好处是，可以让每个线程不必独自从全局内存读取所有需要的数据，整个线程块将共同需要的数据从全局内存中读取并写入到共享内存中，此后每个线程在计算过程中只需要从共享内存中读取所需要的数据即可。
 
 
 ![向共享内存中写入数据](../img/ch06/6.4/use_smem_store.png)
@@ -177,147 +177,7 @@ Average Time: 3.188 ms, Average Throughput: 2694.440 GFLOPS
 :width:` 800px`
 :label:`use_smem_load`
 
-下面将实现使用共享内存的GPU核函数。首先，定义每个线程块在外层循环的每次迭代中从矩阵$A$中读取大小为$tileM \times tileK$的数据块，在矩阵$B$中读取大小为$tileK \times tileN$的数据块。假设每个线程块中一共含有$blockSize$个线程，那么就可以使用这$blockSize$个线程，每个线程循环$\frac{tileM * tileK}{blockSize * 4}$次将矩阵$A$中的矩阵块 `tileA` 读取进共享内存中，同理每个线程循环$\frac{tileM * tileK}{blockSize * 4}$次将矩阵$B$中的矩阵块 `tileB` 读取进共享内存中。
-
-首先需要定义若干变量：
-
-```c++
-using LayoutTileT =
-     Layout<LayoutTile::m / kCount, LayoutTile::n / kCount,
-                               LayoutTile::k / kCount>;
- using LayoutThreadT =
-     Layout<LayoutThread::m / kCount, LayoutThread::n / kCount>;
-
-constexpr unsigned blockSize = LayoutBlock::m * LayoutBlock::n;
-
-const unsigned nInTileC = threadIdx.x % LayoutBlock::m;
-const unsigned mInTileC = threadIdx.x / LayoutBlock::m;
-
-constexpr unsigned tileSizeA = LayoutTile::m * LayoutTile::k;
-constexpr unsigned tileIterationsA = tileSizeA / blockSize / kCount;
-constexpr unsigned tileGlobalIntervalA = blockSize / LayoutTileT::k;
-constexpr unsigned tileComputeIterationsA = LayoutTileT::m / LayoutBlock::m;
-constexpr unsigned tileSharedIntervalA = LayoutTile::m / tileComputeIterationsA;
-const unsigned kInTileA = threadIdx.x % LayoutTileT::k;
-const unsigned mInTileA = threadIdx.x / LayoutTileT::k;
-
-constexpr unsigned tileSizeB = LayoutTile::n * LayoutTile::k;
-constexpr unsigned tileIterationsB = tileSizeB / blockSize / kCount;
-constexpr unsigned tileGlobalIntervalB = blockSize / LayoutTileT::n;
-constexpr unsigned tileComputeIterationsB = LayoutTileT::n / LayoutBlock::n;
-constexpr unsigned tileSharedIntervalBT = LayoutTileT::n / tileComputeIterationsB;
-const unsigned nInTileB = threadIdx.x % LayoutTileT::n;
-const unsigned kinTileB = threadIdx.x / LayoutTileT::n;
-```
-因为 `LayoutTile` 与 `LayoutThread` 是表示的 `float` 数据的布局，有时将其看为 `float4` 的数据储存，因此需要加入变量 `LayoutTileT` 与 `LayoutThreadT` 。 `blockSize` 指一个线程块内的线程数量。 在此版本使用一维线程块的布局模拟二维布局，所以需要计算在二维布局下的坐标：用 `mInTileC` 与 `nInTileC` 表示在给定 `LayoutBlock` 布局下的二维线程坐标。由于 `tileA` 是$tileM \times timeK$的尺寸，因此可以确定其中数据数量`tileSizeA` ，由于一个线程块内有 `blockSize` 个线程且每个线程一次读取 `kCount` 个 `float` 数，因此整个 `tileA` 需要用 `tileIterationsA = tileSizeA / blockSize / kCount` 次读取。每个线程在最开始时负责读取的 `tileA` 的位置使用变量 `kInTileA` 和 `mInTileA` 表示。因为需要用`tileIterationsA` 次读取 `tileA` ，每次向下滑动的距离使用变量`tileGlobalIntervalA`表示。同时因为需要用每个线程需要处理 `thread tile`  中多个子矩阵块，其中每个线程处理 `thread tile` 时在行方向上迭代的次数 定义为`tileComputeIterationsA` 。这些子矩阵块在 `m` 方向的间隔用`tileSharedIntervalA` 表示。类似地，定义与 `tileB` 的若干变量。
-
-此外需要声明共享内存 `tile` 和从全局内存读取的数据 `buffer` ：
-
-```c++
-__shared__ float4 tileA[LayoutTile::m][LayoutTileT::k];
-__shared__ float4 tileB[LayoutTile::k][LayoutTileT::n];
-float4 bufferA[tileIterationsA];
-float4 bufferB[tileIterationsB];
-```
-
-使用以下代码将数据从全局内存中读出：
-
-```c++
-#pragma unroll
-for (unsigned j = 0; j < tileIterationsA; ++j) {
- validLoadTileA[j] = validLoadTileA[j] && pA.validColOffset(0);
- bufferA[j] =
-     validLoadTileA[j] ? pA(j * tileGlobalIntervalA, 0) : float4Zero;
-}
-
-#pragma unroll
-for (unsigned j = 0; j < tileIterationsB; ++j) {
- validLoadTileB[j] =
-     validLoadTileB[j] && pB.validRowOffset(j * tileGlobalIntervalB);
- bufferB[j] =
-     validLoadTileB[j] ? pB(j * tileGlobalIntervalB, 0) : float4Zero;
-}
-```
-
-从全局内存将数据读入 `buffer` 之后使用以下代码将数据写入共享内存：
-
-```c++
-__syncthreads();
-#pragma unroll
-for (unsigned a = 0; a < tileIterationsA; ++a) {
- tileA[mInTileA + a * tileGlobalIntervalA][kInTileA] = bufferA[a];
-}
-
-#pragma unroll
-for (unsigned a = 0; a < tileIterationsB; ++a) {
- tileB[kinTileB + a * tileGlobalIntervalB][nInTileB] = bufferB[a];
-}
-__syncthreads();
-```
-不要忘记写入前和写入后进行一次同步避免数据竞争。
-此后使用以下代码执行内层循环：
-
-```c++
-#pragma unroll
-for (unsigned j = 0; j < LayoutTile::k; j++) {
-#pragma unroll
- for (unsigned a = 0; a < tileComputeIterationsA; ++a) {
-#pragma unroll
-   for (unsigned b = 0; b < LayoutThread::m; ++b) {
-     fragmentA[a][b] =
-         tileA[a * tileSharedIntervalA + mInTileC * LayoutThread::m + b]
-              [j / kCount][j % kCount];
-   }
- }
-#pragma unroll
- for (unsigned a = 0; a < tileComputeIterationsB; ++a) {
-   fragmentB[a] = tileB[j][a * tileSharedIntervalBT + nInTileC];
- }
-#pragma unroll
- for (unsigned d = 0; d < tileComputeIterationsA * LayoutThread::m; ++d) {
-#pragma unroll
-   for (unsigned e = 0; e < tileComputeIterationsB * LayoutThreadT::n; ++e) {
-     c[d][e] =
-         c[d][e] + fragmentB[e] *
-                       fragmentA[d / LayoutThread::m][d % LayoutThread::m];
-   }
- }
-}
-```
-内层循环的流程包括从共享内存中读取数据到 `fragment` ，使用 `fragment` 的数据进行计算。
-在内层循环结束后对全局内存增加偏移量后执行下一次外层循环：
-
-```c++
-pA.addOffset(0, LayoutTileT::k);
-pB.addOffset(LayoutTile::k, 0);
-```
-
-其他计算放缩等代码与上一个版本基本一致，写回代码如下：
-
-```c++
-#pragma unroll
-for (unsigned i = 0; i < tileComputeIterationsA; ++i) {
-#pragma unroll
- for (unsigned a = 0; a < LayoutThread::m; a++) {
-   const bool mValid = pC.validRowOffset(a);
-#pragma unroll
-   for (unsigned b = 0; b < tileComputeIterationsB; b++) {
-     const bool nValid = pC.validColOffset(b * tileSharedIntervalBT);
-     if (mValid && nValid) {
-       openmlsys::float4 result{c[a + i * LayoutThread::m][b]};
-       if (beta != 0) {
-         result = result + pC(a, b * tileSharedIntervalBT) * beta;
-       }
-       pC(a, b * tileSharedIntervalBT) = result;
-     }
-   }
- }
- pC.addOffset(tileSharedIntervalA, 0);
-}
-```
 完整代码见[gemm_use_smem.cu](https://github.com/openmlsys/openmlsys-cuda/blob/main/gemm_use_smem.cu)。
-
-#### 测试及分析
 
 测试得到以下结果：
 
@@ -326,43 +186,12 @@ Max Error: 0.000092
 Average Time: 0.617 ms, Average Throughput: 13925.168 GFLOPS
 ```
 
-使用Nsight Compute对核函数分析并与上一个核函数进行对比，观察到主要的变化有：首先 `LDG` 指令数量下降了97%，与的此前设计相吻合。同时观察到 `SM Utilization` 提升了218%也可以侧面证实使用共享内存减少了内存访问延迟从而提升了利用率，此外观察到各项指标如 `Pipe Fma Cycles Active` 等都有显著提升，这都能充分解释了使用共享内存的改进是合理且有效的。
+通过使用Nsight Compute对核函数分析并与上一个核函数进行对比，可以观察到一些主要的变化：首先 `LDG` 指令数量下降了97%，与此前设计相吻合。同时观察到 `SM Utilization` 提升了218%也可以侧面证实使用共享内存减少了内存访问延迟从而提升了利用率，此外还可以观察到各项指标如 `Pipe Fma Cycles Active` 等都有显著提升，这都能充分解释了使用共享内存的改进是合理且有效的。
 
 ### 减少寄存器使用
+可以注意到在向共享内存中存储矩阵$A$的数据块是按照行优先的数据排布进行的，而对此共享内存的读取是逐行读取的。可以将矩阵$A$的数据块在共享内存中数据按照列优先的形式排布，这样可以减少循环及循环变量从而带来寄存器使用数量减少进而带来性能提升。
 
-注意到在向共享内存中存储矩阵$A$的数据块是按照行优先的数据排布进行的，而对此共享内存的读取是按列逐行读取的。可以将矩阵$A$的数据块在共享内存中数据按照列优先的形式排布，这样可以减少循环及循环变量从而带来寄存器使用数量减少进而带来性能提升。
-
-需要对代码做如下修改，首先将 `tileA` 修改为列优先矩阵：
-
-```c++
-__shared__ float4 tileA[LayoutTile::k][LayoutTileT::m];
-```
-
-其次需要将写入 `tileA` 的过程按照列优先调整：
-
-```c++
-#pragma unroll
- for (unsigned a = 0; a < tileIterationsA; ++a) {
-#pragma unroll
-   for (unsigned j = 0; j < LayoutThread::m; ++j) {
-     tileA[kInTileA * kCount + j]
-          [(a * tileGlobalIntervalA + mInTileA) / kCount]
-          [(a * tileGlobalIntervalA + mInTileA) % kCount] = bufferA[a][j];
-   }
- }
-```
-
-最后修改从 `tileA` 读取的过程：
-
-```c++
-#pragma unroll
- for (unsigned a = 0; a < tileComputeIterationsA; ++a) {
-   fragmentA[a] = tileA[j][a * tileSharedIntervalAT + mInTileC];
- }
-```
 完整代码见[gemm_transpose_smem.cu](https://github.com/openmlsys/openmlsys-cuda/blob/main/gemm_transpose_smem.cu)。
-
-#### 测试及分析
 
 测试得到以下结果：
 
@@ -370,11 +199,11 @@ __shared__ float4 tileA[LayoutTile::k][LayoutTileT::m];
 Max Error: 0.000092
 Average Time: 0.610 ms, Average Throughput: 14083.116 GFLOPS
 ```
-使用Nsight Compute分析有以下观察发现主要的变化： `Occupancy` 提升1.3%，而带来此提升的原因是寄存器使用111个，相比上一个GPU核函数使用128个寄存器减少了17个，从而带来了性能提升。但这个变化会因为GPU架构不同导致有不同的变化，同时观察到 `STS` 指令数量提升且带来一些 `bank confilct` ，因此在其他GPU架构上此改动可能不会带来正面影响。
+使用Nsight Compute分析有以下观察发现主要的变化：`Occupancy` 提升1.3%，而带来此提升的原因是寄存器使用111个，相比上一个GPU核函数使用128个寄存器减少了17个，从而带来了性能提升。但这个变化会因为GPU架构不同导致有不同的变化，同时可以观察到 `STS` 指令数量提升且带来一些 bank confilct ，因此在其他GPU架构上此改动可能不会带来正面影响。
 
 ### 隐藏共享内存读取延迟
 
-在GPU中使用指令 `LDS` 读取共享内存中的数据，在这条指令发出后并不会等待数据读取到寄存器后再执行下一条语句，只有执行到依赖 `LDS` 指令读取的数据的指令时才会等待读取的完成。而在上一小节中，在内层$tileK$次循环中，每次发射完读取共享内存的指令之后就会立即执行依赖于读取数据的数学运算，这样就会导致计算单元等待数据从共享内存的读取，如 :numref:`use_smem_pipeline` 所示。事实上，对共享内存的访问周期能多达几十个时钟周期，而计算指令的执行往往只有几个时钟周期，因此通过一定方式隐藏对共享内存的访问会取得不小的收益。可以重新优化流水线隐藏一定的数据读取延迟。具体地，可以在内层的$tileK$次循环中每次循环开始时读取发射下一次内层循环数据的读取指令。由于在执行本次运算时计算指令并不依赖于下一次循环的数据，因此计算过程不会等待之前发出的读取下一次内层循环数据的指令，具体见 :numref:`hide_smem_latency` 。
+在GPU中使用指令 `LDS` 读取共享内存中的数据，在这条指令发出后并不会等待数据读取到寄存器后再执行下一条语句，只有执行到依赖 `LDS` 指令读取的数据的指令时才会等待读取的完成。而在上一小节中，在内层$tileK$次循环中，每次发射完读取共享内存的指令之后就会立即执行依赖于读取数据的数学运算，这样就会导致计算单元等待数据从共享内存的读取，如 :numref:`use_smem_pipeline` 所示。事实上，对共享内存的访问周期能多达几十个时钟周期，而计算指令的执行往往只有几个时钟周期，因此通过一定方式隐藏对共享内存的访问会取得不小的收益。可以通过重新优化流水线隐藏一定的数据读取延迟。如图 :numref:`hide_smem_latency` 所示，可以在内层的$tileK$次循环中每次循环开始时读取发射下一次内层循环数据的读取指令。由于在执行本次运算时计算指令并不依赖于下一次循环的数据，因此计算过程不会等待之前发出的读取下一次内层循环数据的指令。
 
 ![上一个GPU核函数的流水线](../img/ch06/6.4/use_smem_pipeline.png)
 :width:` 800px`
@@ -384,59 +213,7 @@ Average Time: 0.610 ms, Average Throughput: 14083.116 GFLOPS
 :width:` 800px`
 :label:`hide_smem_latency`
 
-对代码需要做如下修改，首先需要将`fragment` 的数量加倍用于存储下一次内循环读取的数据：
-
-```c++
-float4 fragmentA[2][tileComputeIterationsA * LayoutThreadT::m];
-float4 fragmentB[2][tileComputeIterationsB * LayoutThreadT::n];
-```
-
-其后要在内层循环开始前从 `tile` 中向 `fragment` 传输数据：
-
-```c++
-#pragma unroll
-for (unsigned a = 0; a < tileComputeIterationsA; ++a) {
-  fragmentA[0][a] = tileA[0][a * tileSharedIntervalAT + mInTileC];
-}
-#pragma unroll
-for (unsigned a = 0; a < tileComputeIterationsB; ++a) {
-  fragmentB[0][a] = tileB[0][a * tileSharedIntervalBT + nInTileC];
-}
-```
-
-同时在内层循环每次迭代的开始时读取下一次内层循环需要的 `tile` 中的数据：
-
-```c++
-#pragma unroll
-for (unsigned a = 0; a < tileComputeIterationsA; ++a) {
-  fragmentA[(j + 1) % 2][a] =
-      tileA[j + 1][a * tileSharedIntervalAT + mInTileC];
-}
-#pragma unroll
-for (unsigned a = 0; a < tileComputeIterationsB; ++a) {
-  fragmentB[(j + 1) % 2][a] =
-      tileB[j + 1][a * tileSharedIntervalBT + nInTileC];
-}
-```
-其中 `j` 为内存循环的次数。
-最后修改计算过程的代码 ：
-
-```c++
-#pragma unroll
-for (unsigned d = 0; d < tileComputeIterationsA * LayoutThread::m; ++d) {
-#pragma unroll
-  for (unsigned e = 0; e < tileComputeIterationsA * LayoutThreadT::n; ++e) {
-    c[d][e] =
-        c[d][e] +
-        fragmentB[j % 2][e] *
-            fragmentA[j % 2][d / LayoutThread::m][d % LayoutThread::m];
-  }
-}
-```
-其中 `j` 为内层循环的次数。
 完整代码见[gemm_hide_smem_latency.cu](https://github.com/openmlsys/openmlsys-cuda/blob/main/gemm_hide_smem_latency.cu)。
-
-#### 测试及分析
 
 测试得到以下结果：
 
@@ -444,105 +221,20 @@ for (unsigned d = 0; d < tileComputeIterationsA * LayoutThread::m; ++d) {
 Max Error: 0.000092
 Average Time: 0.585 ms, Average Throughput: 14686.179 GFLOPS
 ```
-使用Nsight Compute观察发现：相比上一个GPU核函数，指标 `Stall Short Scoreboard` 减少了67%。而此前提过GPU内存读写指令发出后并不会等待数据读取到寄存器后再执行下一条语句，但是会在Scoreboard设置符号并在完成读取后置回符号，等到之后有数据依赖的指令执行前会等待Scoreboard中符号的置回。所以这里`Stall Short Scoreboard` 的减少充分说明了内存延迟是有效的。
+
+使用Nsight Compute观察发现：相比上一个GPU核函数，指标 `Stall Short Scoreboard` 减少了67%。而此前提过GPU内存读写指令发出后并不会等待数据读取到寄存器后再执行下一条语句，但是会在Scoreboard设置符号并在完成读取后置回符号，等到之后有数据依赖的指令执行前会等待Scoreboard中符号的置回。所以这里 `Stall Short Scoreboard` 的减少充分说明了内存延迟是有效的。
 
 ### 隐藏全局内存读取延迟
 
 上一小节中介绍了对共享内存读取流水线优化的方法，事实上，GPU再读取全局内存中使用的指令 `LDG` 也有与共享内存读取指令 `LDS` 类似的行为特性。因此类似的在$\frac{K}{tileK}$次外层循环中每次循环开始时发出下一次外层循环需要的矩阵$A$中的数据块的读取指令，而本次外循环的整个内层循环过程中不依赖下一次外循环的数据，因此本次外循环的内循环过程中不会等待对下一次外层循环需要的矩阵$A$中的数据块的读取指令完成，从而实现隐藏全局内存读取延迟的目的。具体流水线可视化见 :numref:`hide_global_latency` 。
 
+上一小节中介绍了对共享内存读取流水线优化的方法，事实上，GPU在读取全局内存中使用的指令 `LDG` 也有与共享内存读取指令 `LDS` 类似的行为特性。因此类似的在$\frac{K}{tileK}$次外层循环中每次循环开始时发出下一次外层循环需要的矩阵$A$中的数据块的读取指令，而本次外循环的整个内层循环过程中不依赖下一次外循环的数据，因此本次外循环的内循环过程中不会等待对下一次外层循环需要的矩阵$A$中的数据块的读取指令完成，从而实现隐藏全局内存读取延迟的目的。此外，可以让内层循环先执行$tileK - 1$次，在最后一次执行前将 `buffer` 中的数据写入 `tile` ，其后再执行内层循环的最后一次迭代，这样能更进一步隐藏向 `tile` 写入的内存延迟。具体流水线可视化见图 :numref:`hide_global_latency` 。
+
 ![隐藏全局内存读取延迟的流水线](../img/ch06/6.4/hide_global_latency.png)
 :width:` 800px`
 :label:`hide_global_latency`
 
-将对代码进行以下修改，首先需要将 `tile` 加倍并加入一个决定向哪个 `tile` 写入的符号 `writeStageIdx` ：
-
-```c++
-__shared__ float4 tileA[2][LayoutTile::k][LayoutTileT::m];
-__shared__ float4 tileB[2][LayoutTile::k][LayoutTileT::n];
-bool writeStageIdx = false;
-```
-
-紧接着将从 `buffer` 向 `tile` 写入的过程相应的依照加倍后的 `tile` 修改 ：
-
-```c++
-for (unsigned i = 0; i < tileIterationsA; ++i) {
-#pragma unroll
-  for (unsigned j = 0; j < LayoutThread::m; ++j) {
-    tileA[writeStageIdx][kInTileA * kCount + j]
-         [(i * tileGlobalIntervalA + mInTileA) / kCount]
-         [(i * tileGlobalIntervalA + mInTileA) % kCount] = bufferA[i][j];
-  }
-}
-
-#pragma unroll
-for (unsigned i = 0; i < tileIterationsB; ++i) {
-  tileB[writeStageIdx][kinTileB + i * tileGlobalIntervalB][nInTileB] =
-      bufferB[i];
-}
-```
-
-其后相应修改从 `tile` 向 `fragment` 读取数据的相关代码，并将符号 `writeStageIdx` 翻转：
-
-```c++
-#pragma unroll
-for (unsigned i = 0; i < tileComputeIterationsA; ++i) {
-  fragmentA[0][i] =
-      tileA[writeStageIdx][0][i * tileSharedIntervalAT + mInTileC];
-}
-#pragma unroll
-for (unsigned i = 0; i < tileComputeIterationsB; ++i) {
-  fragmentB[0][i] =
-      tileB[writeStageIdx][0][i * tileSharedIntervalBT + nInTileC];
-}
-writeStageIdx = !writeStageIdx;
-```
-
-接下来在每次外层循环开始时从全局内存读取下一次计算需要的 `buffer` ：
-
-```c++
-tensorA.addOffset(0, LayoutTileT::k);
-tensorB.addOffset(LayoutTile::k, 0);
-#pragma unroll
-for (unsigned j = 0; j < tileIterationsA; ++j) {
-  validLoadTileA[j] = validLoadTileA[j] && tensorA.validColOffset(0);
-  bufferA[j] =
-      validLoadTileA[j] ? tensorA(j * tileGlobalIntervalA, 0) : float4Zero;
-}
-
-#pragma unroll
-for (unsigned j = 0; j < tileIterationsB; ++j) {
-  validLoadTileB[j] =
-      validLoadTileB[j] && tensorB.validRowOffset(j * tileGlobalIntervalB);
-  bufferB[j] =
-      validLoadTileB[j] ? tensorB(j * tileGlobalIntervalB, 0) : float4Zero;
-}
-```
-
-最后在内层循环结束后将预先读取的 `buffer` 写入到 `tile` 中并翻转符号位 `writeStageIdx` ：
-
-```c++
-#pragma unroll
-for (unsigned d = 0; d < tileIterationsA; ++d) {
-#pragma unroll
-  for (unsigned e = 0; e < LayoutThread::m; ++e) {
-    tileA[writeStageIdx][kInTileA * kCount + e]
-         [(d * tileGlobalIntervalA + mInTileA) / kCount]
-         [(d * tileGlobalIntervalA + mInTileA) % kCount] = bufferA[d][e];
-  }
-}
-#pragma unroll
-for (unsigned a = 0; a < tileIterationsB; ++a) {
-  tileB[writeStageIdx][kinTileB + a * tileGlobalIntervalB][nInTileB] =
-      bufferB[a];
-}
-writeStageIdx = !writeStageIdx;
-```
-
-事实上，可以让内层循环先执行$tileK - 1$次，在最后一次执行前将 `buffer` 中的数据写入 `tile` ，其后再执行内层循环的最后一次迭代，这样能更进一步隐藏向 `tile` 写入的内存延迟。
-
 完整代码见[gemm_final.cu](https://github.com/openmlsys/openmlsys-cuda/blob/main/gemm_final.cu)。
-
-#### 测试及分析
 
 测试得到以下结果：
 
@@ -550,11 +242,13 @@ writeStageIdx = !writeStageIdx;
 Max Error: 0.000092
 Average Time: 0.542 ms, Average Throughput: 15838.302 GFLOPS
 ```
-使用Nsight Compute分析观察到指标 `Stall Long Scoreboard` 减少了67%，与上一小结的 `Stall Short Scoreboard` 概念相对应，`Stall Long Scoreboard` 主要是针对全局内存的指标。该指标的显著减少充分说明可以在一定程度上隐藏全局内存的读取。
+
+使用Nsight Compute分析可以观察到指标 `Stall Long Scoreboard` 减少了67%，与上一小结的 `Stall Short Scoreboard` 概念相对应，`Stall Long Scoreboard` 主要是针对全局内存的指标。该指标的显著减少充分说明预取数据可以在一定程度上隐藏全局内存的读取。
 
 ### 与cuBLAS对比
 
-前一节中介绍了cuBLAS的接口，可以很容易地写出以下代码使用cuBLAS完成矩阵乘法：
+按照节 :numref:`sec-accelerator-use-cublas` 中介绍的cuBLAS的接口使用方法，可以很容易地写出代码使用cuBLAS完成矩阵乘法，如代码 :numref:`practise-cublas` 所示。
+
 
 ```c++
 void cublasGemm(const float *A, const float *B, float *C, float alf, float bet, int M, int N, int K) {
@@ -567,10 +261,9 @@ void cublasGemm(const float *A, const float *B, float *C, float alf, float bet, 
   cublasDestroy(handle);
 }
 ```
+:label:`practise-cublas`
 
-需要注意的是cuBLAS默认矩阵在GPU中是按列优先存储的，而的矩阵是按行优先存储的，而两者可以通过转置相互转换，所以$A\times B = (B^T\times A^T)^T$，因此在输入时需要调整矩阵的顺序，即可保证输出结果仍是行优先矩阵。
-
-#### 测试及分析
+需要注意的是cuBLAS默认矩阵在GPU中是按列优先存储的，而我们的矩阵是按行优先存储的，而两者可以通过转置相互转换，所以$A\times B = (B^T\times A^T)^T$，因此在输入时需要调整矩阵的顺序，即可保证输出结果仍是行优先矩阵。
 
 测试得到以下结果：
 
@@ -578,5 +271,19 @@ void cublasGemm(const float *A, const float *B, float *C, float alf, float bet, 
 Max Error: 0.000092
 Average Time: 0.613 ms, Throughput: 14002.600 GFLOPS
 ```
-使用Nsight Compute分析发现 `LDG` 和 `STS` 等指令使用较多，导致指令发射压力较大，具体体现在 `Stall Wait` 与 `Stall Dispatch Stall` 指标相比较差。但其他指标诸如 `Stall Long Scoreboard` 等优于，但总体上略胜一筹。
-尽管的代码相比cuBLAS已经取得了一定的性能提升，但是需要强调的是cuBLAS内部为各种不同的矩阵尺寸以及不同的设备实现了若干不同的GPU核函数，实现的核函数在其他尺寸或其他设备设备上性能可能无法取得此加速比。
+
+使用Nsight Compute分析发现 `LDG` 和 `STS` 等指令使用较多，导致指令发射压力较大，具体体现在 `Stall Wait` 与 `Stall Dispatch Stall` 指标相比较差。但其他指标诸如 `Stall Long Scoreboard` 等cuBLAS更优，但总体上我们略胜一筹。
+尽管我们的代码相比cuBLAS已经取得了一定的性能提升，但是需要强调的是cuBLAS内部为各种不同的矩阵尺寸以及不同的设备实现了若干不同的GPU核函数，我们实现的核函数在其他尺寸或其他设备设备上性能可能无法取得此加速比。
+
+
+### 小结
+
+要实现一个高性能算子需要依照硬件特性适应性进行若干优化。本节优化策略可总结为以下几点：
+
+  - 并行资源映射——提高并行性：将多层级的并行资源（`block` 、`warp` 、`thread` ）与对应需要计算和搬移的数据建立映射关系，提高程序并行性。将可并行的计算和数据搬移操作映射到并行资源上，对于广义矩阵乘法实例，在节~\ref{sec-accelerator-naive`朴素实现的例子中，令每个`block` 与矩阵$C$中的一个矩阵块建立映射关系，每个`thread` 与矩阵块中的一个元素建立映射关系。
+  
+  - 优化内存结构——减小访存延迟：观察计算过程中同一个`block` 中数据复用的情况，将复用的数据被如共享内存、寄存器等高性能体系结构存储下来，以此提高吞吐量。如在节 :numref`sec-accelerator-naive` 中将矩阵$A$与矩阵$B$中会被同一个 `block` 内不同 `thread` 共同访问的数据缓存到共享内存中。
+  
+  - 优化指令执行——减小指令发射开销：使用 `#pragma unroll` 功能进行循环展开来提升指令级并行，减少逻辑判断；使用向量化加载指令以提高带宽等，对于Ampere架构，最大向量化加载指令为 `LDG.E.128` ，可以采用 `float4` 类型的数据进行读取。
+  
+  - 优化访存流水线——隐藏访存延迟：在进行内存结构变化（矩阵数据搬移）时，可以优化访存流水线，在数据搬移的间隔执行计算操作以隐藏数据搬移的延迟。
