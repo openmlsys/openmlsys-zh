@@ -64,7 +64,7 @@ __global__ void gemmKernel(const float * A,
 
 其可视化结构如 :numref:`cuda_naive_gemm`所示，矩阵$C$中每一个元素由一个线程计算，在GPU Kernel的第5和6行计算该线程对应矩阵$C$中的元素行号$m$及列号$n$，然后在第9到11行该线程利用行号与列号读取矩阵$A$和矩阵$B$中相应的行列向量元素并计算向量内积，最后在第17行将结果写回$C$矩阵。
 
-![矩阵乘法的朴素实现](../img/ch06/6.4/naive.svg)
+![矩阵乘法的朴素实现](../img/ch06/6.4/naive.png)
 :width:` 800px`
 :label:`cuda_naive_gemm`
 
@@ -112,14 +112,14 @@ Average Throughput: 185.313 GFLOPS
 在实现GPU核函数过程中要注意，每个线程需要从原本各读取矩阵$A$和矩阵$B$中一个 `float` 数据变为各读取4个 `float` 数据，这就要求现在每个线程负责处理矩阵$C$中$4\times 4$的矩阵块，称之为 `thread tile` 。如图:numref:`use_float4`所示，每个线程从左到右、从上到下分别读取矩阵$A$和矩阵$B$的数据并运算，最后写入到矩阵$C$中。
 
 
-![提高计算强度](../img/ch06/6.4/use_float4.svg)
+![提高计算强度](../img/ch06/6.4/use_float4.png)
 :width:` 800px`
 :label:`use_float4`
 
 
 完整代码见[gemm_use_128.cu](https://github.com/openmlsys/openmlsys-cuda/blob/main/gemm_use_128.cu)。我们可以进一步让每个线程处理更多的数据，从而进一步提升计算强度，如图:numref:`use_tile`所示。完整代码见[gemm_use_tile.cu](https://github.com/openmlsys/openmlsys-cuda/blob/main/gemm_use_tile.cu)。
 
-![通过提高线程所处理矩阵块的数量来进一步提高计算强度](../img/ch06/6.4/use_tile.svg)
+![通过提高线程所处理矩阵块的数量来进一步提高计算强度](../img/ch06/6.4/use_tile.png)
 :width:` 800px`
 :label:`use_tile`
 
@@ -162,18 +162,18 @@ Average Time: 3.188 ms, Average Throughput: 2694.440 GFLOPS
 
 虽然令一个线程一次读取更多的数据能取得计算强度的提升进而带来性能的提升，但是这种令单个线程处理数据增多的设计会导致开启总的线程数量减少，进而导致并行度下降，因此需要使用其他硬件特性在尽可能不影响并行度的前提下取得性能提升。在之前的代码中，开启若干个线程块，每个线程块处理矩阵$C$中的一个或多个矩阵块。在 :numref:`duplicated_data` 中，可以观察到，处理矩阵$C$同一行的线程$x, y$会读取矩阵$A$中相同的数据，可以借助共享内存让同一个线程块中不同的线程读取不重复的数据而提升程序吞吐量。
 
-![线程间重复读取数据](../img/ch06/6.4/duplicated_data.svg)
+![线程间重复读取数据](../img/ch06/6.4/duplicated_data.png)
 :width:` 800px`
 :label:`duplicated_data`
 
 具体地，需要对代码进行如下改造：首先此前代码在计算内积过程是进行$K$次循环读取数据并累加计算，在此设定下每次循环中处理矩阵$C$中相同行的线程会读取相同的矩阵$A$的数据，处理矩阵$C$中相同列的线程会读取相同的矩阵$B$的数据。可以通过将此$K$次循环拆解成两层循环，外层循环$\frac{K}{tileK}$次，每次外循环的迭代读取一整块数据，内层循环$tileK$次进行累加数据。直观来看，外层循环如 :numref:`use_smem_store` 所示，每次循环将矩阵$A$和矩阵$B$中一整个 `tile` 读取到共享内存中；内层循环如 :numref:`use_smem_load` 所示，每次循环从共享内存读取数据并计算。这种设计带来的好处是，可以让每个线程不必独自从全局内存读取所有需要的数据，整个线程块将共同需要的数据从全局内存中读取并写入到共享内存中，此后每个线程在计算过程中只需要从共享内存中读取所需要的数据即可。
 
 
-![向共享内存中写入数据](../img/ch06/6.4/use_smem_store.svg)
+![向共享内存中写入数据](../img/ch06/6.4/use_smem_store.png)
 :width:` 800px`
 :label:`use_smem_store`
 
-![从共享内存中读取数据](../img/ch06/6.4/use_smem_load.svg)
+![从共享内存中读取数据](../img/ch06/6.4/use_smem_load.png)
 :width:` 800px`
 :label:`use_smem_load`
 
@@ -376,11 +376,11 @@ Average Time: 0.610 ms, Average Throughput: 14083.116 GFLOPS
 
 在GPU中使用指令 `LDS` 读取共享内存中的数据，在这条指令发出后并不会等待数据读取到寄存器后再执行下一条语句，只有执行到依赖 `LDS` 指令读取的数据的指令时才会等待读取的完成。而在上一小节中，在内层$tileK$次循环中，每次发射完读取共享内存的指令之后就会立即执行依赖于读取数据的数学运算，这样就会导致计算单元等待数据从共享内存的读取，如 :numref:`use_smem_pipeline` 所示。事实上，对共享内存的访问周期能多达几十个时钟周期，而计算指令的执行往往只有几个时钟周期，因此通过一定方式隐藏对共享内存的访问会取得不小的收益。可以重新优化流水线隐藏一定的数据读取延迟。具体地，可以在内层的$tileK$次循环中每次循环开始时读取发射下一次内层循环数据的读取指令。由于在执行本次运算时计算指令并不依赖于下一次循环的数据，因此计算过程不会等待之前发出的读取下一次内层循环数据的指令，具体见 :numref:`hide_smem_latency` 。
 
-![上一个GPU核函数的流水线](../img/ch06/6.4/use_smem_pipeline.svg)
+![上一个GPU核函数的流水线](../img/ch06/6.4/use_smem_pipeline.png)
 :width:` 800px`
 :label:`use_smem_pipeline`
 
-![隐藏共享内存读取延迟的流水线](../img/ch06/6.4/hide_smem_latency.svg)
+![隐藏共享内存读取延迟的流水线](../img/ch06/6.4/hide_smem_latency.png)
 :width:` 800px`
 :label:`hide_smem_latency`
 
@@ -450,7 +450,7 @@ Average Time: 0.585 ms, Average Throughput: 14686.179 GFLOPS
 
 上一小节中介绍了对共享内存读取流水线优化的方法，事实上，GPU再读取全局内存中使用的指令 `LDG` 也有与共享内存读取指令 `LDS` 类似的行为特性。因此类似的在$\frac{K}{tileK}$次外层循环中每次循环开始时发出下一次外层循环需要的矩阵$A$中的数据块的读取指令，而本次外循环的整个内层循环过程中不依赖下一次外循环的数据，因此本次外循环的内循环过程中不会等待对下一次外层循环需要的矩阵$A$中的数据块的读取指令完成，从而实现隐藏全局内存读取延迟的目的。具体流水线可视化见 :numref:`hide_global_latency` 。
 
-![隐藏全局内存读取延迟的流水线](../img/ch06/6.4/hide_global_latency.svg)
+![隐藏全局内存读取延迟的流水线](../img/ch06/6.4/hide_global_latency.png)
 :width:` 800px`
 :label:`hide_global_latency`
 
