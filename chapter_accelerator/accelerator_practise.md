@@ -20,7 +20,7 @@
 
 :label:`sec-accelerator-naive`
 
-依照算法:label:`algo-accelerator-gemm`，编写CPU代码如代码如下。
+依照算法:label:`algo-accelerator-gemm`，编写CPU代码如下所示：
 ```c++
 float A[M][K];
 float B[K][N];
