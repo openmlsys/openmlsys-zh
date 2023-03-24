@@ -1,4 +1,4 @@
-## 机器人操作系统（ROS）的入门案例
+## 案例分析：使用机器人操作系统
 
 在这一章节中，我们将带领大家安装ROS2并配置好使用环境，然后再通过一些简单的代码示例来让大家更深入的了解如何使用ROS2和上一章节所介绍的概念。
 
@@ -7,7 +7,7 @@
 这是因为debian安装方式会将很多ROS2的Python依赖库以`apt install`（而非`pip install`）的方式安装到Ubuntu自带的Python3路径中去。
 这也就是说，当你选定ROS2版本后，你所需的Ubuntu版本和Python版本也就随之确定了。
 
-如果想要使用Python虚拟环境（virtual env）的话，也必须指定使用Ubuntu系统所带的Python解释器（interpreter），并在创建时加上`site-packages`选项。添加这个选项是因为我们需要那些安装在系统Python3路径中的ROS2的依赖库。如果读者感兴趣的话，可以阅读这篇[英文教程](https://docs.ros.org/en/foxy/How-To-Guides/Using-Python-Packages.html)来了解更多细节。
+如果想要使用Python虚拟环境（virtual env）的话，也必须指定使用Ubuntu系统所带的Python解释器（interpreter），并在创建时加上`site-packages`选项。添加这个选项是因为我们需要那些安装在系统Python3路径中的ROS2的依赖库。
 
 举例来说，对于`pipenv`用户，可以通过下面这条命令来创建一个使用系统Python3并添加了`site-packages`的虚拟环境。
 
@@ -21,15 +21,11 @@ pipenv --python $(/usr/bin/python3 -V | cut -d" " -f2) --site-packages
 
 在本章节以及本章后续的案例章节中，我们在合适的场合将用ROS2，Ubuntu和Python来分别指代ROS2 Foxy Fitzroy，Ubuntu Focal和Ubuntu Focal所带的Python 3.8。
 
-本章节中的案例有参考ROS2的[官方教程](https://docs.ros.org/en/foxy/Tutorials.html)。这个官方教程讲解的非常详细，非常适合初学者入门ROS2。如果读者对英文有自信的话，可以尝试阅读官方教程来了解更多ROS2的细节。
-
-另外，本章节的案例所使用的代码可以在本书相关的[ROS2案例代码库](https://github.com/openmlsys/openmlsys-ros2)中的`src/my_hello_world`和`src/my_interfaces`文件夹内找到。
+本章节中的案例有参考ROS2的官方教程。这个官方教程讲解的非常详细，非常适合初学者入门ROS2。
 
 ### 安装ROS2 Foxy Fitzroy
 
 在Ubuntu上安装ROS2相对简单，绝大多数情况跟随官方教程安装即可。
-例如对于ROS2 Foxy Fitzroy和Ubuntu Focal，对自己英文水平较为自信的读者也可以跟随[这篇官方教程](https://docs.ros.org/en/foxy/Installation/Ubuntu-Install-Debians.html)。
-本章节关于ROS2的安装的部分主要也是这篇教程相关部分的转述。
 
 #### 系统区域（locale）需要支持UTF-8
 
@@ -166,7 +162,7 @@ cd src
 ros2 pkg create --build-type ament_python --dependencies rclpy std_msgs --node-name hello_world_node my_hello_world
 ```
 
-`ros2`命令的`pkg create`子项可以帮助我们快速的创建一个ROS2程序库的框架。`build-type`参数指明了这是一个纯Python库，`dependencies`参数指明了这个库将会使用`rclpy`和`std_msgs`这两个依赖库，`node-name`参数指明了我们创建的程序库中会有一个名为hello_world_node的ROS2节点，而最后的my_hello_world则是新建程序库的名字。
+`ros2`命令的`pkg create`子项可以帮助我们快速的创建一个ROS2程序库的框架。`build-type`参数指明了这是一个纯Python库，`dependencies`参数指明了这个库将会使用`rclpy`和`std_msgs`这两个依赖库，`node-name`参数指明了我们创建的程序库中会有一个名为hello_world_node的ROS2节点，而最后的`my_hello_world`则是新建程序库的名字。
 
 进入新建好的程序库文件夹`my_hello_world`，我们可以看到刚运行的命令已经帮我们建好一个Python库文件夹`my_hello_world`。其与程序库同名，且内含`__init__.py`文件和`hello_world_node.py`文件。后者的存在是由于我们使用了`node_name`参数的原因。我们将在这个Python库文件夹内编写我们的Python代码。
 
@@ -228,7 +224,7 @@ class HelloWorldNode(Node):
 
 在`timer_callback()`方法中，我们简单的创建一条带计数器的Hello World信息，并通过信息发布者发送出去。然后我们在日志中记录这次操作并将计数器加一。
 
-定义好我们的Hello World节点类后，我们可以开始定义`main()`函数。这个函数就是我们之前在`setup.py`中看到的那个entry point。
+定义好我们的HelloWorldNode类后，我们可以开始定义`main()`函数。这个函数就是我们之前在`setup.py`中看到的那个entry point。
 
 ```python
 def main(args=None):
@@ -338,7 +334,7 @@ if __name__ == "__main__":
     main()
 ```
 
-这个新添加的文件以及其中的消息订阅者节点类和上面的HelloWorld节点类十分相似，甚至更为简单些。我们只需要在初始化时通过基类初始化方法赋予节点`my_hello_world_subscriber`这个名字，然后创建一个消息订阅者来订阅`hello_world_topic`主题下的消息，并指定`subscriber_callback()`方法来处理接收到的消息。而在`subscriber_callback()`中，我们将接收到的消息记录进日志。`main()`方法则和HelloWorld节点类的基本一样。
+这个新添加的文件以及其中的消息订阅者节点类和上面的HelloWorldNode类十分相似，甚至更为简单些。我们只需要在初始化时通过基类初始化方法赋予节点`my_hello_world_subscriber`这个名字，然后创建一个消息订阅者来订阅`hello_world_topic`主题下的消息，并指定`subscriber_callback()`方法来处理接收到的消息。而在`subscriber_callback()`中，我们将接收到的消息记录进日志。`main()`方法则和HelloWorld节点类的基本一样。
 
 在能正式使用这个新节点之前，我们需要将其添加成为一个entry point。为此，我们只需在`setup.py`的对应位置添加下面这行：
 
@@ -443,7 +439,7 @@ ros2 param set /parametrised_hello_world_node name "ROS2"
 
 恭喜！你现在掌握了如何让ROS2节点（和其它类型的ROS2程序）使用参数的方法。
 
-### ROS2服务
+### 服务端-客户端服务模式
 
 在上一章节中我们知道了ROS2框架除了发布者-订阅者这种通信模式，还有服务端-客户端这种模式。
 在这一小节中，我们将通过一个简单的串联两个字符串的服务来演示如何使用这种模式。
@@ -531,7 +527,7 @@ colcon build --packages-select my_interfaces
 
 我们可以通过在新的终端窗口运行`ros2 interface show my_interfaces/srv/ConcatTwoStr`来验证是否已经编译成功了。成功的话终端会显示自定义服务接口`ConcatTwoStr`的具体定义。
 
-现在，我们定义好了需要使用的服务接口，下面可以开始编写我们的服务段和客户端了。
+现在，我们定义好了需要使用的服务接口，下面可以开始编写我们的服务端和客户端了。
 
 #### ROS2服务端
 
@@ -643,8 +639,6 @@ if __name__ == '__main__':
 'concat_two_str_client_async = my_hello_world.concat_two_str_client_async:main'
 ```
 
-#### 确认正常运行
-
 我们现在编写好了我们的服务端和客户端，让我们在工作区根目录下重新编译一边`my_hello_world`库。
 
 ```shell
@@ -680,7 +674,7 @@ str2: World
 
 恭喜！您现在已经了解如何在ROS2框架中新建自定义的接口类型和创建服务端节点和客户端节点了！
 
-### ROS2动作
+### 动作模式
 
 在上一章节中我们了解了ROS2框架内的服务端-客户端模式。这样一来，我们只剩下动作（action）这一种模式了。
 在这一小节中，我们将通过一个简单的逐个累加一个数列的每项元素来求和的动作来演示如何使用这种模式。
@@ -854,9 +848,7 @@ if __name__ == '__main__':
 'my_sum_action_client = my_hello_world.my_sum_action_client:main'
 ```
 
-#### 确认正常运行
-
-我们现在编写好了我们的动作服务器和动作客户端，让我们在工作区根目录下重新编译一边`my_hello_world`库。
+我们现在编写好了我们的动作服务器和动作客户端，让我们在工作区根目录下重新编译一遍`my_hello_world`库。
 
 ```shell
 cd openmlsys-ros2
@@ -895,7 +887,3 @@ ros2 run my_hello_world my_sum_action_server
 ```
 
 恭喜！您现在已经了解如何在ROS2框架中新建自定义的接口类型和创建动作服务端节点和动作客户端节点了！
-
-### 小结
-
-在本章节中，我们了解了怎样安装ROS2和在Python虚拟环境中进行ROS2项目的开发。然后我们通过一些案例来更加深入的了解了ROS2的一些核心概念，即节点，主题，参数，服务，和动作。
