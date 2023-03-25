@@ -1,0 +1,480 @@
+<head>
+<style>
+h1, .side-doc-outline  {
+    display: none;
+}
+.document .page-content {
+    width: 100%;
+}
+h2, h3, h4 {
+    letter-spacing: 2px;
+}
+.mdl-grid {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 150px 0 0 0;
+}
+h2.toc {
+    padding: 150px 0 0 0;
+}
+
+.header h2 {
+    font-size: 2rem;
+    padding-bottom: 35px;
+}
+
+.header p {
+    font-size: 1.25rem;
+    letter-spacing: 0px;
+    line-height: 1.5rempx;
+    padding-bottom: 10px;
+}
+
+.header .mdl-button {
+  margin: 0px 10px;
+  letter-spacing: 2px;
+  font-size: 16px;
+  margin: 1rem 1.5rem;
+  height: 40px;
+  width: 120px;
+}
+.author-item {
+  max-width: 300px;
+}
+.author-item h3 {
+    padding-top: 25px;
+    padding-bottom: 10px;
+}
+.author-item img {
+    border-radius: 50%;
+    width: 120px;
+}
+.authors h4 {
+    width: 100%;
+}
+
+.authors h2 {
+    padding-bottom: 18px;
+}
+
+.running-item  {
+  max-width: 300px;
+}
+
+.running-item img {
+  height: 40px;
+}
+
+.running-item p {
+    padding: 20px;
+}
+
+.running.mdl-grid {
+padding: 20px 0 0 0;
+}
+
+.logos img {
+display: inline;
+max-height: 70px;
+max-width: 100px;
+margin-left: auto;
+margin-right: auto;
+}
+
+.logos {
+padding-top: 1em;
+padding-bottom: 2em;
+}
+
+.logos .mdl-grid {
+padding: 0;
+}
+
+.features .logos .mdl-cell {
+padding: 10px 0;
+}
+
+
+.features .mdl-cell {
+    padding: 0 36px;
+}
+.features h2, .features-2 h2 {
+    padding-bottom: 24px;
+}
+.features-2 p {
+    padding: 0 200px;
+}
+.institute.mdl-grid {
+    padding: 24px;
+}
+.institute .mdl-cell {
+    text-align: left;
+    padding: 0;
+}
+#logoimg {
+    padding-top: 0em;
+    padding-bottom: 2em;
+    width: 100%;
+}
+#map {
+    height: 400px;
+    width: 100%;
+}
+#mapimg {
+    width: 100%;
+}
+a {
+  font-size: normal;
+}
+
+@media (max-width: 1000px) {
+    .mdl-grid, h2.toc {
+        padding: 50px 0 0 0;
+    }
+    .header img, .features-2 img {
+        max-width: 300px;
+    }
+    .header .mdl-cell--1-col {
+        display: none;
+    }
+    .features img {
+        max-width: 350px;
+    }
+    .features-2 p {
+        padding: 0 24px;
+    }
+.features .mdl-cell {
+    padding: 0 8px;
+}
+}
+
+.collapsible {
+    background-color: #EEE;
+    color: black;
+    cursor: pointer;
+    padding: 6px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 16px;
+}
+.collapsible-active, .collapsible:hover {
+    background-color: #DDD;
+}
+.expansion {
+    padding: 3px 6px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+.cover h2 {
+  font-size: 34px;
+  margin-bottom: 0px;
+  padding-bottom: 20px;
+}
+
+.cover p.version {
+  font-size: 18px;
+  padding: 0 0 9px 0;
+
+}
+
+.cover p {
+  margin: 0;
+  padding:  20px 0 0px 0;
+  font-size: 20px;
+}
+
+</style>
+</head>
+
+<div class="mdl-grid header">
+  <div class="mdl-cell mdl-cell--3-col">
+    <img src="_images/logo.png" class="img-fluid" alt="">
+  </div>
+  <div class="mdl-cell mdl-cell--1-col">
+  </div>
+  <div class="mdl-cell mdl-cell--5-col mdl-cell--middle cover">
+    <h2 class="mdl-color-text--primary">《机器学习系统：设计和实现》</h2>
+    <p>做世界上第一本全面讲述机器学习系统知识的开源书籍</p>
+    <p><a class="github-button" href="https://github.com/openmlsys/openmlsys-zh" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star openmlsys/openmlsys-zh on GitHub">Star</a></p>
+  </div>
+</div>
+
+
+<div class = "authors mdl-grid" id = "author" >
+  <div class = "author-group-title mdl-cell mdl-cell--12-col mdl-cell--top">
+  <h2>核心作者</h2>
+  </div>
+  <div class = "mdl-cell mdl-cell--3-col mdl-cell--top">
+    <div class="author-item">
+      <img src="https://avatars.githubusercontent.com/u/1136455?v=4"/>
+      <h3><a href="https://github.com/luomai">麦络 </a></h3>
+      <p>爱丁堡大学</p>
+    </div>
+  </div>
+    <div class = "mdl-cell mdl-cell--3-col mdl-cell--top">
+    <div class="author-item">
+      <img src="https://avatars.githubusercontent.com/u/10713581?v=4"/>
+      <h3><a href="https://github.com/zsdonghao">董豪</a></h3>
+      <p> 北京大学、鹏城实验室</p>
+    </div>
+  </div>
+  <div class = "mdl-cell mdl-cell--3-col mdl-cell--top">
+    <div class="author-item">
+      <img src="./_images/jinxuefeng.png"/>
+      <h3>金雪锋</h3>
+      <p> MindSpore架构师</p>
+    </div>
+  </div>
+  <div class = "mdl-cell mdl-cell--3-col mdl-cell--top">
+    <div class="author-item">
+      <img src="https://avatars.githubusercontent.com/u/90942796?v=4"/>
+      <h3><a href="https://github.com/ganzhiliang">干志良</a></h3>
+      <p> MindSpore架构师</p>
+    </div>
+  </div>
+
+  <div class = "author-group-title mdl-cell mdl-cell--12-col mdl-cell--top">
+  <h2>章节作者</h2>
+  </div>
+  <div class = "mdl-cell mdl-cell--3-col mdl-cell--top">
+    <div class="author-item">
+      <img src="https://avatars.githubusercontent.com/u/21324004?v=4"/>
+      <h3><a href="https://github.com/Laicheng0830">赖铖</a></h3>
+      <p>鹏城实验室</p>
+    </div>
+  </div>
+  <div class = "mdl-cell mdl-cell--3-col mdl-cell--top">
+    <div class="author-item">
+      <img src="https://avatars.githubusercontent.com/u/73918561?v=4"/>
+      <h3><a href="https://github.com/hanjr92">韩佳容</a></h3>
+      <p>鹏城实验室</p>
+    </div>
+  </div>
+  <div class = "mdl-cell mdl-cell--3-col mdl-cell--top">
+    <div class="author-item">
+      <img src="https://avatars.githubusercontent.com/u/31511840?v=4"/>
+      <h3><a href="https://github.com/future-xy">符尧</a></h3>
+      <p>爱丁堡大学</p>
+    </div>
+  </div>
+  <div class = "mdl-cell mdl-cell--3-col mdl-cell--top">
+    <div class="author-item">
+      <img src="https://avatars.githubusercontent.com/u/39682259?v=4"/>
+      <h3><a href="https://github.com/eedalong">袁秀龙</a></h3>
+      <p>清华大学</p>
+    </div>
+  </div>
+
+  <div class = "mdl-cell mdl-cell--3-col mdl-cell--top">
+    <div class="author-item">
+      <img src="https://avatars.githubusercontent.com/u/22659010?v=4"/>
+      <h3><a href="https://github.com/quantumiracle">丁子涵</a></h3>
+      <p>普林斯顿大学</p>
+    </div>
+  </div>
+  <div class = "mdl-cell mdl-cell--3-col mdl-cell--top">
+    <div class="author-item">
+      <img src="https://avatars.githubusercontent.com/u/25477396?v=4"/>
+      <h3><a href="https://github.com/Jiankai-Sun">Jiankai Sun</a></h3>
+      <p>Stanford University</p>
+    </div>
+  </div>
+  <div class = "mdl-cell mdl-cell--3-col mdl-cell--top">
+    <div class="author-item">
+      <img src="https://avatars.githubusercontent.com/u/34192321?v=4"/>
+      <h3><a href="https://liaopeiyuan.com/">廖培元</a></h3>
+      <p>Carnegie Mellon University</p>
+    </div>
+  </div>
+  <div class = "mdl-cell mdl-cell--3-col mdl-cell--top">
+    <div class="author-item">
+      <img src="https://avatars.githubusercontent.com/u/91313652?v=4"/>
+      <h3><a href="https://github.com/Went-Liang">梁文腾</a></h3>
+      <p>北京邮电大学</p>
+    </div>
+  </div>
+  <div class = "mdl-cell mdl-cell--3-col mdl-cell--top">
+    <div class="author-item">
+      <img src="https://avatars.githubusercontent.com/u/49299030?v=4"/>
+      <h3><a href="https://github.com/JieRen98">任杰</a></h3>
+      <p>爱丁堡大学</p>
+    </div>
+  </div>
+  <div class = "mdl-cell mdl-cell--3-col mdl-cell--top">
+    <div class="author-item">
+      <img src="./_images/wanghanchen.png"/>
+      <h3><a href="https://github.com/hansen7">王瀚宸</a></h3>
+      <p>剑桥大学</p>
+    </div>
+  </div>
+  <div class = "mdl-cell mdl-cell--3-col mdl-cell--top">
+    <div class="author-item">
+      <img src="https://avatars.githubusercontent.com/u/10811136?v=4"/>
+      <h3><a href="https://github.com/ds1231h">穆沛</a></h3>
+      <p>爱丁堡大学</p>
+    </div>
+  </div>
+  <div class = "mdl-cell mdl-cell--3-col mdl-cell--top">
+    <div class="author-item">
+      <img src="./_images/zhangqinghua.png"/>
+      <h3>张清华</h3>
+      <p>华为工程师</p>
+    </div>
+  </div>
+  <div class = "mdl-cell mdl-cell--3-col mdl-cell--top">
+    <div class="author-item">
+      <img src="https://avatars.githubusercontent.com/u/18185293?v=4"/>
+      <h3>梁志博</h3>
+      <p>华为工程师</p>
+    </div>
+  </div>
+  <div class = "mdl-cell mdl-cell--3-col mdl-cell--top">
+    <div class="author-item">
+      <img src="https://avatars.githubusercontent.com/u/20573763?v=4"/>
+      <h3>余坚峰</h3>
+      <p>华为工程师</p>
+    </div>
+  </div>
+  <div class = "mdl-cell mdl-cell--3-col mdl-cell--top">
+    <div class="author-item">
+      <img src="https://avatars.githubusercontent.com/u/5563661?v=4"/>
+      <h3>褚金锦</h3>
+      <p>华为工程师</p>
+    </div>
+  </div>
+
+  <div class = "mdl-cell mdl-cell--3-col mdl-cell--top">
+    <div class="author-item">
+      <img src="https://avatars.githubusercontent.com/u/68210792?v=4"/>
+      <h3>蔡福璧</h3>
+      <p>华为工程师</p>
+    </div>
+  </div>
+  <div class = "mdl-cell mdl-cell--3-col mdl-cell--top">
+    <div class="author-item">
+      <img src="./_images/zhangrenwei.png"/>
+      <h3>张任伟</h3>
+      <p>华为工程师</p>
+    </div>
+  </div>
+  <div class = "mdl-cell mdl-cell--3-col mdl-cell--top">
+    <div class="author-item">
+      <img src="https://avatars.githubusercontent.com/u/2681256?v=4"/>
+      <h3>刘超</h3>
+      <p>华为工程师</p>
+    </div>
+  </div>
+  <div class = "mdl-cell mdl-cell--3-col mdl-cell--top">
+    <div class="author-item">
+      <img src="https://avatars.githubusercontent.com/u/5202350?v=4"/>
+      <h3>陈钢</h3>
+      <p>华为工程师</p>
+    </div>
+  </div>
+
+  <div class = "mdl-cell mdl-cell--3-col mdl-cell--top">
+    <div class="author-item">
+      <img src="https://avatars.githubusercontent.com/u/61316635?v=4"/>
+      <h3>黎明奇</h3>
+      <p>华为工程师</p>
+    </div>
+  </div>
+  <div class = "mdl-cell mdl-cell--3-col mdl-cell--top">
+    <div class="author-item">
+      <img src="https://avatars.githubusercontent.com/u/36526001?v=4"/>
+      <h3>韩刚强</h3>
+      <p>华为工程师</p>
+    </div>
+  </div>
+  <div class = "mdl-cell mdl-cell--3-col mdl-cell--top">
+    <div class="author-item">
+      <img src="https://avatars.githubusercontent.com/u/55628940?v=4"/>
+      <h3>唐业辉</h3>
+      <p>华为工程师</p>
+    </div>
+  </div>
+  <div class = "mdl-cell mdl-cell--3-col mdl-cell--top">
+    <div class="author-item">
+      <img src="./_images/zhaizhiqiang.png"/>
+      <h3>翟智强</h3>
+      <p>华为工程师</p>
+    </div>
+  </div>
+  <div class = "mdl-cell mdl-cell--3-col mdl-cell--top">
+    <div class="author-item">
+      <img src="./_images/wutiancheng.png"/>
+      <h3>吴天诚</h3>
+      <p>华为工程师</p>
+    </div>
+  </div>
+  <div class = "mdl-cell mdl-cell--3-col mdl-cell--top">
+    <div class="author-item">
+      <img src="https://avatars.githubusercontent.com/u/59854698?v=4"/>
+      <h3>李小慧</h3>
+      <p>华为工程师</p>
+    </div>
+  </div>
+  <div class = "mdl-cell mdl-cell--3-col mdl-cell--top">
+    <div class="author-item">
+      <img src="https://avatars.githubusercontent.com/u/20376974?v=4"/>
+      <h3>李昊阳</h3>
+      <p>华为工程师</p>
+    </div>
+  </div>
+
+  <div class = "mdl-cell mdl-cell--3-col mdl-cell--top">
+    <div class="author-item">
+      <img src="https://avatars.githubusercontent.com/u/17228522?v=4"/>
+      <h3>谭志鹏</h3>
+      <p>华为工程师</p>
+    </div>
+  </div>
+  <div class = "mdl-cell mdl-cell--3-col mdl-cell--top">
+    <div class="author-item">
+      <img src="https://avatars.githubusercontent.com/u/105415060?v=4"/>
+      <h3>李姗妮</h3>
+      <p>华为工程师</p>
+    </div>
+  </div>
+  <div class = "mdl-cell mdl-cell--3-col mdl-cell--top">
+    <div class="author-item">
+      <img src="./_images/guozhijian.png"/>
+      <h3>郭志建</h3>
+      <p>华为工程师</p>
+    </div>
+  </div>
+
+
+  <div class = "author-group-title mdl-cell mdl-cell--12-col mdl-cell--top">
+    <h3> 感谢来自社区的<a href="https://github.com/openmlsys/openmlsys-zh/graphs/contributors">贡献者</a></h3>
+    <h3> 以及为本书提出宝贵意见的 <a href="https://github.com/openmlsys/openmlsys-zh/issues">勘误者</a></h3>
+    <h4><a href="https://github.com/openmlsys/openmlsys-zh">欢迎为本书贡献</a></h4>
+  </div>
+</div>
+
+
+<h2 class="toc">目录</h2>
+
+<script>
+var coll = document.getElementsByClassName("collapsible");
+var i;
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("collapsible-active");
+    var content = this.nextElementSibling;
+    if (content.style.maxHeight){
+      content.style.maxHeight = null;
+    } else {
+      content.style.maxHeight = content.scrollHeight + "px";
+    }
+  });
+}
+</script>
+
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+

@@ -1,6 +1,11 @@
 机器学习系统：设计和实现
 =========================
 
+```eval_rst
+.. raw:: html
+   :file: frontpage.html
+```
+
 ```toc
 :maxdepth: 2
 :numbered:
