@@ -1,5 +1,5 @@
 ## 案例分析：支持在线模型更新的大型推荐系统
-下面我们分析一个新型的支持低延迟模型更新的推荐系统Ekko\citeu{280902}，从而引入实际部署推荐系统所需要考虑的系统设计知识。Ekko的核心思想是将训练服务器产生的梯度或模型更新立刻发送至所有参数服务器，绕过费时长达数分钟乃至数小时的保存模型检查点、验证模型检查点、广播模型检查点到所有推理数据中心的过程。如此一来，推理服务器每次都能从同一数据中心的参数服务器上读到最新的模型参数。我们将这样的模型更新方式称为在线更新，以区别于上一小节介绍的离线更新，如图\ref{fig:online update}所示。
+下面我们分析一个新型的支持低延迟模型更新的推荐系统Ekko\citeu{280902}，从而引入实际部署推荐系统所需要考虑的系统设计知识。Ekko的核心思想是将训练服务器产生的梯度或模型更新立刻发送至所有参数服务器，绕过费时长达数分钟乃至数小时的保存模型检查点、验证模型检查点、广播模型检查点到所有推理数据中心的过程。如此一来，推理服务器每次都能从同一数据中心的参数服务器上读到最新的模型参数。我们将这样的模型更新方式称为在线更新，以区别于上一小节介绍的离线更新，如图 :numref:`online-update`所示。
 
 <!-- \begin{figure}[H]
     \centering
@@ -7,6 +7,9 @@
     \caption{在线更新}
     \label{fig:online update}
 \end{figure} -->
+![在线更新](../img/ch10/ch-recsys/online_update.png)
+:width:`800px`
+:label:`online-update`
 
 ### 系统设计挑战
 相比于离线更新，在线更新避免了费时的存储和验证模型检查点的步骤，然而也带来了新的问题和挑战：
@@ -18,7 +21,7 @@
     
 如果从训练数据中心向所有其他数据中心广播参数更新，会导致训练数据中心成为影响同步速度的瓶颈。假设训练数据中心需要广播一个100GB的模型至5个推理数据中心，训练数据中心可用的带宽为5Gbps，则需要花费800秒时间，这离秒级模型更新的需求还差了两个数量级。
     
-如果使用如图\ref{fig:chain replication}所示的链式复制~\citeu{186214}，虽然可以避免在训练数据中心出现瓶颈，但是这种方式的更新延迟很大程度上取决于链上最慢的一段网络，导致在广域网的场景下延迟极高。
+如果使用如图 :numref:`chain-replication`所示的链式复制~\citeu{186214}，虽然可以避免在训练数据中心出现瓶颈，但是这种方式的更新延迟很大程度上取决于链上最慢的一段网络，导致在广域网的场景下延迟极高。
     
     <!-- \begin{figure}[H]
     \centering
@@ -37,24 +40,30 @@
     
 模型在线更新带来的一个问题是，不可能单独对每一条更新进行检查以确保其对服务质量不会产生负面影响。因此有偏差的模型更新可能被发送到推理集群中，从而直接影响在线服务质量。而且在大规模在线环境中，出现有偏差的模型更新的概率并不低。
 
-图\ref{fig:system challenges}总结了在线更新会面临的系统挑战。
+图 :numref:`system-challenges`总结了在线更新会面临的系统挑战。
 
-\begin{figure}[H]
+<!-- \begin{figure}[H]
     \centering
     \includegraphics{figs/ch_recommender/system_challenges.png}
     \caption{系统挑战}
     \label{fig:system challenges}
-\end{figure}
+\end{figure} -->
+![系统挑战](../img/ch10/ch-recsys/system_challenges.png)
+:width:`800px`
+:label:`system-challenges`
 
 ### 系统架构
-针对这些挑战，Ekko提出了如图\ref{fig:ekko overview}所总结的三个核心组件。概括来讲：
+针对这些挑战，Ekko提出了如图 :numref:`ekko-overview`所总结的三个核心组件。概括来讲：
 
-\begin{figure}[H]
+<!-- \begin{figure}[H]
     \centering
     \includegraphics{figs/ch_recommender/ekko_overview.png}
     \caption{Ekko的系统概览}
     \label{fig:ekko overview}
-\end{figure}
+\end{figure} -->
+![Ekko的系统概览](../img/ch10/ch-recsys/ekko_overview.png)
+:width:`800px`
+:label:`ekko-overview`
 
 <!-- \begin{enumerate}[label={(\arabic*)}]
     \item Ekko设计了一套\textbf{高性能的点对点（Peer-to-Peer，P2P）模型更新传播算法}，令参数服务器根据不同的网络带宽从同伴（peer）处以自适应的速率拉取模型更新，并且结合推荐模型的特点优化了拉取效率。
@@ -66,7 +75,7 @@
 3. Ekko设计了\textbf{推理模型状态管理器}来监控在线服务的质量并快速回滚被有害更新损害的模型状态以避免SLO（Service-Level Objectives）受到严重影响。
 
 ### 点对点模型更新传播算法
-Ekko需要支持上千台分布在数个相隔上千公里的数据中心内的参数服务器之间传播模型更新。然而一个超大规模深度学习推荐系统每秒钟可以生成几百GB的模型更新，而数据中心之前的网络带宽仅有100Mbps到1Gbps不等。如果采用已有参数服务器架构，例如Project Adam~\citeu{ProjectAdam_186212}的两阶段提交协议，由训练数据中心向其他数据中心发送这些模型更新，不仅训练数据中心的带宽会成为瓶颈，而且整个系统的模型更新速度会受限于最慢的一条网络。同时Ekko的研究人员发现使用深度学习模型的推理服务器并不需要知道参数的更新过程，而仅需要知道参数的最新权重（状态）。有鉴于此，Ekko设计了基于状态的无日志同步算法，如图\ref{fig:P2P replication}所示，令参数服务器之间以自适应的速度相互拉取最新的模型更新。
+Ekko需要支持上千台分布在数个相隔上千公里的数据中心内的参数服务器之间传播模型更新。然而一个超大规模深度学习推荐系统每秒钟可以生成几百GB的模型更新，而数据中心之前的网络带宽仅有100Mbps到1Gbps不等。如果采用已有参数服务器架构，例如Project Adam~\citeu{ProjectAdam_186212}的两阶段提交协议，由训练数据中心向其他数据中心发送这些模型更新，不仅训练数据中心的带宽会成为瓶颈，而且整个系统的模型更新速度会受限于最慢的一条网络。同时Ekko的研究人员发现使用深度学习模型的推理服务器并不需要知道参数的更新过程，而仅需要知道参数的最新权重（状态）。有鉴于此，Ekko设计了基于状态的无日志同步算法，如图 :numref:`P2P-replication`所示，令参数服务器之间以自适应的速度相互拉取最新的模型更新。
 
 <!-- \begin{figure}[H]
     \centering
@@ -74,6 +83,10 @@ Ekko需要支持上千台分布在数个相隔上千公里的数据中心内的�
     \caption{点对点模型更新}
     \label{fig:P2P replication}
 \end{figure} -->
+![点对点模型更新](../img/ch10/ch-recsys/p2p_replication.png)
+:width:`800px`
+:label:`p2p-replication`
+
 
 为了实现点对点无日志同步算法，Ekko首先借鉴已有的版本向量（Version Vector）算法~\citeu{ConciseVV_10.1007/11561927_25,VectorSet_10.1145/1243418.1243427}，为每个参数（即每个键值对）赋予一个版本（Version）。版本可以记录参数的更新时间和地点。此外，Ekko在每个分片内设置一条版本向量（也称之为见闻，Knowledge），用来记录该分片的所有已知版本。通过对比版本号和版本向量，参数服务器可以在不发送参数本身的前提下从同伴处拉取更新的参数状态。对版本向量算法感兴趣的读者可以参考原论文了解细节。
 
@@ -111,7 +124,7 @@ Ekko需要支持上千台分布在数个相隔上千公里的数据中心内的�
 
 
 
-如图\ref{fig:model update scheduler}所示，对于每一条模型更新，Ekko根据公式\ref{equ:priority}计算其总的优先值，然后和k\%分位阈值做比较，如果大于k\%分位阈值，则视为高优先级，否则为低优先级。K值由使用者设置，而k\%分位阈值采用已有算法根据历史优先值估计。
+如图 numref:`model-update-scheduler`所示，对于每一条模型更新，Ekko根据公式\ref{equ:priority}计算其总的优先值，然后和k\%分位阈值做比较，如果大于k\%分位阈值，则视为高优先级，否则为低优先级。K值由使用者设置，而k\%分位阈值采用已有算法根据历史优先值估计。
 
 <!-- \begin{figure}[H]
     \centering
@@ -119,6 +132,9 @@ Ekko需要支持上千台分布在数个相隔上千公里的数据中心内的�
     \caption{SLO有感的模型更新调度器}
     \label{fig:model update scheduler}
 \end{figure} -->
+![SLO有感的模型更新调度器](../img/ch10/ch-recsys/update_scheduler.png)
+:width:`800px`
+:label:`model-update-scheduler`
 
 <!-- \begin{equation}\label{equ:priority}
     p=(p_g+p_u) \times p_m
@@ -133,7 +149,7 @@ Ekko的线上实验结果显示，当网络拥塞时，采用服务质量有感�
 
 ### 模型状态管理器
 
-为了防止有害的模型更新影响到在线服务质量，Ekko设计了推理模型状态管理器来监控推理模型的健康状态。其核心思想是设置一组基线模型，并从推理请求中分出不到1\%的流量给基线模型，从而可以得到基线模型的服务质量相关指标。如图\ref{fig:model state manager}所示，推理模型状态管理器中的时序异常检测算法不断监控基线模型和在线模型的服务质量。模型质量的状态可能是健康、未定或者损害，由复制状态机维护。一旦确定在线模型处于损坏状态，首先将被损坏模型的流量切换至其他健康的替换模型上，然后在线回滚模型至健康的状态。
+为了防止有害的模型更新影响到在线服务质量，Ekko设计了推理模型状态管理器来监控推理模型的健康状态。其核心思想是设置一组基线模型，并从推理请求中分出不到1\%的流量给基线模型，从而可以得到基线模型的服务质量相关指标。如图 :numref:`model-state-manager`所示，推理模型状态管理器中的时序异常检测算法不断监控基线模型和在线模型的服务质量。模型质量的状态可能是健康、未定或者损害，由复制状态机维护。一旦确定在线模型处于损坏状态，首先将被损坏模型的流量切换至其他健康的替换模型上，然后在线回滚模型至健康的状态。
 
 <!-- \begin{figure}[H]
     \centering
@@ -141,6 +157,9 @@ Ekko的线上实验结果显示，当网络拥塞时，采用服务质量有感�
     \caption{模型状态管理器}
     \label{fig:model state manager}
 \end{figure} -->
+![模型状态管理器](../img/ch10/ch-recsys/state_manager.png)
+:width:`800px`
+:label:`model-state-manager`
 
 
 ### 小结
