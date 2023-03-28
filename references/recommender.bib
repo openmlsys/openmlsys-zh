@@ -1,37 +1,123 @@
-@inproceedings{10.1145/2988450.2988454,
-author = {Cheng, Heng-Tze and Koc, Levent and Harmsen, Jeremiah and Shaked, Tal and Chandra, Tushar and Aradhye, Hrishi and Anderson, Glen and Corrado, Greg and Chai, Wei and Ispir, Mustafa and Anil, Rohan and Haque, Zakaria and Hong, Lichan and Jain, Vihan and Liu, Xiaobing and Shah, Hemal},
-title = {Wide \& Deep Learning for Recommender Systems},
-year = {2016},
-isbn = {9781450347952},
-publisher = {Association for Computing Machinery},
-address = {New York, NY, USA},
-url = {https://doi.org/10.1145/2988450.2988454},
-doi = {10.1145/2988450.2988454},
-abstract = {Generalized linear models with nonlinear feature transformations are widely used for large-scale regression and classification problems with sparse inputs. Memorization of feature interactions through a wide set of cross-product feature transformations are effective and interpretable, while generalization requires more feature engineering effort. With less feature engineering, deep neural networks can generalize better to unseen feature combinations through low-dimensional dense embeddings learned for the sparse features. However, deep neural networks with embeddings can over-generalize and recommend less relevant items when the user-item interactions are sparse and high-rank. In this paper, we present Wide \& Deep learning---jointly trained wide linear models and deep neural networks---to combine the benefits of memorization and generalization for recommender systems. We productionized and evaluated the system on Google Play, a commercial mobile app store with over one billion active users and over one million apps. Online experiment results show that Wide \& Deep significantly increased app acquisitions compared with wide-only and deep-only models. We have also open-sourced our implementation in TensorFlow.},
-booktitle = {Proceedings of the 1st Workshop on Deep Learning for Recommender Systems},
-pages = {7-10},
-numpages = {4},
-keywords = {Recommender Systems, Wide \& Deep Learning},
-location = {Boston, MA, USA},
-series = {DLRS 2016}
+@inproceedings{cheng2016wide,
+  title={Wide \& deep learning for recommender systems},
+  author={Cheng, Heng-Tze and Koc, Levent and Harmsen, Jeremiah and Shaked, Tal and Chandra, Tushar and Aradhye, Hrishi and Anderson, Glen and Corrado, Greg and Chai, Wei and Ispir, Mustafa and others},
+  booktitle={Proceedings of the 1st workshop on deep learning for recommender systems},
+  pages={7--10},
+  year={2016}
 }
 
-@inproceedings{10.1145/3124749.3124754,
-author = {Wang, Ruoxi and Fu, Bin and Fu, Gang and Wang, Mingliang},
-title = {Deep \& Cross Network for Ad Click Predictions},
-year = {2017},
-isbn = {9781450351942},
+@inproceedings{yi2019sampling,
+  title={Sampling-bias-corrected neural modeling for large corpus item recommendations},
+  author={Yi, Xinyang and Yang, Ji and Hong, Lichan and Cheng, Derek Zhiyuan and Heldt, Lukasz and Kumthekar, Aditee and Zhao, Zhe and Wei, Li and Chi, Ed},
+  booktitle={Proceedings of the 13th ACM Conference on Recommender Systems},
+  pages={269--277},
+  year={2019}
+}
+
+@inproceedings{ma2018entire,
+  title={Entire space multi-task model: An effective approach for estimating post-click conversion rate},
+  author={Ma, Xiao and Zhao, Liqin and Huang, Guan and Wang, Zhi and Hu, Zelin and Zhu, Xiaoqiang and Gai, Kun},
+  booktitle={The 41st International ACM SIGIR Conference on Research \& Development in Information Retrieval},
+  pages={1137--1140},
+  year={2018}
+}
+
+@inproceedings{de2021transformers4rec,
+  title={Transformers4rec: Bridging the gap between nlp and sequential/session-based recommendation},
+  author={de Souza Pereira Moreira, Gabriel and Rabhi, Sara and Lee, Jeong Min and Ak, Ronay and Oldridge, Even},
+  booktitle={Proceedings of the 15th ACM Conference on Recommender Systems},
+  pages={143--153},
+  year={2021}
+}
+
+@inproceedings {280902,
+author = {Chijun Sima and Yao Fu and Man-Kit Sit and Liyi Guo and Xuri Gong and Feng Lin and Junyu Wu and Yongsheng Li and Haidong Rong and Pierre-Louis Aublin and Luo Mai},
+title = {Ekko: A {Large-Scale} Deep Learning Recommender System with {Low-Latency} Model Update},
+booktitle = {16th USENIX Symposium on Operating Systems Design and Implementation (OSDI 22)},
+year = {2022},
+isbn = {978-1-939133-28-1},
+address = {Carlsbad, CA},
+pages = {821--839},
+url = {https://www.usenix.org/conference/osdi22/presentation/sima},
+publisher = {USENIX Association},
+month = jul,
+}
+
+@inproceedings {186214,
+author = {Mu Li and David G. Andersen and Jun Woo Park and Alexander J. Smola and Amr Ahmed and Vanja Josifovski and James Long and Eugene J. Shekita and Bor-Yiing Su},
+title = {Scaling Distributed Machine Learning with the Parameter Server},
+booktitle = {11th USENIX Symposium on Operating Systems Design and Implementation (OSDI 14)},
+year = {2014},
+isbn = { 978-1-931971-16-4},
+address = {Broomfield, CO},
+pages = {583--598},
+url = {https://www.usenix.org/conference/osdi14/technical-sessions/presentation/li_mu},
+publisher = {USENIX Association},
+month = oct,
+}
+
+@inproceedings {ProjectAdam_186212,
+	author = {Trishul Chilimbi and Yutaka Suzue and Johnson Apacible and Karthik Kalyanaraman},
+	title = {Project Adam: Building an Efficient and Scalable Deep Learning Training System},
+	booktitle = {11th {USENIX} Symposium on Operating Systems Design and Implementation ({OSDI} 14)},
+	year = {2014},
+	isbn = { 978-1-931971-16-4},
+	address = {Broomfield, CO},
+	pages = {571--582},
+	url = {https://www.usenix.org/conference/osdi14/technical-sessions/presentation/chilimbi},
+	publisher = {{USENIX} Association},
+	month = oct,
+}
+
+@InProceedings{ConciseVV_10.1007/11561927_25,
+author="Malkhi, Dahlia
+and Terry, Doug",
+editor="Fraigniaud, Pierre",
+title="Concise Version Vectors in WinFS",
+booktitle="Distributed Computing",
+year="2005",
+publisher="Springer Berlin Heidelberg",
+address="Berlin, Heidelberg",
+pages="339--353",
+abstract="Conflicts naturally arise in optimistically replicated systems. The common way to detect update conflicts is via version vectors, whose storage and communication overhead are number of replicas {\texttimes} number of objects. These costs may be prohibitive for large systems.",
+isbn="978-3-540-32075-3"
+}
+
+@article{VectorSet_10.1145/1243418.1243427,
+author = {Malkhi, Dahlia and Novik, Lev and Purcell, Chris},
+title = {P2P Replica Synchronization with Vector Sets},
+year = {2007},
+issue_date = {April 2007},
 publisher = {Association for Computing Machinery},
 address = {New York, NY, USA},
-url = {https://doi.org/10.1145/3124749.3124754},
-doi = {10.1145/3124749.3124754},
-abstract = {Feature engineering has been the key to the success of many prediction models. However, the process is nontrivial and often requires manual feature engineering or exhaustive searching. DNNs are able to automatically learn feature interactions; however, they generate all the interactions implicitly, and are not necessarily efficient in learning all types of cross features. In this paper, we propose the Deep \& Cross Network (DCN) which keeps the benefits of a DNN model, and beyond that, it introduces a novel cross network that is more efficient in learning certain bounded-degree feature interactions. In particular, DCN explicitly applies feature crossing at each layer, requires no manual feature engineering, and adds negligible extra complexity to the DNN model. Our experimental results have demonstrated its superiority over the state-of-art algorithms on the CTR prediction dataset and dense classification dataset, in terms of both model accuracy and memory usage.},
-booktitle = {Proceedings of the ADKDD'17},
-articleno = {12},
-numpages = {7},
-keywords = {CTR Prediction, Deep Learning, Neural Networks, Feature Crossing},
-location = {Halifax, NS, Canada},
-series = {ADKDD'17}
+volume = {41},
+number = {2},
+issn = {0163-5980},
+url = {https://doi.org/10.1145/1243418.1243427},
+doi = {10.1145/1243418.1243427},
+abstract = {},
+journal = {SIGOPS Oper. Syst. Rev.},
+month = apr,
+pages = {68–74},
+numpages = {7}
+}
+
+@article{russakovsky2015imagenet,
+	title={{Imagenet Large Scale Visual Recognition Challenge}},
+	author={Russakovsky, Olga and Deng, Jia and Su, Hao and Krause, Jonathan and Satheesh, Sanjeev and Ma, Sean and Huang, Zhiheng and Karpathy, Andrej and Khosla, Aditya and Bernstein, Michael},
+	journal={International Journal of Computer Vision (IJCV)},
+	volume={115},
+	number={3},
+	pages={211--252},
+	year={2015},
+	publisher={Springer}
+}
+
+@article{merity2016pointer,
+  title={Pointer sentinel mixture models},
+  author={Merity, Stephen and Xiong, Caiming and Bradbury, James and Socher, Richard},
+  journal={arXiv preprint arXiv:1609.07843},
+  year={2016}
 }
 
 @inproceedings{ijcai2017-239,
