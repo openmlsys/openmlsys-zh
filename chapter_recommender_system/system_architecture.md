@@ -33,20 +33,14 @@
 
 
 ### 稠密神经网络
-稠密神经网络（Dense Neural Network，DNN）是推荐模型的核心，负责探索各个特征之间隐含的联系从而为用户推荐出可能感兴趣的物品。一般在推荐系统中，简单的多层感知机（Multilayer Perceptron，MLP）模型就已经显示出了强大的效果并被应用在谷歌~\citeu{10.1145/2988450.2988454}、Meta~\citeu{naumov2019deep}等各大公司的推荐模型中。虽然MLP的大矩阵相乘操作属于计算密集型任务，对于计算能力要求很高，但是推荐模型中的MLP尺寸一般不超过数MB，对存储要求不高。
+稠密神经网络（Dense Neural Network，DNN）是推荐模型的核心，负责探索各个特征之间隐含的联系从而为用户推荐出可能感兴趣的物品。一般在推荐系统中，简单的多层感知机（Multilayer Perceptron，MLP）模型就已经显示出了强大的效果并被应用在谷歌 :cite:`cheng2016wide`、Meta :cite:`naumov2019deep`等各大公司的推荐模型中。虽然MLP的大矩阵相乘操作属于计算密集型任务，对于计算能力要求很高，但是推荐模型中的MLP尺寸一般不超过数MB，对存储要求不高。
 
-虽然MLP已经取得了不错的效果，在推荐系统领域，近年来应用各种新型深度神经网络的尝试从未止步，更加精巧复杂的网络结构层出不穷，近年来也有工作尝试应用Transformer模型完成推荐任务~\citeu{10.1145/3460231.3474255}。在可以预见的未来，推荐模型中的稠密神经网络也必然会增长到数GB乃至TB。
+虽然MLP已经取得了不错的效果，在推荐系统领域，近年来应用各种新型深度神经网络的尝试从未止步，更加精巧复杂的网络结构层出不穷，近年来也有工作尝试应用Transformer模型完成推荐任务 :cite:`10.1145/3460231.3474255`。在可以预见的未来，推荐模型中的稠密神经网络也必然会增长到数GB乃至TB。
 
 ### 嵌入表
 嵌入表是几乎所有推荐模型的共有组件，负责将无法直接参与计算的离散特征数据，例如：用户和物品ID、用户性别、物品类别等，转化为高维空间中的一条向量。推荐模型中的嵌入表的结构和自然语言处理模型中的类似，不同的是自然语言处理模型中的深度神经网络贡献了主要的参数量，而在推荐模型中，如图 :numref:`recommendation-models`所示，嵌入表贡献主要的参数量。这是因为，推荐系统中有大量的离散特征，而每个离散特征的每一种可能的取值都需要有对应的嵌入项。例如，性别特征的取值可能是“女”，“男”，“未知”，则需要三个嵌入项。假设每条嵌入项是一个64维的单精度浮点数向量，如果一个推荐系统服务一亿用户，那么仅仅对应的用户嵌入表（其中的每条嵌入项对应一个用户）的大小就有$4*64*10^8～=23.8$GB。除了用户嵌入表，还有商品嵌入表（其中的每条嵌入项对应一个商品），以及用户和商品的各项特征的嵌入表。总的嵌入表大小可以轻易达到几百GB甚至几十TB。
-而正如上文提到的，推荐系统中通常用的MLP模型尺寸较小。例如一个在Ali-CCP数据集~\citeu{10.1145/3209978.3210104}上训练的DLRM~\citeu{naumov2019deep}的嵌入表大小超过1.44GB，而稠密神经网络仅有大约100KB。
+而正如上文提到的，推荐系统中通常用的MLP模型尺寸较小。例如一个在Ali-CCP数据集 :cite:`10.1145/3209978.3210104`上训练的DLRM :cite:`naumov2019deep`的嵌入表大小超过1.44GB，而稠密神经网络仅有大约100KB。
 
-<!-- \begin{figure}[H]
-\centering
-\includegraphics{figs/ch_recommender/recommendation_model.png}
-\caption{推荐模型的基本结构}
-\label{fig:recommendation models}
-\end{figure} -->
 ![推荐模型的基本结构](../img/ch10/ch-recsys/ch10-recommendation-models.png)
 :width:`800px`
 :label:`recommendation-models`
@@ -55,14 +49,8 @@
 
 
 ### 训练服务器
-因为深度学习推荐系统同时具有存储密集（嵌入表）和计算密集（深度神经网路）的特点，工业界通常使用参数服务器架构来支持超大规模推荐模型的训练和推理。参数服务器架构包含训练服务器、参数服务器和推理服务器。本书\ref{sec:parameter server}章详细介绍了参数服务器架构，因此本节只重点介绍参数服务器架构具体在推荐系统中的功能。
+因为深度学习推荐系统同时具有存储密集（嵌入表）和计算密集（深度神经网路）的特点，工业界通常使用参数服务器架构来支持超大规模推荐模型的训练和推理。参数服务器架构包含训练服务器、参数服务器和推理服务器。本书 :ref:`parameter_servers`章详细介绍了参数服务器架构，因此本节只重点介绍参数服务器架构具体在推荐系统中的功能。
 
-<!-- \begin{figure}[H]
-\centering
-\includegraphics{figs/ch_recommender/parameter_server_in_recommendation.png}
-\caption{推荐系统中的参数服务器}
-\label{fig:parameter server in recommendation}
-\end{figure} -->
 ![推荐系统中的参数服务器](../img/ch10/ch-recsys/parameter_server_in_recommendation.png)
 :width:`800px`
 :label:`parameter-server-in-recommendation`

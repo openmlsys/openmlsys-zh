@@ -6,7 +6,7 @@
 
 - 推荐模型：[Wide & Deep](https://arxiv.org/abs/1606.07792)
   
-- 消息队列介绍：[什么是消息队列](https://irsworkshop.github.io/2020/publications/paper_21_Oldridge_Merlin.pdf)
+- 消息队列介绍：[什么是消息队列](https://aws.amazon.com/message-queue/)
   
 - 特征存储介绍：[什么是机器学习中的特征存储](https://www.featurestore.org/what-is-a-feature-store)
 
