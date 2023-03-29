@@ -18,7 +18,7 @@
 
 overview
 methods
-pipeline
+cluster
 collective
 parameter_servers
 summary
