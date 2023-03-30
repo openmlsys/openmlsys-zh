@@ -17,6 +17,8 @@
 
 -   掌握计算图调度和执行的常用方法
 
+- 了解目前算子编译器的基本特点以及其尚未收敛的几个问题。
+
 ```toc
 :maxdepth: 2
 
@@ -25,5 +27,6 @@ graph_optimizer
 kernel_selecter
 memory_allocator
 compute_schedule_and_execute
+op_compiler
 summary
 ```
