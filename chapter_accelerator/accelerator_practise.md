@@ -1,6 +1,7 @@
 ## 加速器实践
 
 在本节中会通过具体的CUDA代码向读者介绍如何编写一个并行计算的广义矩阵乘法程序，通过提高计算强度、使用共享内存、优化内存读取流水线等方法最终取得接近硬件加速器性能峰值的实现。虽然在以上章节介绍了张量计算核心相关的内容，但由于篇幅限制，在本节中不使用此硬件结构。而是通过使用更为基本的CUDA代码实现FP32的广义矩阵乘法，来讲解若干实用优化策略。
+
 ### 环境
 
 本节的实践有以下的软件环境依赖：
@@ -20,7 +21,7 @@
 
 :label:`sec-accelerator-naive`
 
-依照算法:label:`algo-accelerator-gemm`，编写CPU代码如下所示：
+依照算法如 :numref:`gemm-algorith`所示，编写CPU代码如下所示：
 ```c++
 float A[M][K];
 float B[K][N];
@@ -109,7 +110,7 @@ Average Throughput: 185.313 GFLOPS
 
 具体的实现如下，由于每个 `float` 类型大小为32个比特，可以将4个 `float` 堆叠在一起构成一个128比特的 `float4` 类，对 `float4` 的访存将会是使用宽指令完成。其具体代码实现见[util.cuh](https://github.com/openmlsys/openmlsys-cuda/blob/main/util.cuh)中。
 
-在实现GPU核函数过程中要注意，每个线程需要从原本各读取矩阵$A$和矩阵$B$中一个 `float` 数据变为各读取4个 `float` 数据，这就要求现在每个线程负责处理矩阵$C$中$4\times 4$的矩阵块，称之为 `thread tile` 。如图:numref:`use_float4`所示，每个线程从左到右、从上到下分别读取矩阵$A$和矩阵$B$的数据并运算，最后写入到矩阵$C$中。
+在实现GPU核函数过程中要注意，每个线程需要从原本各读取矩阵$A$和矩阵$B$中一个 `float` 数据变为各读取4个 `float` 数据，这就要求现在每个线程负责处理矩阵$C$中$4\times 4$的矩阵块，称之为 `thread tile` 。如 :numref:`use_float4`所示，每个线程从左到右、从上到下分别读取矩阵$A$和矩阵$B$的数据并运算，最后写入到矩阵$C$中。
 
 
 ![提高计算强度](../img/ch06/6.4/use_float4.png)
@@ -117,7 +118,7 @@ Average Throughput: 185.313 GFLOPS
 :label:`use_float4`
 
 
-完整代码见[gemm_use_128.cu](https://github.com/openmlsys/openmlsys-cuda/blob/main/gemm_use_128.cu)。我们可以进一步让每个线程处理更多的数据，从而进一步提升计算强度，如图:numref:`use_tile`所示。完整代码见[gemm_use_tile.cu](https://github.com/openmlsys/openmlsys-cuda/blob/main/gemm_use_tile.cu)。
+完整代码见[gemm_use_128.cu](https://github.com/openmlsys/openmlsys-cuda/blob/main/gemm_use_128.cu)。我们可以进一步让每个线程处理更多的数据，从而进一步提升计算强度，如 :numref:`use_tile`所示。完整代码见[gemm_use_tile.cu](https://github.com/openmlsys/openmlsys-cuda/blob/main/gemm_use_tile.cu)。
 
 ![通过提高线程所处理矩阵块的数量来进一步提高计算强度](../img/ch06/6.4/use_tile.png)
 :width:` 800px`
@@ -280,9 +281,9 @@ Average Time: 0.613 ms, Throughput: 14002.600 GFLOPS
 
 要实现一个高性能算子需要依照硬件特性适应性进行若干优化。本节优化策略可总结为以下几点：
 
-  - 并行资源映射——提高并行性：将多层级的并行资源（`block` 、`warp` 、`thread` ）与对应需要计算和搬移的数据建立映射关系，提高程序并行性。将可并行的计算和数据搬移操作映射到并行资源上，对于广义矩阵乘法实例，在节~\ref{sec-accelerator-naive`朴素实现的例子中，令每个`block` 与矩阵$C$中的一个矩阵块建立映射关系，每个`thread` 与矩阵块中的一个元素建立映射关系。
+  - 并行资源映射——提高并行性：将多层级的并行资源（`block` 、`warp` 、`thread` ）与对应需要计算和搬移的数据建立映射关系，提高程序并行性。将可并行的计算和数据搬移操作映射到并行资源上，对于广义矩阵乘法实例，在 :numref:`sec-accelerator-naive`朴素实现的例子中，令每个`block` 与矩阵$C$中的一个矩阵块建立映射关系，每个`thread` 与矩阵块中的一个元素建立映射关系。
   
-  - 优化内存结构——减小访存延迟：观察计算过程中同一个`block` 中数据复用的情况，将复用的数据被如共享内存、寄存器等高性能体系结构存储下来，以此提高吞吐量。如在节 :numref`sec-accelerator-naive` 中将矩阵$A$与矩阵$B$中会被同一个 `block` 内不同 `thread` 共同访问的数据缓存到共享内存中。
+  - 优化内存结构——减小访存延迟：观察计算过程中同一个`block` 中数据复用的情况，将复用的数据被如共享内存、寄存器等高性能体系结构存储下来，以此提高吞吐量。如在 :numref:`sec-accelerator-naive` 中将矩阵$A$与矩阵$B$中会被同一个 `block` 内不同 `thread` 共同访问的数据缓存到共享内存中。
   
   - 优化指令执行——减小指令发射开销：使用 `#pragma unroll` 功能进行循环展开来提升指令级并行，减少逻辑判断；使用向量化加载指令以提高带宽等，对于Ampere架构，最大向量化加载指令为 `LDG.E.128` ，可以采用 `float4` 类型的数据进行读取。
   
