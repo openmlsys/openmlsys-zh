@@ -11,7 +11,7 @@
 访存密集型算子，这些算子的时间绝大部分花在访存上，他们大部分是Element-Wise算子，例如 ReLU、Element-Wise Sum等。
 在典型的深度学习模型中，一般计算密集型和访存密集型算子是相伴出现的，最简单的例子是“Conv + ReLU”。Conv卷积算子是计算密集型，ReLU算子是访存密集型算子，ReLU算子可以直接取Conv算子的计算结果进行计算，因此可以将二者融合成一个算子来进行计算，从而减少内存访问延时和带宽压力，提高执行效率。
 
-例如：“Conv + Conv + Sum + ReLU”的融合，从图\ref{fig:ch07/ch07-compiler-backend-03}中可以看到融合后的算子减少了两个内存的读和写的操作，优化了Conv的输出和Sum的输出的读和写的操作。
+例如：“Conv + Conv + Sum + ReLU”的融合，从 :numref:`conv_sum_relu`中可以看到融合后的算子减少了两个内存的读和写的操作，优化了Conv的输出和Sum的输出的读和写的操作。
 
 ![Elementwise算子融合](../img/ch05/conv_sum_relu.png)
 :width:`800px`

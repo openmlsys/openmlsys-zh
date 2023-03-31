@@ -42,7 +42,7 @@ $$\pmb{Y_{bn}}=\gamma\frac{\pmb{X_{bn}}-\mu_{\mathcal{B}}}{\sqrt{{\sigma_{\mathc
 
 同样，这里不需要理解Batchnorm中的所有参数的含义，只需要了解式 :eqref:`ch08-equ-bn_equation`是$\pmb{Y_{bn}}$关于$\pmb{X_{bn}}$的，其他符号均表示常量。
 
-如 :numref:`ch08-fig-conv_bn_fusion`，当Convlution算子的输出作为Batchnorm输入时，最终Batchnorm算子的计算公式也就是要求$\pmb{Y_{bn}}$关于$\pmb{X_{conv}}$的计算公式，我们将$\pmb{Y_{conv}}$代入到$\pmb{X_{bn}}$，然后将常数项合并提取后，可以得到公式 :eqref:`equ:conv-bn-equation-3`。
+如 :numref:`ch08-fig-conv_bn_fusion`，当Convlution算子的输出作为Batchnorm输入时，最终Batchnorm算子的计算公式也就是要求$\pmb{Y_{bn}}$关于$\pmb{X_{conv}}$的计算公式，我们将$\pmb{Y_{conv}}$代入到$\pmb{X_{bn}}$，然后将常数项合并提取后，可以得到公式 :eqref:`ch08-equ-conv_bn_equation_3`。
 
 $$\pmb{Y_{bn}}=\pmb{A}*\pmb{X_{conv}}+\pmb{B}$$
 :eqlabel:`ch08-equ-conv_bn_equation_3`
