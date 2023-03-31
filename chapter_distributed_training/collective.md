@@ -42,12 +42,12 @@
 #### Gather
 Gather算子可以将全部设备的数据全部收集（Gather）到编号为$i$的设备上。 :numref:`ch10-collective-operators`展示了设备1调用Gather来收集全部设备的数据的初始和结束状态。
 
-在收集函数（Gather Function）符合结合律和交换律的情况下，可以通过将其设为Reduce算子中的$f$来实现Gather算子。但是，在这种情况下，无论是基于链表还是数组的实现，在每一步的Reduce操作中$f$的时间复杂度和输出长度$l$都发生了改变。因此，Gather的时间复杂度是$a \times \log p + (p-1) \times b \times l$。这是因为在算法的每一阶段$t$，传输的信息长度为$ 2^t \times l$。
+在收集函数（Gather Function）符合结合律和交换律的情况下，可以通过将其设为Reduce算子中的$f$来实现Gather算子。但是，在这种情况下，无论是基于链表还是数组的实现，在每一步的Reduce操作中$f$的时间复杂度和输出长度$l$都发生了改变。因此，Gather的时间复杂度是$a \times \log p + (p-1) \times b \times l$。这是因为在算法的每一阶段$t$，传输的信息长度为$2^{t} \times l$。
 
 #### AllGather
 AllGather算子会把收集的结果分发到全部的设备上。 :numref:`ch10-collective-operators`展示了设备1，设备2和设备3共同调用AllGather的初始和结束状态。
 
-在这里，一个简单的方法是使用Gather和Broadcast算子把聚合结果先存到编号为1的设备中，再将其广播到剩余的设备上。这会产生一个$a \times \log p + (p-1) \times b \times l + (a+p \times l \times b) \times \log p$的时间复杂度，因为在广播时，如果忽略链表/数组实现所带来的额外空间开销，每次通信的长度为$pl$而不是$l$。简化后，得到了一个$a \times  \log p + p \times l \times b \times \log p$ 的时间复杂度。在一个基于超立方体\footnote{可参考网址为：\url{https://link.springer.com/book/10.1007/978-3-030-25209-0}}的算法下，可以将其进一步优化到和Gather算子一样的时间复杂度$a \times \log p + (p-1) \times b \times l$，由于篇幅问题此处便不再赘述。
+在这里，一个简单的方法是使用Gather和Broadcast算子把聚合结果先存到编号为1的设备中，再将其广播到剩余的设备上。这会产生一个$a \times \log p + (p-1) \times b \times l + (a+p \times l \times b) \times \log p$的时间复杂度，因为在广播时，如果忽略链表/数组实现所带来的额外空间开销，每次通信的长度为$pl$而不是$l$。简化后，得到了一个$a \times  \log p + p \times l \times b \times \log p$ 的时间复杂度。在一个基于[超立方体](https://link.springer.com/book/10.1007/978-3-030-25209-0)的算法下，可以将其进一步优化到和Gather算子一样的时间复杂度$a \times \log p + (p-1) \times b \times l$，由于篇幅问题此处便不再赘述。
 
 #### Scatter
 
