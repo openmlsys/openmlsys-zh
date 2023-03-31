@@ -126,9 +126,9 @@ compute(y, z)
 上述代码表达了如下计算逻辑：
 
 ```text
-    x = y
-    x = z
-    x = x - y
+x = y
+x = z
+x = x - y
 ```
 
 这段简单的计算逻辑翻译到计算图上可以表示为 :numref:`side_effect_1`所示。
