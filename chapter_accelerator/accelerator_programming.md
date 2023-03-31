@@ -6,7 +6,7 @@
 ### 硬件加速器的可编程性
 :label:`accelerator-programable-title`
 
- :numref:`accelerator-design-title`节中列出的硬件加速器均具有一定的可编程性，程序员可以通过软件编程，有效的使能上述加速器进行计算加速。现有硬件加速器常见的两类编程方式主要有编程接口调用以及算子编译器优化。
+ :numref:`accelerator-design-title`中列出的硬件加速器均具有一定的可编程性，程序员可以通过软件编程，有效的使能上述加速器进行计算加速。现有硬件加速器常见的两类编程方式主要有编程接口调用以及算子编译器优化。
 
 #### 编程接口使能加速器
 
@@ -65,7 +65,7 @@ AKG则是MindSpore社区的开源算子编译工具。与上述介绍的算子�
 ### 硬件加速器的多样化编程方法
 :label:`diversified-programming-title`
 
-矩阵乘法运算作为深度学习网络中占比最大的计算，对其进行优化是十分必要的。因此本节将统一以广义矩阵乘法为实例，对比介绍如何通过不同编程方式使能加速器。广义矩阵乘法指GEMM（General Matrix Multiplication），即$\bm{C} = \alpha \bm{A}\times \bm{B} + \beta \bm{C}$，其中$\bm{A}\in\mathbb{R}^{M\times K}, \bm{B}\in\mathbb{R}^{K\times N}, \bm{C}\in\mathbb{R}^{M\times N}$。
+矩阵乘法运算作为深度学习网络中占比最大的计算，对其进行优化是十分必要的。因此本节将统一以广义矩阵乘法为实例，对比介绍如何通过不同编程方式使能加速器。广义矩阵乘法指GEMM（General Matrix Multiplication），即${C} = \alpha {A}\times {B} + \beta {C}$，其中${A}\in\mathbb{R}^{M\times K}, {B}\in\mathbb{R}^{K\times N}, {C}\in\mathbb{R}^{M\times N}$。
 
 ![矩阵乘法GEMM运算](../img/ch06/gemm.svg)
 :width:`800px`
@@ -78,7 +78,7 @@ AKG则是MindSpore社区的开源算子编译工具。与上述介绍的算子�
 :label:`sec-accelerator-use-cublas`
 
 在上述不同层级的编程方式中，直接调用算子加速库使能加速器无疑是最快捷高效的方式。NVIDIA提供了cuBLAS/cuDNN两类算子计算库，cuBLAS提供了使能张量计算核心的接口，用以加速矩阵乘法(GEMM)运算，cuDNN提供了对应接口加速卷积(CONV)运算等。
-以 :numref:`accelerator-programable-title`小节的GEMM运算为例，与常规CUDA调用cuBLAS算子库相似，通过cuBLAS加速库使能张量计算核心步骤包括：
+以 :numref:`accelerator-programable-title`的GEMM运算为例，与常规CUDA调用cuBLAS算子库相似，通过cuBLAS加速库使能张量计算核心步骤包括：
 
 1.  创建cuBLAS对象句柄且设置对应数学计算模式
 
