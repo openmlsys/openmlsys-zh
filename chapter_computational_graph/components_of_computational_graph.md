@@ -142,23 +142,23 @@ propagation）。在深度神经网络模型训练过程中，前向传播的输
 
 反向传播过程中，使用链式法则来计算参数的梯度信息。链式法则是微积分中的求导法则，用于求解复合函数中的导数。复合函数的导数是构成复合有限个函数在相应点的导数乘积。假设*f*和*g*是关于实数*x*的映射函数，设$y=g(x)$并且$z=f(y)=f(g(x))$，则*z*对*x*的导数即为：
 
-$$
-\frac{dz}{dx}=\frac{dz}{dy}\frac{dy}{dx}~~~~~~~~~~~(3.1)$$
+$$\frac{dz}{dx}=\frac{dz}{dy}\frac{dy}{dx}$$
+:eqlabel:`ch04-1`
 
 神经网络的反向传播是根据反向计算图的特定运算顺序来执行链式法则的算法。由于神经网络的输入通常为三维张量，输出为一维向量。因此将上述复合函数关于标量的梯度法则进行推广和扩展。假设$\boldsymbol{X}$是*m*维张量，$\boldsymbol{Y}$为*n*维张量，$\boldsymbol{z}$为一维向量，$\boldsymbol{Y}=g(\boldsymbol{X})$并且$\boldsymbol{z}=f(\boldsymbol{Y})$，则$\boldsymbol{z}$关于$\boldsymbol{X}$每一个元素的偏导数即为：
 
-$$
-\frac{\partial z}{\partial x_i}=\sum_j\frac{\partial z}{\partial y_j}\frac{\partial y_j}{\partial x_i}~~~~~~~~~~~(3.2)$$
+$$\frac{\partial z}{\partial x_i}=\sum_j\frac{\partial z}{\partial y_j}\frac{\partial y_j}{\partial x_i}$$
+:eqlabel:`ch04-2`
 
 上述公式可以等价的表示为：
 
-$$
-\nabla_{\boldsymbol{X}}\boldsymbol{z} = (\frac{\partial \boldsymbol{Y}}{\partial \boldsymbol{X}})^{\top}\nabla_{\boldsymbol{Y}}\boldsymbol{z}~~~~~~~~~~~(3.3)$$
+$$\nabla_{\boldsymbol{X}}\boldsymbol{z} = (\frac{\partial \boldsymbol{Y}}{\partial \boldsymbol{X}})^{\top}\nabla_{\boldsymbol{Y}}\boldsymbol{z}$$
+:eqlabel:`ch04-3`
 
 其中$\nabla_{\boldsymbol{X}}\boldsymbol{z}$表示$\boldsymbol{z}$关于$\boldsymbol{X}$的梯度矩阵。
 
 
-为了便于理解链式法则在神经网络模型中的运用，给出如:numref:`chain`所示前向和反向结合的简单计算图。这个神经网络模型经过两次矩阵相乘得到预测值$\boldsymbol{Y}$，然后根据输出与标签值之间的误差值进行反向梯度传播，以最小化误差值的目的来更新参数权重，模型中需要更新的参数权重包含$\boldsymbol{W}$和$\boldsymbol{W_1}$。
+为了便于理解链式法则在神经网络模型中的运用，给出如 :numref:`chain`所示前向和反向结合的简单计算图。这个神经网络模型经过两次矩阵相乘得到预测值$\boldsymbol{Y}$，然后根据输出与标签值之间的误差值进行反向梯度传播，以最小化误差值的目的来更新参数权重，模型中需要更新的参数权重包含$\boldsymbol{W}$和$\boldsymbol{W_1}$。
 
 ![反向传播局部计算图](../img/ch03/chain.png)
 :width:`600px`
@@ -166,64 +166,26 @@ $$
 
 假设选取均方误差为损失函数，那么损失值是怎样通过链式法则将梯度信息传递给图中的$\boldsymbol{W}$和$\boldsymbol{W_1}$呢？又为什么要计算非参数数据$\boldsymbol{X}$和$\boldsymbol{X_1}$的梯度呢？为了解决上述两个疑问，要详细思考前向传播和反向传播的计算过程。首先通过前向传播来计算损失值三个步骤：（1）$\boldsymbol{X_1}=\boldsymbol{XW}$；(2)$\boldsymbol{Y}=\boldsymbol{X_1W_1}$；（3）Loss=$\frac{1}{2}$($\boldsymbol{Y}$-Label)$^2$, 此处Label即为标签值。
 
-得到损失函数之后，目的是最小化预测值和标签值间的差异。为此根据链式法则利用公式3.4和公式3.5来进行反向传播，来求解损失函数关于参数$\boldsymbol{W}$和$\boldsymbol{W_1}$的梯度值：
+得到损失函数之后，目的是最小化预测值和标签值间的差异。为此根据链式法则利用公式 :eqref:`ch04-4`和公式 :eqref:`ch04-5`来进行反向传播，来求解损失函数关于参数$\boldsymbol{W}$和$\boldsymbol{W_1}$的梯度值：
 
-$$
-\frac{\partial {\rm Loss}}{\partial \boldsymbol{W_1}}=\frac{\partial \boldsymbol{Y}}{\partial \boldsymbol{W_1}}\frac{\partial {\rm Loss}}{\partial \boldsymbol{Y}}  ~~~~~~~~~~~(3.4)
-$$
+$$\frac{\partial {\rm Loss}}{\partial \boldsymbol{W_1}}=\frac{\partial \boldsymbol{Y}}{\partial \boldsymbol{W_1}}\frac{\partial {\rm Loss}}{\partial \boldsymbol{Y}}$$
+:eqlabel:`ch04-4`
 
-$$
-\frac{\partial {\rm Loss}}{\partial \boldsymbol{W}}=\frac{\partial \boldsymbol{X_1}}{\partial \boldsymbol{W}}\frac{\partial {\rm Loss}}{\partial \boldsymbol{Y}}\frac{\partial \boldsymbol{Y}}{\partial \boldsymbol{X_1}}  ~~~~~~~~~~~(3.5)
-$$
+$$\frac{\partial {\rm Loss}}{\partial \boldsymbol{W}}=\frac{\partial \boldsymbol{X_1}}{\partial \boldsymbol{W}}\frac{\partial {\rm Loss}}{\partial \boldsymbol{Y}}\frac{\partial \boldsymbol{Y}}{\partial \boldsymbol{X_1}}$$
+:eqlabel:`ch04-5`
 
-可以看出公式3.4和公式3.5都计算了$\frac{\partial {\rm Loss}}{\partial \boldsymbol{Y}}$对应图3.10中的grad $\boldsymbol{Y}$。公式3.5中的$\frac{\partial {\rm Loss}}{\partial \boldsymbol{Y}}\frac{\partial \boldsymbol{Y}}{\partial \boldsymbol{X_1}}$对应:numref:`chain`中的grad $\boldsymbol{X_1}$，为了便于计算模型参数$\boldsymbol{W}$的梯度信息，需要计算中间结果$\boldsymbol{X_1}$的梯度信息。这也就解决了前面提出的第二个疑问，计算非参数的中间结果梯度是为了便于计算前序参数的梯度值。
+可以看出公式 :eqref:`ch04-4`和公式 :eqref:`ch04-5`都计算了$\frac{\partial {\rm Loss}}{\partial \boldsymbol{Y}}$对应 :numref:`chain`中的grad $\boldsymbol{Y}$。公式 :eqref:`ch04-5`中的$\frac{\partial {\rm Loss}}{\partial \boldsymbol{Y}}\frac{\partial \boldsymbol{Y}}{\partial \boldsymbol{X_1}}$对应 :numref:`chain`中的grad $\boldsymbol{X_1}$，为了便于计算模型参数$\boldsymbol{W}$的梯度信息，需要计算中间结果$\boldsymbol{X_1}$的梯度信息。这也就解决了前面提出的第二个疑问，计算非参数的中间结果梯度是为了便于计算前序参数的梯度值。
 
-接着将$\boldsymbol{X_1}=\boldsymbol{XW}$、$\boldsymbol{Y}=\boldsymbol{X_1W_1}$和Loss=$\frac{1}{2}$($\boldsymbol{Y}$-Label)$^2$代入公式3.4和公式3.5展开为公
-式3.6和公式3.7，可以分析机器学习框架在利用链式法则构建反向计算图时，变量是如何具体参与到梯度计算中的。
+接着将$\boldsymbol{X_1}=\boldsymbol{XW}$、$\boldsymbol{Y}=\boldsymbol{X_1W_1}$和Loss=$\frac{1}{2}$($\boldsymbol{Y}$-Label)$^2$代入公式 :eqref:`ch04-4`和公式 :eqref:`ch04-5`展开为公式 :eqref:`ch04-6`和公式 :eqref:`ch04-7`，可以分析机器学习框架在利用链式法则构建反向计算图时，变量是如何具体参与到梯度计算中的。
 
-$$
-\frac{\partial {\rm Loss}}{\partial \boldsymbol{W_1}}=\frac{\partial \boldsymbol{Y}}{\partial \boldsymbol{W_1}}\frac{\partial {\rm Loss}}{\partial \boldsymbol{Y}}=\boldsymbol{X_1}^\top(\boldsymbol{Y}-{\rm Label})     ~~~~~~~~~~~(3.6)
-$$
+$$\frac{\partial {\rm Loss}}{\partial \boldsymbol{W_1}}=\frac{\partial \boldsymbol{Y}}{\partial \boldsymbol{W_1}}\frac{\partial {\rm Loss}}{\partial \boldsymbol{Y}}=\boldsymbol{X_1}^\top(\boldsymbol{Y}-{\rm Label})$$
+:eqlabel:`ch04-6`
 
-$$
-\frac{\partial {\rm Loss}}{\partial \boldsymbol{W}}=\frac{\partial \boldsymbol{X_1}}{\partial \boldsymbol{W}}\frac{\partial {\rm Loss}}{\partial \boldsymbol{Y}}\frac{\partial \boldsymbol{Y}}{\partial \boldsymbol{X_1}}=\boldsymbol{X}^\top(\boldsymbol{Y}-{\rm Label})\boldsymbol{W_1}^\top    ~~~~~~~~~~~(3.7)
-$$
+$$\frac{\partial {\rm Loss}}{\partial \boldsymbol{W}}=\frac{\partial \boldsymbol{X_1}}{\partial \boldsymbol{W}}\frac{\partial {\rm Loss}}{\partial \boldsymbol{Y}}\frac{\partial \boldsymbol{Y}}{\partial \boldsymbol{X_1}}=\boldsymbol{X}^\top(\boldsymbol{Y}-{\rm Label})\boldsymbol{W_1}^\top$$
+:eqlabel:`ch04-7`
 
-公式3.6在计算$\boldsymbol{W_1}$的梯度值时使用到了前向图中的中间结果$\boldsymbol{X_1}$。公式3.7中不仅使用输入数据$\boldsymbol{X}$来进行梯度计算，参数$\boldsymbol{W_1}$也参与了参数$\boldsymbol{W}$的梯度值计算。因此可以回答第一个疑问，参与计算图中参数的梯度信息计算过程的不仅有后序网络层传递而来的梯度信息，还包含有前向计算中的中间结果和参数数值。
+公式 :eqref:`ch04-6`在计算$\boldsymbol{W_1}$的梯度值时使用到了前向图中的中间结果$\boldsymbol{X_1}$。公式 :eqref:`ch04-7`中不仅使用输入数据$\boldsymbol{X}$来进行梯度计算，参数$\boldsymbol{W_1}$也参与了参数$\boldsymbol{W}$的梯度值计算。因此可以回答第一个疑问，参与计算图中参数的梯度信息计算过程的不仅有后序网络层传递而来的梯度信息，还包含有前向计算中的中间结果和参数数值。
 
-通过分析:numref:`chain`和公式3.4、3.5、3.6、3.7解决了两个疑问后，可以发现计算图在利用链式法则构建反向计算图时，会对计算过程进行分析保存模型中的中间结果和梯度传递状态，通过占用部分内存复用计算结果达到提高反向传播计算效率的目的。
+通过分析 :numref:`chain`和公式 :eqref:`ch04-4`、:eqref:`ch04-5`、:eqref:`ch04-6`、:eqref:`ch04-7`解决了两个疑问后，可以发现计算图在利用链式法则构建反向计算图时，会对计算过程进行分析保存模型中的中间结果和梯度传递状态，通过占用部分内存复用计算结果达到提高反向传播计算效率的目的。
 
 将上述的链式法则推导推广到更加一般的情况，结合控制流的灵活构造，机器学习框架均可以利用计算图快速分析出前向数据流和反向梯度流的计算过程，正确的管理中间结果内存周期，更加高效的完成计算任务。
-
-
-<!-- 上一小节中简单的循环控制模型前向传播可以表示为$\boldsymbol{Y}=\boldsymbol{W_2}(\boldsymbol{W_1}(\boldsymbol{W}(\boldsymbol{X})))$。在反向传播的过程中可以将前向计算等价为$\boldsymbol{Y}=\boldsymbol{W_2}\boldsymbol{X_2}$，首先得到参数$\boldsymbol{W_2}$的梯度表示。再接着根据$\boldsymbol{X_2}=\boldsymbol{W_1}\boldsymbol{X_1}$得到$\boldsymbol{W_1}$的梯度表示，按照层级即可推导得出$\boldsymbol{W}$的梯度表示：
-
-$$
-\begin{aligned}
-\nabla\boldsymbol{X_2} &= \nabla\boldsymbol{Y}\boldsymbol{W_2}^\top  \\
-\nabla\boldsymbol{W_2} &= \boldsymbol{X_2}^\top\nabla\boldsymbol{Y}   \\
-\nabla\boldsymbol{X_1} &= \nabla\boldsymbol{X_2}\boldsymbol{W_1}^\top = (\nabla\boldsymbol{Y}\boldsymbol{W_2}^\top)\boldsymbol{W_1}^\top   \\
-\nabla\boldsymbol{W_1} &= \boldsymbol{X_1}^\top\nabla\boldsymbol{X_2} = \boldsymbol{X_1}^\top(\nabla\boldsymbol{Y}\boldsymbol{W_2}^\top)  \\
-\nabla\boldsymbol{X} &= \nabla\boldsymbol{X_1}\boldsymbol{W}^\top = ((\nabla\boldsymbol{Y}\boldsymbol{W_2}^\top)\boldsymbol{W_1}^\top)\boldsymbol{W}^\top   \\
-\nabla\boldsymbol{W} &= \boldsymbol{X}^\top\nabla\boldsymbol{X_1} = \boldsymbol{X}^\top((\nabla\boldsymbol{Y}\boldsymbol{W_2}^\top)\boldsymbol{W_1}^\top)
-\end{aligned}
-$$
-
-根据链式法则，相应位置的导数乘积即可将网络得到的损失函数梯度信息传播到每一个权重参数，应用优化器的参数权重更新规则，即可达到神经网络模型参数训练迭代的目的。
-
-根据上述公式我们可以得出循环控制的反向梯度计算过程如下，在下面代码中变量的前缀*grad*代表变量梯度变量，*transpose*代表矩阵转置算子。
-```python
-grad_X2 = matmul(grad_Y, transpose(W2))
-grad_W2 = matmul(transpose(X2), grad_Y)
-grad_X1 = matmul(grad_X2, transpose(W1))
-grad_W1 = matmul(transpose(X1), grad_X2)
-grad_X = matmul(grad_X1, transpose(W))
-grad_W = matmul(transpose(X), grad_X1)
-```
-结合公式、代码以及 :numref:`chain`我们可以看出，在反向传播过程中使用到前向传播的中间变量。因此保存网络中间层输出状态和中间变量，尽管占用了部分内存但能够复用计算结果，达到了提高反向传播计算效率的目的。
-
-![反向传播局部计算图](../img/ch03/chain.svg)
-:width:`600px`
-:label:`chain`
-
-在深度学习计算框架中，控制流可以进行嵌套，比如多重循环和循环条件控制，计算图会对复杂控制流进行准确的描述，以便于执行正确的计算调度与执行任务。可以通过[代码示例](https://github.com/openmlsys/openmlsys-pytorch/blob/master/chapter_computational_graph/control_flow.py)查看在条件控制和循环控制下，前向和反向计算的数据流。 -->
