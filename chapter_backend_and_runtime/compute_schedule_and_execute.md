@@ -9,10 +9,6 @@
 ```python
 import mindspore.nn as nn
 from mindspore import context
-from mindspore import ms_function
-
-# 以单算子方式执行后续计算中的算子。
-context.set_context(mode=context.PYNATIVE_MODE)
 
 class Computation(nn.Cell):
    def construct(self, x, y):
@@ -71,14 +67,14 @@ Kernel。主流框架均提供了指定算子所在运行设备的能力，以Mi
 import numpy as np
 from mindspore import Tensor
 import mindspore.ops.operations as ops
-from mindspore.common.api import ms_function
+from mindspore.common.api import jit
 
 # 创建算子并指定执行算子的硬件设备
 add = ops.Add().add_prim_attr('primitive_target', 'CPU')
 sub = ops.Sub().add_prim_attr('primitive_target', 'GPU')
 
 # 指定按照静态计算图模式执行函数
-@ms_function
+@jit
 def compute(x, y, z):
     r = add(x, y)
     return sub(r, z)
@@ -105,7 +101,7 @@ output = compute(x, y, z)
 import mindspore as ms
 from mindspore import Parameter, Tensor
 import mindspore.ops.operations as ops
-from mindspore.common.api import ms_function
+from mindspore.common.api import jit
 
 # 定义全局变量
 x = Parameter(Tensor([1.0], ms.float32), name="x")
@@ -113,7 +109,7 @@ y = Tensor([0.2], ms.float32)
 z = Tensor([0.3], ms.float32)
 
 # 指定按照静态计算图模式执行函数
-@ms_function
+@jit
 def compute(y, z):
     ops.Assign()(x, y)
     ops.Assign()(x, z)
