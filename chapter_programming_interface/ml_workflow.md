@@ -203,6 +203,7 @@ param_dict = load_checkpoint("checkpoint_lenet-1_1875.ckpt")
 load_param_into_net(net, param_dict)
 # 使用函数model.predict预测image对应分类
 output = model.predict(Tensor(data['image']))
+predicted = np.argmax(output.asnumpy(), axis=1)
 # 输出预测分类与实际分类
 print(f'Predicted: "{predicted[0]}", Actual: "{labels[0]}"')
 ```
