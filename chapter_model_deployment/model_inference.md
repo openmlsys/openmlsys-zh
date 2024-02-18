@@ -130,12 +130,12 @@ $$F(2, 3)=\left[ \begin{matrix} d_0 & d_1 & d_2 \\ d_1 & d_2 & d_3 \end{matrix} 
 
 可以观察到，卷积运算转换为矩阵乘法时输入矩阵中存在着重复元素$d_1$和$d_2$，因此，卷积转换的矩阵乘法相对一般的矩阵乘有了优化空间。可以通过计算中间变量$m_0-m_3$得到矩阵乘的结果，见式 :eqref:`ch08-equ-conv-2-winograd`：
 
-$$F(2, 3)=\left[ \begin{matrix} d_0 & d_1 & d_2 \\ d_1 & d_2 & d_3 \end{matrix} \right] \left[ \begin{matrix} g_0 \\ g_1 \\ g_2 \end{matrix} \right]=\left[ \begin{matrix} m_0+m_1+m_2 \\ m_1-m_2+m_3 \end{matrix} \right]$$
+$$F(2, 3)=\left[ \begin{matrix} d_0 & d_1 & d_2 \\ d_1 & d_2 & d_3 \end{matrix} \right] \left[ \begin{matrix} g_0 \\ g_1 \\ g_2 \end{matrix} \right]=\left[ \begin{matrix} m_0+m_1+m_2 \\ m_1-m_2-m_3 \end{matrix} \right]$$
 :eqlabel:`ch08-equ-conv-2-winograd`
 
 其中，$m_0-m_3$的分别见公式 :eqref:`ch08-equ-winograd-param`：
 
-$$\begin{aligned}m_0=(d_0-d_2)*g_0 \\m_1=(d_1+d_2)*(\frac{g_0+g_1+g_2}{2}) \\m_2=(d_0-d_2)*(\frac{g_0-g_1+g_2}{2}) \\m_2=(d_1-d_3)*g_2\end{aligned}$$
+$$\begin{aligned}m_0=(d_0-d_2)*g_0 \\m_1=(d_1+d_2)*(\frac{g_0+g_1+g_2}{2}) \\m_2=(d_2-d_1)*(\frac{g_0-g_1+g_2}{2}) \\m_3=(d_1-d_3)*g_2\end{aligned}$$
 :eqlabel:`ch08-equ-winograd-param`
 
 通过$m_0-m_3$间接计算r1，r2，需要的运算次数包括：输入$d$的4次加法；输出$m$的4次乘法和4次加法。在推理阶段，权重的数值是常量，因此卷积核上的运算可以在图编译阶段计算，不计入在线的run时间。所以总的运算次数为4次乘法和8次加法，与直接运算的6次乘法和4次加法相比，乘法次数减少，加法次数增加。在计算机中，乘法一般比加法慢，通过减少乘法次数，增加少量加法，可以实现加速。
