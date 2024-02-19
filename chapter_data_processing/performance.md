@@ -36,8 +36,6 @@
 :width:`800px`
 :label:`file_random_access`
 
-#### MindRecord介绍
-
 MindRecord是MindSpore推出的统一数据格式，目标是归一化用户的数据集，优化训练数据的读取过程。该文件格式具备如下特征：
 
 -   实现多变的用户数据统一存储、访问，训练数据读取更加简便。
